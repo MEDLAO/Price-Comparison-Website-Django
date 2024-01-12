@@ -13,4 +13,6 @@ soup = BeautifulSoup(page.content, 'lxml')
 #print(soup.prettify())
 
 products = soup.find_all('div', class_='a-section a-spacing-base')
+images = soup.find_all('img', class_="s-image")
+# prices = soup.find_all('span', attrs={"aria-hidden": "true"})
 print(products)
