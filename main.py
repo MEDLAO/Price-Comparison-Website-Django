@@ -3,30 +3,25 @@ from bs4 import BeautifulSoup
 import re
 
 
-amazon_product_url = "https://www.amazon.eg/s?k=smart+watch&ref=nb_sb_noss"
+amazon_product_url_ar = "https://www.amazon.eg/s?k=smart+watch&language=ar_AE&crid=VEA91KM5TLZU&" \
+                        "sprefix=%2Caps%2C158&ref=nb_sb_ss_recent_1_0_recent"
+amazon_product_url_en = "https://www.amazon.eg/s?k=smart+watch&language=en_AE&crid=VEA91KM5TLZU&" \
+                        "sprefix=%2Caps%2C158&ref=nb_sb_ss_recent_1_0_recent"
 
 # populate headers
 headers = {"user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
-                        " (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+                        " (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+           #"Accept-Language": "ar-ae,en-ae"
+           }
 
 # Fetching data and cleaning it
-page = requests.get(url=amazon_product_url, headers=headers)
+page = requests.get(url=amazon_product_url_en, headers=headers)
 soup = BeautifulSoup(page.content, 'lxml')
 #print(soup.prettify())
 
 products = soup.find_all('div', class_='a-section a-spacing-base')
 
 for product in products:
-
-    # brand
-
-    # class ="a-size-mini s-line-clamp-1" > < span class ="a-size-base-plus a-color-base" > KOSPET < / span > < / h2 >
-    h2 = product.find('h2', class_='a-size-mini s-line-clamp-1')
-    print(h2)
-
-    # brand = h2.find_all('span')
-    # print(brand)
-
     # price
     price_with_html_tag = product.find('span', class_='a-offscreen')
     if price_with_html_tag:
