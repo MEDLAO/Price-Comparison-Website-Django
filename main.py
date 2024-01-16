@@ -14,10 +14,11 @@ headers = {"user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWe
            #"Accept-Language": "ar-ae,en-ae"
            }
 # Rotating proxies
-
+proxies_list = open("Free_Proxy_List.txt", "r").readlines()[0]
+print(proxies_list)
 
 # Fetching data and cleaning it
-page = requests.get(url=amazon_product_url_en, headers=headers)
+page = requests.get(url=amazon_product_url_ar, headers=headers)
 soup = BeautifulSoup(page.content, 'lxml')
 #print(soup.prettify())
 
@@ -29,20 +30,20 @@ for product in products:
     if price_with_html_tag:
         price = price_with_html_tag.get_text()
         price = re.sub(r'جنيه', '', price)
-        print(price)
+        #print(price)
 
     # description
     description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
                                                         'a-text-normal')
     description = description_with_html_tag.get_text()
-    print(description)
+    #print(description)
 
     # image
     image_with_html_tag = product.find('img', class_='s-image')
     image = image_with_html_tag.attrs['src']
-    print(image)
+    #print(image)
 
     # link
     link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
     link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
-    print(link)
+    #print(link)
