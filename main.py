@@ -13,8 +13,14 @@ headers = {"user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWe
                         " (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
            #"Accept-Language": "ar-ae,en-ae"
            }
+
 # Rotating proxies
-proxies_list = open("Free_Proxy_List.txt", "r").readlines()[0]
+proxies_list = []
+proxies_list_elts = open("Free_Proxy_List.txt", "r").readlines()
+for line in proxies_list_elts[1:]:
+    separate_line = line.split(',')
+    proxies_list.append(separate_line[0].strip('"'))
+
 print(proxies_list)
 
 # Fetching data and cleaning it
