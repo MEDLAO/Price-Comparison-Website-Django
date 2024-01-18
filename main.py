@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import pandas as pd
+from io import StringIO
 
 
 amazon_product_url_ar = "https://www.amazon.eg/s?k=smart+watch&language=ar_AE&crid=VEA91KM5TLZU&" \
@@ -15,13 +17,14 @@ headers = {"user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWe
            }
 
 # Rotating proxies
-proxies_list = []
-proxies_list_elts = open("Free_Proxy_List.txt", "r").readlines()
-for line in proxies_list_elts[1:]:
-    separate_line = line.split(',')
-    proxies_list.append(separate_line[0].strip('"'))
 
-print(proxies_list)
+# parse the free proxies form the HTML
+prox_list = []
+response = requests.get('https://free-proxy-list.net/')
+df = pd.read_html(StringIO(str(response.text)))[0]
+for ip, port in zip(df['IP Address'], df['Port']):
+    prox_list.append(ip + ':' + str(port))
+print(prox_list)
 
 # Fetching data and cleaning it
 page = requests.get(url=amazon_product_url_ar, headers=headers)
