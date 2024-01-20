@@ -44,7 +44,7 @@ for i in proxy_list[:10]:
         proxy = {'http':'http://' + i,
                  'https':'https://' + i}
         res = requests.get('http://example.org/', proxies = proxy)
-        working_proxies.append(i)
+        working_proxies.append(proxy)
     except:
         pass
 
