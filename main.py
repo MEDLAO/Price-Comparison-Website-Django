@@ -57,5 +57,8 @@ for product in products:
     link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
     #print(link)
 
+# Pagination
+
+
 # Delete gateways
 gateway.shutdown()
