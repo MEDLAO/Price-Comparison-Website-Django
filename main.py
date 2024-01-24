@@ -3,7 +3,14 @@ from bs4 import BeautifulSoup
 import re
 from requests_ip_rotator import ApiGateway
 from fake_useragent import UserAgent
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+ACCESS_KEY_SECRET = os.getenv('ACCESS_KEY_SECRET')
 
 amazon_product_url_ar = "https://www.amazon.eg/s?k=smart+watch&language=ar_AE&crid=VEA91KM5TLZU&" \
                         "sprefix=%2Caps%2C158&ref=nb_sb_ss_recent_1_0_recent"
@@ -16,12 +23,13 @@ headers = ua.random
 
 # Create gateway object and initialise in
 # AWS API Gateway's large IP pool as a proxy to generate pseudo-infinite IPs
-gateway = ApiGateway("https://www.amazon.eg/-/en/ref=nav_logo")
+gateway = ApiGateway("https://sbvb9w3uj7.execute-api.us-west-2.amazonaws.com", access_key_id = AWS_ACCESS_KEY_ID,
+                     access_key_secret = ACCESS_KEY_SECRET)
 gateway.start()
 
 # Assign gateway to session
 session = requests.Session()
-session.mount("https://www.amazon.eg/-/en/ref=nav_logo", gateway)
+session.mount("https://sbvb9w3uj7.execute-api.us-west-2.amazonaws.com", gateway)
 
 # Send request (IP will be randomised)
 response = session.get(amazon_product_url_en, headers = headers)
