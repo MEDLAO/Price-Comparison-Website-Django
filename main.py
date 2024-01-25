@@ -11,21 +11,22 @@ load_dotenv()
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 ACCESS_KEY_SECRET = os.getenv('ACCESS_KEY_SECRET')
 
-amazon_product_url_ar = "https://sbvb9w3uj7.execute-api.us-west-2.amazonaws.com/-/en/s?k=smart+watch&language=en&crid=1OMSCNXEZPR9X&qid=1706130152&sprefix=smart+watch%2Caps%2C77&ref=sr_pg_1"
-amazon_product_url_en = "https://sbvb9w3uj7.execute-api.us-west-2.amazonaws.com/s?k=smart+watch&language=ar&crid=1OMSCNXEZPR9X&qid=1706130152&sprefix=smart+watch%2Caps%2C77&ref=sr_pg_1"
+api_url = "https://sbvb9w3uj7.execute-api.us-west-2.amazonaws.com"
+amazon_product_url_ar = api_url + "/s?k=smart+watch&language=ar"
+amazon_product_url_en = api_url + "/s?k=smart+watch&language=en"
 
 
 # Create gateway object and initialise in
 # AWS API Gateway's large IP pool as a proxy to generate pseudo-infinite IPs
-gateway = ApiGateway("https://sbvb9w3uj7.execute-api.us-west-2.amazonaws.com", access_key_id = AWS_ACCESS_KEY_ID, access_key_secret = ACCESS_KEY_SECRET)
+gateway = ApiGateway(api_url, access_key_id = AWS_ACCESS_KEY_ID, access_key_secret = ACCESS_KEY_SECRET)
 gateway.start()
 
 # Assign gateway to session
 session = requests.Session()
-session.mount("https://sbvb9w3uj7.execute-api.us-west-2.amazonaws.com", gateway)
+session.mount(api_url, gateway)
 
 # Send request (IP will be randomised)
-response = session.get("https://sbvb9w3uj7.execute-api.us-west-2.amazonaws.com/s?k=smart+watch&crid=34ESLMJPH18PK&sprefix=smart%2Caps%2C83&ref=nb_sb_ss_ts-doa-p_1_5")
+response = session.get(amazon_product_url_en)
 print(response.status_code)
 
 # Fetching data and cleaning it
