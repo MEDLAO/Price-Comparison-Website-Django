@@ -25,41 +25,52 @@ gateway.start()
 session = requests.Session()
 session.mount(api_url, gateway)
 
-# Send request (IP will be randomised)
-response = session.get(amazon_product_url_en)
-print(response.status_code)
+url = amazon_product_url_en
 
-# Fetching data and cleaning it
-soup = BeautifulSoup(response.content, 'lxml')
-# print(soup.prettify())
+while True: # pagination
+    # Send request (IP will be randomised)
+    response = session.get(url)
+    print(response.status_code)
 
-products = soup.find_all('div', class_='a-section a-spacing-base')
+    # Fetching data and cleaning it
+    soup = BeautifulSoup(response.content, 'lxml')
+    # print(soup.prettify())
 
-for product in products:
-    # price
-    price_with_html_tag = product.find('span', class_='a-offscreen')
-    if price_with_html_tag:
-        price = price_with_html_tag.get_text()
-        price = re.sub(r'جنيه', '', price)
-        print(price)
+    products = soup.find_all('div', class_='a-section a-spacing-base')
 
-    # description
-    description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
-                                                        'a-text-normal')
-    description = description_with_html_tag.get_text()
-    print(description)
+    for product in products:
+        # price
+        price_with_html_tag = product.find('span', class_='a-offscreen')
+        if price_with_html_tag:
+            price = price_with_html_tag.get_text()
+            price = re.sub(r'جنيه', '', price)
+            #print(price)
 
-    # image
-    image_with_html_tag = product.find('img', class_='s-image')
-    image = image_with_html_tag.attrs['src']
-    print(image)
+        # description
+        description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
+                                                            'a-text-normal')
+        description = description_with_html_tag.get_text()
+        #print(description)
 
-    # link
-    link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
-    link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
-    print(link)
+        # image
+        image_with_html_tag = product.find('img', class_='s-image')
+        image = image_with_html_tag.attrs['src']
+        #print(image)
 
-# Pagination
+        # link
+        link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
+        link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
+        #print(link)
+
+    next_button_with_html_tags = soup.div('a', class_='s-pagination-item s-pagination-next s-pagination-button s-pagination-separator')
+    next_button = next_button_with_html_tags[0].attrs['href']
+
+    if next_button_with_html_tags:
+        url = api_url + next_button
+        print(url)
+    else:
+        break
+
 
 
 # Delete gateways
