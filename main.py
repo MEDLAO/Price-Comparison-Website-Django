@@ -25,7 +25,7 @@ gateway.start()
 session = requests.Session()
 session.mount(api_url, gateway)
 
-url = amazon_product_url_en
+url = amazon_product_url_ar
 
 while True: # pagination
     # Send request (IP will be randomised)
