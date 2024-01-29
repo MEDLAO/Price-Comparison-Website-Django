@@ -66,3 +66,5 @@ for product in products:
 
 # Delete gateways
 gateway.shutdown()
+
+# 3rd approach : use selenium to search 'smart watch' in the search bar.
