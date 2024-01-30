@@ -11,7 +11,7 @@ load_dotenv()
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 ACCESS_KEY_SECRET = os.getenv('ACCESS_KEY_SECRET')
 
-api_url = "https://sbvb9w3uj7.execute-api.us-west-2.amazonaws.com"
+api_url = "https://amazon.eg"
 amazon_product_url_ar = api_url + "/s?k=smart+watch&crid=2VO6ZUHG1QLMC&sprefix=smart%2Caps%2C149&ref=nb_sb_ss_ts-doa-p_1_5"
 amazon_product_url_en = api_url + "/s?k=smart+watch&language=en"
 
