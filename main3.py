@@ -1,6 +1,8 @@
 from random import choice
 import requests
 from bs4 import BeautifulSoup
+from random import randint
+from time import sleep
 
 
 response = requests.get("https://sslproxies.org/")
@@ -21,19 +23,23 @@ def proxy_generator():
     proxy = {'https': choice(ips_with_ports)}
     return proxy
 
-def data_scraper(request_method, url, **kwargs):
+def data_scraper(url, **kwargs):
     while True:
         try:
             proxy = proxy_generator()
             print("Proxy currently being used: {}".format(proxy))
-            response = requests.request(request_method, url, proxies=proxy, timeout=7, **kwargs)
+            response = requests.get(url, proxies=proxy, timeout=7, **kwargs)
+            print(response.status_code)
+            print(response.text)
             break
             # if the request is successful, no exception is raised
         except:
             print("Connection error, looking for another proxy")
             pass
+
+        # Sleep a random number of seconds (between 1 and 5)
+        sleep(randint(1, 5))
+
     return response
 
-response = data_scraper('get', "https://amazon.eg")
-print(response.status_code)
-print(response.text)
+response = data_scraper("https://httpbin.org/ip")
