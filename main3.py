@@ -23,7 +23,7 @@ def proxy_generator():
     proxy = {'https': choice(ips_with_ports)}
     return proxy
 
-def data_scraper(url, **kwargs):
+def check_proxy(url, **kwargs):
     while True:
         try:
             proxy = proxy_generator()
@@ -31,7 +31,7 @@ def data_scraper(url, **kwargs):
             response = requests.get(url, proxies=proxy, timeout=7, **kwargs)
             print(response.status_code)
             print(response.text)
-            break
+            return proxy
             # if the request is successful, no exception is raised
         except:
             print("Connection error, looking for another proxy")
@@ -40,6 +40,19 @@ def data_scraper(url, **kwargs):
         # Sleep a random number of seconds (between 1 and 5)
         sleep(randint(1, 5))
 
-    return response
 
-response = data_scraper("https://httpbin.org/ip")
+valid_proxy = check_proxy("https://httpbin.org/ip")
+
+
+def data_scraper(url_scrap):
+    # add user_agent
+    # fetch the html page with a http get request
+    response = requests.get(url_scrap, proxies = valid_proxy)
+
+    # parse the html content of the page
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    print(response.status_code)
+
+
+data_scraper("https://amazon.eg")
