@@ -1,6 +1,7 @@
 from random import choice
 import requests
 from bs4 import BeautifulSoup
+import re
 from random import randint
 from time import sleep
 from fake_useragent import UserAgent
@@ -22,7 +23,7 @@ def proxy_generator():
     response = requests.get("https://sslproxies.org/")
     soup = BeautifulSoup(response.content, 'html.parser')
     choosen_proxy = choice(ips_with_ports)
-    proxy = {'https': choosen_proxy}
+    proxy = {'http': choosen_proxy}
     return proxy
 
 def check_proxy(url, **kwargs):
@@ -33,7 +34,7 @@ def check_proxy(url, **kwargs):
             response = requests.get(url, proxies = proxy, timeout = 7, **kwargs)
             print(response.status_code)
             print(response.text)
-            proxy['https'] = f"https://{proxy['https']}"
+            proxy['http'] = f"http://{proxy['http']}"
             return proxy
             # if the request is successful, no exception is raised
         except:
@@ -47,6 +48,9 @@ def check_proxy(url, **kwargs):
 valid_proxy = check_proxy("https://httpbin.org/ip")
 print(valid_proxy)
 
+home_url = "https://amazon.eg"
+amazon_product_url_ar = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=ar_AE&ref=lp_21832958031_sar"
+amazon_product_url_en = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=en_AE&ref=lp_21832958031_sar"
 
 def data_scraper(url_scrap):
     # add user_agent
@@ -58,9 +62,34 @@ def data_scraper(url_scrap):
     # proxies = valid_proxy
 
     # parse the html content of the page
-    soup = BeautifulSoup(response.content, "html.parser")
+    soup = BeautifulSoup(response.content, "lxml")
+    # print(soup.prettify())
 
-    print(response.status_code)
+    products = soup.find_all('div', class_='a-section a-spacing-base')
+
+    for product in products:
+        # price
+        price_with_html_tag = product.find('span', class_='a-offscreen')
+        if price_with_html_tag:
+            price = price_with_html_tag.get_text()
+            price = re.sub(r'جنيه', '', price)
+            print(price)
+
+        # description
+        description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
+                                                                'a-text-normal')
+        description = description_with_html_tag.get_text()
+        print(description)
+
+        # image
+        image_with_html_tag = product.find('img', class_='s-image')
+        image = image_with_html_tag.attrs['src']
+        print(image)
+
+        # link
+        link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
+        link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
+        print(link)
 
 
-data_scraper("https://amazon.eg")
+data_scraper(amazon_product_url_ar)
