@@ -91,5 +91,11 @@ def data_scraper(url_scrap):
         link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
         print(link)
 
+        # next page
+        next_page_with_tag = soup.find('a', class_ ="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator")
+        next_page = next_page_with_tag.get('href')
+        next_page_url = home_url + next_page
+        print(next_page_url)
+
 
 data_scraper(amazon_product_url_ar)
