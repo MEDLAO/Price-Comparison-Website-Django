@@ -53,49 +53,54 @@ amazon_product_url_ar = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958
 amazon_product_url_en = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=en_AE&ref=lp_21832958031_sar"
 
 def data_scraper(url_scrap):
-    # add user_agent
-    ua = UserAgent()
-    headers = {"user-agent": ua.random}
+    while True:
+        # add user_agent
+        ua = UserAgent()
+        headers = {"user-agent": ua.random}
 
-    # fetch the html page with a http get request
-    response = requests.get(url_scrap, headers = headers, proxies = valid_proxy)
-    # proxies = valid_proxy
+        # fetch the html page with a http get request
+        response = requests.get(url_scrap, headers = headers, proxies = valid_proxy)
+        # proxies = valid_proxy
 
-    # parse the html content of the page
-    soup = BeautifulSoup(response.content, "lxml")
-    # print(soup.prettify())
+        # parse the html content of the page
+        soup = BeautifulSoup(response.content, "lxml")
+        # print(soup.prettify())
 
-    products = soup.find_all('div', class_='a-section a-spacing-base')
+        products = soup.find_all('div', class_='a-section a-spacing-base')
 
-    for product in products:
-        # price
-        price_with_html_tag = product.find('span', class_='a-offscreen')
-        if price_with_html_tag:
-            price = price_with_html_tag.get_text()
-            price = re.sub(r'جنيه', '', price)
-            print(price)
+        for product in products:
+            # price
+            price_with_html_tag = product.find('span', class_='a-offscreen')
+            if price_with_html_tag:
+                price = price_with_html_tag.get_text()
+                price = re.sub(r'جنيه', '', price)
+                # print(price)
 
-        # description
-        description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
-                                                                'a-text-normal')
-        description = description_with_html_tag.get_text()
-        print(description)
+            # description
+            description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
+                                                                    'a-text-normal')
+            description = description_with_html_tag.get_text()
+            # print(description)
 
-        # image
-        image_with_html_tag = product.find('img', class_='s-image')
-        image = image_with_html_tag.attrs['src']
-        print(image)
+            # image
+            image_with_html_tag = product.find('img', class_='s-image')
+            image = image_with_html_tag.attrs['src']
+            # print(image)
 
-        # link
-        link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
-        link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
-        print(link)
+            # link
+            link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
+            link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
+            # print(link)
 
-        # next page
-        next_page_with_tag = soup.find('a', class_ ="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator")
-        next_page = next_page_with_tag.get('href')
-        next_page_url = home_url + next_page
-        print(next_page_url)
+            # next page
+            next_page_with_tag = soup.find('a', class_ ="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator")
+            if next_page_with_tag :
+                next_page = next_page_with_tag.get('href')
+                next_page_url = home_url + next_page
+                print(next_page_url)
+                url_scrap = next_page_url
+            break
+        sleep(randint(1, 10))
 
 
 data_scraper(amazon_product_url_ar)
