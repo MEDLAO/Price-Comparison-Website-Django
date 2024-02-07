@@ -44,9 +44,10 @@ def check_proxy(url, **kwargs):
         # Sleep a random number of seconds (between 1 and 5)
         sleep(randint(1, 5))
 
-
+# rotate proxy
 valid_proxy = check_proxy("https://httpbin.org/ip")
 print(valid_proxy)
+
 
 home_url = "https://amazon.eg"
 amazon_product_url_ar = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=ar_AE&ref=lp_21832958031_sar"
@@ -54,7 +55,7 @@ amazon_product_url_en = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958
 
 def data_scraper(url_scrap):
     while True:
-        # add user_agent
+        # rotate user_agent
         ua = UserAgent()
         headers = {"user-agent": ua.random}
 
@@ -92,15 +93,18 @@ def data_scraper(url_scrap):
             link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
             # print(link)
 
-            # next page
-            next_page_with_tag = soup.find('a', class_ ="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator")
-            if next_page_with_tag :
-                next_page = next_page_with_tag.get('href')
-                next_page_url = home_url + next_page
-                print(next_page_url)
-                url_scrap = next_page_url
+        # next page
+        next_page_with_tag = soup.find('a', class_ ="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator")
+
+        if not next_page_with_tag:
             break
-        sleep(randint(1, 10))
+        next_page = next_page_with_tag.get('href')
+        next_page_url = home_url + next_page
+        print(next_page_url)
+        url_scrap = next_page_url
+
+        sleep(randint(3, 10))
 
 
 data_scraper(amazon_product_url_ar)
+
