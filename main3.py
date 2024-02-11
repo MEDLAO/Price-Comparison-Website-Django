@@ -26,6 +26,7 @@ def proxy_generator():
     proxy = {'http': choosen_proxy}
     return proxy
 
+# create a list altern_list to stock the valid proxies and use the script from the online compiler
 def check_proxy(url, **kwargs):
     while True:
         try:
@@ -47,7 +48,6 @@ def check_proxy(url, **kwargs):
 # rotate proxy
 valid_proxy = check_proxy("https://httpbin.org/ip")
 print(valid_proxy)
-
 
 home_url = "https://amazon.eg"
 amazon_product_url_ar = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=ar_AE&ref=lp_21832958031_sar"
@@ -103,8 +103,8 @@ def data_scraper(url_scrap):
         print(next_page_url)
         url_scrap = next_page_url
 
-        sleep(randint(3, 10))
+        sleep(randint(2, 7))
 
 
-data_scraper(amazon_product_url_ar)
+data_scraper(amazon_product_url_en)
 
