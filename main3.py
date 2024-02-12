@@ -26,42 +26,49 @@ def proxy_generator():
     proxy = {'http': choosen_proxy}
     return proxy
 
-# create a list altern_list to stock the valid proxies and use the script from the online compiler
 def check_proxy(url, **kwargs):
-    while True:
+    alternating_proxies = []
+    while len(alternating_proxies) < 20:
         try:
             proxy = proxy_generator()
             print("Proxy currently being used: {}".format(proxy))
-            response = requests.get(url, proxies = proxy, timeout = 7, **kwargs)
+            response = requests.get(url, proxies = proxy, **kwargs)
             print(response.status_code)
             print(response.text)
             proxy['http'] = f"http://{proxy['http']}"
-            return proxy
+            alternating_proxies.append(proxy)
+            sleep(randint(1, 5)) # Sleep a random number of seconds (between 1 and 5)
+
             # if the request is successful, no exception is raised
         except:
             print("Connection error, looking for another proxy")
             pass
+    return alternating_proxies
 
-        # Sleep a random number of seconds (between 1 and 5)
-        sleep(randint(1, 5))
-
-# rotate proxy
-valid_proxy = check_proxy("https://httpbin.org/ip")
-print(valid_proxy)
 
 home_url = "https://amazon.eg"
 amazon_product_url_ar = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=ar_AE&ref=lp_21832958031_sar"
 amazon_product_url_en = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=en_AE&ref=lp_21832958031_sar"
 
 def data_scraper(url_scrap):
+    # get a list of proxies
+    valid_proxies = check_proxy("https://httpbin.org/ip")
+    print(valid_proxies)
+
+    i = 0
+    counter_delay = 0
     while True:
         # rotate user_agent
         ua = UserAgent()
         headers = {"user-agent": ua.random}
 
+        # rotate proxies
+        valid_proxy = valid_proxies[i % len(valid_proxies)]
+        print(valid_proxy)
+        i += 1
+
         # fetch the html page with a http get request
         response = requests.get(url_scrap, headers = headers, proxies = valid_proxy)
-        # proxies = valid_proxy
 
         # parse the html content of the page
         soup = BeautifulSoup(response.content, "lxml")
@@ -103,8 +110,11 @@ def data_scraper(url_scrap):
         print(next_page_url)
         url_scrap = next_page_url
 
-        sleep(randint(2, 7))
+        counter_delay += 1
+        if counter_delay % 10 == 0:
+            sleep(randint(180, 300))
+        else:
+            sleep(randint(5, 10))
 
 
 data_scraper(amazon_product_url_en)
-
