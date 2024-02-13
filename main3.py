@@ -37,7 +37,7 @@ def check_proxy(url, **kwargs):
             print(response.text)
             proxy['http'] = f"http://{proxy['http']}"
             alternating_proxies.append(proxy)
-            sleep(randint(1, 5)) # Sleep a random number of seconds (between 1 and 5)
+            sleep(randint(3, 7)) # Sleep a random number of seconds (between 1 and 5)
 
             # if the request is successful, no exception is raised
         except:
@@ -111,10 +111,7 @@ def data_scraper(url_scrap):
         url_scrap = next_page_url
 
         counter_delay += 1
-        if counter_delay % 10 == 0:
-            sleep(randint(180, 300))
-        else:
-            sleep(randint(5, 10))
-
+        sleep(randint(20, 60))
+        # sleep(randint(30))
 
 data_scraper(amazon_product_url_en)
