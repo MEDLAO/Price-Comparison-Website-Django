@@ -54,10 +54,11 @@ def data_scraper(url_scrap):
     # get a list of proxies
     valid_proxies = check_proxy("https://httpbin.org/ip")
     print(valid_proxies)
+    # counter_delay = 0
+    for i in  range(1,38):
+        # i = 0
 
-    i = 0
-    counter_delay = 0
-    while True:
+        # while True:
         # rotate user_agent
         ua = UserAgent()
         headers = {"user-agent": ua.random}
@@ -65,9 +66,11 @@ def data_scraper(url_scrap):
         # rotate proxies
         valid_proxy = valid_proxies[i % len(valid_proxies)]
         print(valid_proxy)
-        i += 1
+        # i += 1
 
         # fetch the html page with a http get request
+        url_scrap = f"https://amazon.eg/-/en/s?i=electronics&bbn=18018102031&rh=n%3A21832958031&fs=true&page={i}&language=en_AE"
+
         response = requests.get(url_scrap, headers = headers, proxies = valid_proxy)
 
         # parse the html content of the page
@@ -100,18 +103,19 @@ def data_scraper(url_scrap):
             link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
             # print(link)
 
-        # next page
-        next_page_with_tag = soup.find('a', class_ ="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator")
+        print(url_scrap)
+        # # next page
+        # next_page_with_tag = soup.find('a', class_ ="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator")
+        #
+        # if not next_page_with_tag:
+        #     break
+        # next_page = next_page_with_tag.get('href')
+        # next_page_url = home_url + next_page
+        # print(next_page_url)
+        # url_scrap = next_page_url
 
-        if not next_page_with_tag:
-            break
-        next_page = next_page_with_tag.get('href')
-        next_page_url = home_url + next_page
-        print(next_page_url)
-        url_scrap = next_page_url
-
-        counter_delay += 1
-        sleep(randint(20, 60))
+        # counter_delay += 1
+        # sleep(randint(20, 60))
         # sleep(randint(30))
 
 data_scraper(amazon_product_url_en)
