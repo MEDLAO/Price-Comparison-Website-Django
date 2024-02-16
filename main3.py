@@ -28,7 +28,7 @@ def proxy_generator():
 
 def check_proxy(url, **kwargs):
     alternating_proxies = []
-    while len(alternating_proxies) < 20:
+    while len(alternating_proxies) < 1:
         try:
             proxy = proxy_generator()
             print("Proxy currently being used: {}".format(proxy))
@@ -55,12 +55,13 @@ def data_scraper(url_scrap):
     valid_proxies = check_proxy("https://httpbin.org/ip")
     print(valid_proxies)
     # counter_delay = 0
-    for i in  range(1,38):
+    # create a user_agent object
+    ua = UserAgent()
+    for i in  range(1,2):
         # i = 0
 
         # while True:
         # rotate user_agent
-        ua = UserAgent()
         headers = {"user-agent": ua.random}
 
         # rotate proxies
@@ -72,38 +73,38 @@ def data_scraper(url_scrap):
         url_scrap = f"https://amazon.eg/-/en/s?i=electronics&bbn=18018102031&rh=n%3A21832958031&fs=true&page={i}&language=en_AE"
 
         response = requests.get(url_scrap, headers = headers, proxies = valid_proxy)
-
+        print(f"Status code for page {i} : {response.status_code}")
         # parse the html content of the page
         soup = BeautifulSoup(response.content, "lxml")
         # print(soup.prettify())
 
         products = soup.find_all('div', class_='a-section a-spacing-base')
+        print(products)
 
-        for product in products:
-            # price
-            price_with_html_tag = product.find('span', class_='a-offscreen')
-            if price_with_html_tag:
-                price = price_with_html_tag.get_text()
-                price = re.sub(r'جنيه', '', price)
-                # print(price)
+        # for product in products:
+        #     # price
+        #     price_with_html_tag = product.find('span', class_='a-offscreen')
+        #     if price_with_html_tag:
+        #         price = price_with_html_tag.get_text()
+        #         price = re.sub(r'جنيه', '', price)
+        #         # print(price)
+        #
+        #     # description
+        #     description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
+        #                                                             'a-text-normal')
+        #     description = description_with_html_tag.get_text()
+        #     # print(description)
+        #
+        #     # image
+        #     image_with_html_tag = product.find('img', class_='s-image')
+        #     image = image_with_html_tag.attrs['src']
+        #     # print(image)
+        #
+        #     # link
+        #     link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
+        #     link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
+        #     # print(link)
 
-            # description
-            description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
-                                                                    'a-text-normal')
-            description = description_with_html_tag.get_text()
-            # print(description)
-
-            # image
-            image_with_html_tag = product.find('img', class_='s-image')
-            image = image_with_html_tag.attrs['src']
-            # print(image)
-
-            # link
-            link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
-            link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
-            # print(link)
-
-        print(url_scrap)
         # # next page
         # next_page_with_tag = soup.find('a', class_ ="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator")
         #
@@ -116,6 +117,6 @@ def data_scraper(url_scrap):
 
         # counter_delay += 1
         # sleep(randint(20, 60))
-        # sleep(randint(30))
+        sleep(3)
 
 data_scraper(amazon_product_url_en)
