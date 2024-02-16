@@ -28,7 +28,7 @@ def proxy_generator():
 
 def check_proxy(url, **kwargs):
     alternating_proxies = []
-    while len(alternating_proxies) < 1:
+    while len(alternating_proxies) < 20:
         try:
             proxy = proxy_generator()
             print("Proxy currently being used: {}".format(proxy))
@@ -57,7 +57,7 @@ def data_scraper(url_scrap):
     # counter_delay = 0
     # create a user_agent object
     ua = UserAgent()
-    for i in  range(1,2):
+    for i in  range(1,38):
         # i = 0
 
         # while True:
@@ -74,49 +74,51 @@ def data_scraper(url_scrap):
 
         response = requests.get(url_scrap, headers = headers, proxies = valid_proxy)
         print(f"Status code for page {i} : {response.status_code}")
-        # parse the html content of the page
-        soup = BeautifulSoup(response.content, "lxml")
-        # print(soup.prettify())
 
-        products = soup.find_all('div', class_='a-section a-spacing-base')
-        print(products)
+        if response.status_code == 200:
+            # parse the html content of the page
+            soup = BeautifulSoup(response.content, "lxml")
+            # print(soup.prettify())
 
-        # for product in products:
-        #     # price
-        #     price_with_html_tag = product.find('span', class_='a-offscreen')
-        #     if price_with_html_tag:
-        #         price = price_with_html_tag.get_text()
-        #         price = re.sub(r'جنيه', '', price)
-        #         # print(price)
-        #
-        #     # description
-        #     description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
-        #                                                             'a-text-normal')
-        #     description = description_with_html_tag.get_text()
-        #     # print(description)
-        #
-        #     # image
-        #     image_with_html_tag = product.find('img', class_='s-image')
-        #     image = image_with_html_tag.attrs['src']
-        #     # print(image)
-        #
-        #     # link
-        #     link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
-        #     link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
-        #     # print(link)
+            products = soup.find_all('div', class_='a-section a-spacing-base')
+            print(products[0])
 
-        # # next page
-        # next_page_with_tag = soup.find('a', class_ ="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator")
-        #
-        # if not next_page_with_tag:
-        #     break
-        # next_page = next_page_with_tag.get('href')
-        # next_page_url = home_url + next_page
-        # print(next_page_url)
-        # url_scrap = next_page_url
+            # for product in products:
+            #     # price
+            #     price_with_html_tag = product.find('span', class_='a-offscreen')
+            #     if price_with_html_tag:
+            #         price = price_with_html_tag.get_text()
+            #         price = re.sub(r'جنيه', '', price)
+            #         # print(price)
+            #
+            #     # description
+            #     description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
+            #                                                             'a-text-normal')
+            #     description = description_with_html_tag.get_text()
+            #     # print(description)
+            #
+            #     # image
+            #     image_with_html_tag = product.find('img', class_='s-image')
+            #     image = image_with_html_tag.attrs['src']
+            #     # print(image)
+            #
+            #     # link
+            #     link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
+            #     link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
+            #     # print(link)
 
-        # counter_delay += 1
-        # sleep(randint(20, 60))
-        sleep(3)
+            # # next page
+            # next_page_with_tag = soup.find('a', class_ ="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator")
+            #
+            # if not next_page_with_tag:
+            #     break
+            # next_page = next_page_with_tag.get('href')
+            # next_page_url = home_url + next_page
+            # print(next_page_url)
+            # url_scrap = next_page_url
+
+            # counter_delay += 1
+            # sleep(randint(20, 60))
+            sleep(3)
 
 data_scraper(amazon_product_url_en)
