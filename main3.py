@@ -65,7 +65,8 @@ def data_scraper(url_scrap):
         headers = {"user-agent": ua.random}
 
         # rotate proxies
-        valid_proxy = valid_proxies[i % len(valid_proxies)]
+        j = i
+        valid_proxy = valid_proxies[j % len(valid_proxies)]
         print(valid_proxy)
         # i += 1
 
@@ -74,10 +75,13 @@ def data_scraper(url_scrap):
 
         status_code_wrong = True
         k = 0
-        while status_code_wrong and k < 5:
+
+
+        while status_code_wrong and k < 10: # retry the request until getting a status code 200
             response = requests.get(url_scrap, headers = headers, proxies = valid_proxy)
             print(f"Status code for page {i} : {response.status_code}")
-            sleep(2)
+            sleep(5)
+            j += 1
             k += 1
             if response.status_code == 200:
                 status_code_wrong = False
