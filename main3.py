@@ -62,7 +62,7 @@ def data_scraper(url_scrap):
     # counter_delay = 0
     # create a user_agent object
     ua = UserAgent()
-    for i in  range(1, NB_PAGES_AMAZON_EG + 1):
+    for i in  range(1, NB_PAGES_AMAZON_EG + 1): # pagination
         # i = 0
 
         # while True:
@@ -99,29 +99,36 @@ def data_scraper(url_scrap):
         products = soup.find_all('div', class_='a-section a-spacing-base')
         print(products[0])
 
-        # for product in products:
-        #     # price
-        #     price_with_html_tag = product.find('span', class_='a-offscreen')
-        #     if price_with_html_tag:
-        #         price = price_with_html_tag.get_text()
-        #         price = re.sub(r'جنيه', '', price)
-        #         # print(price)
-        #
-        #     # description
-        #     description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
-        #                                                             'a-text-normal')
-        #     description = description_with_html_tag.get_text()
-        #     # print(description)
-        #
-        #     # image
-        #     image_with_html_tag = product.find('img', class_='s-image')
-        #     image = image_with_html_tag.attrs['src']
-        #     # print(image)
-        #
-        #     # link
-        #     link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
-        #     link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
-        #     # print(link)
+        final_products = [] # creating a list of dictionaries
+        for product in products:
+            final_product = {} # creating a dictionary to store the product information
+
+            # price
+            price_with_html_tag = product.find('span', class_='a-offscreen')
+            if price_with_html_tag:
+                price = price_with_html_tag.get_text()
+                price = re.sub(r'جنيه', '', price)
+                final_product["price"] = price
+                # print(price)
+
+            # description
+            description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
+                                                                    'a-text-normal')
+            description = description_with_html_tag.get_text()
+            final_product["description"] = description
+            # print(description)
+
+            # image
+            image_with_html_tag = product.find('img', class_='s-image')
+            image = image_with_html_tag.attrs['src']
+            final_product["image"] = image
+            # print(image)
+
+            # link
+            link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
+            link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
+            final_product["link"] = link
+            # print(link)
 
         # # next page
         # next_page_with_tag = soup.find('a', class_ ="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator")
