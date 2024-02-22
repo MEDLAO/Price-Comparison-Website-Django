@@ -7,28 +7,38 @@ from time import sleep
 from fake_useragent import UserAgent
 
 
-response = requests.get("https://sslproxies.org/")
+HOME_URL = "https://amazon.eg"
+AMAZON_PRODUCT_URL_AR = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=ar_AE&ref=lp_21832958031_sar"
+AMAZON_PRODUCT_URL_EN = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=en_AE&ref=lp_21832958031_sar"
+NB_PROXIES_ALTERNATE = 20
+NB_PAGES_AMAZON_EG = 37
+NB_TRIES_SAME_PAGE = 10
 
-soup = BeautifulSoup(response.content, 'html.parser')
-table = soup.find('table', class_="table table-striped table-bordered")
 
-ip_addresses = table.find_all('td')[::8]
-ports = table.find_all('td')[1::8]
+def proxy_scraper():
+    response = requests.get("https://sslproxies.org/")
 
-ip_port_tuples = list(zip(map(lambda x:x.text, ip_addresses), map(lambda x:x.text, ports)))
-ips_with_ports = list(map(lambda x:x[0]+':'+x[1], ip_port_tuples))
-print(ips_with_ports)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    table = soup.find('table', class_="table table-striped table-bordered")
+
+    ip_addresses = table.find_all('td')[::8]
+    ports = table.find_all('td')[1::8]
+
+    ip_port_tuples = list(zip(map(lambda x:x.text, ip_addresses), map(lambda x:x.text, ports)))
+    ips_with_ports = list(map(lambda x:x[0]+':'+x[1], ip_port_tuples))
+    return ips_with_ports
 
 def proxy_generator():
-    response = requests.get("https://sslproxies.org/")
-    soup = BeautifulSoup(response.content, 'html.parser')
-    choosen_proxy = choice(ips_with_ports)
+    # response = requests.get("https://sslproxies.org/")
+    # soup = BeautifulSoup(response.content, 'html.parser')
+    proxy_list = proxy_scraper()
+    choosen_proxy = choice(proxy_list)
     proxy = {'http': choosen_proxy}
     return proxy
 
 def check_proxy(url, **kwargs):
     alternating_proxies = []
-    while len(alternating_proxies) < 20:
+    while len(alternating_proxies) < NB_PROXIES_ALTERNATE:
         try:
             proxy = proxy_generator()
             print("Proxy currently being used: {}".format(proxy))
@@ -45,11 +55,6 @@ def check_proxy(url, **kwargs):
             pass
     return alternating_proxies
 
-
-home_url = "https://amazon.eg"
-amazon_product_url_ar = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=ar_AE&ref=lp_21832958031_sar"
-amazon_product_url_en = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=en_AE&ref=lp_21832958031_sar"
-
 def data_scraper(url_scrap):
     # get a list of proxies
     valid_proxies = check_proxy("https://httpbin.org/ip")
@@ -57,7 +62,7 @@ def data_scraper(url_scrap):
     # counter_delay = 0
     # create a user_agent object
     ua = UserAgent()
-    for i in  range(1,38):
+    for i in  range(1, NB_PAGES_AMAZON_EG + 1):
         # i = 0
 
         # while True:
@@ -66,7 +71,7 @@ def data_scraper(url_scrap):
 
         # rotate proxies
         j = i
-        valid_proxy = valid_proxies[j % len(valid_proxies)]
+        valid_proxy = valid_proxies[j % len(valid_proxies)] # we use modulo to start again from the beginning of the list
         print(valid_proxy)
         # i += 1
 
@@ -77,11 +82,11 @@ def data_scraper(url_scrap):
         k = 0
 
 
-        while status_code_wrong and k < 10: # retry the request until getting a status code 200
+        while status_code_wrong and k < NB_TRIES_SAME_PAGE: # retry the request until getting a status code 200
             response = requests.get(url_scrap, headers = headers, proxies = valid_proxy)
             print(f"Status code for page {i} : {response.status_code}")
             sleep(5)
-            j += 1
+            j += 1 # we try the next proxy
             k += 1
             if response.status_code == 200:
                 status_code_wrong = False
@@ -132,4 +137,4 @@ def data_scraper(url_scrap):
         # sleep(randint(20, 60))
         sleep(3)
 
-data_scraper(amazon_product_url_en)
+data_scraper(AMAZON_PRODUCT_URL_EN)
