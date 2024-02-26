@@ -12,7 +12,7 @@ AMAZON_PRODUCT_URL_AR = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958
 AMAZON_PRODUCT_URL_EN = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=en_AE&ref=lp_21832958031_sar"
 NB_PROXIES_ALTERNATE = 20
 NB_PAGES_AMAZON_EG = 37
-NB_TRIES_SAME_PAGE = 10
+NB_TRIES_SAME_PAGE = 15
 
 
 def proxy_scraper():

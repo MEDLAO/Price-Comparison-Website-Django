@@ -47,8 +47,8 @@ def check_proxy(url, **kwargs):
             print(response.status_code)
             print(response.text)
             proxy['http'] = f"http://{proxy['http']}"
-            alternating_proxies.append(proxy)
-            sleep(randint(3, 7)) # Sleep a random number of seconds (between 1 and 5)
+            alternating_proxies.append(proxy['http'])
+            # sleep(randint(3, 7)) # Sleep a random number of seconds (between 1 and 5)
 
             # if the request is successful, no exception is raised
         except:
@@ -56,16 +56,18 @@ def check_proxy(url, **kwargs):
             pass
     return alternating_proxies
 
-async def fetch(s, url):
+async def fetch(s, url, valid_proxies):
     # create a user_agent object
     ua = UserAgent()
     # rotate user_agent
     headers = {"user-agent": ua.random}
 
+    i = 0
     data = None
     while data is None:
+        valid_proxy = valid_proxies[i % len(valid_proxies)]
         try:
-            async with s.get(f"https://amazon.eg/-/en/s?i=electronics&bbn=18018102031&rh=n%3A21832958031&fs=true&page={url}&language=en_AE", headers=headers) as r:
+            async with s.get(f"https://amazon.eg/-/en/s?i=electronics&bbn=18018102031&rh=n%3A21832958031&fs=true&page={url}&language=en_AE", headers=headers, proxy=valid_proxy) as r:
                 r.raise_for_status()
                 print(r.status)
                 data = await r.text()
@@ -75,6 +77,7 @@ async def fetch(s, url):
                 print(products[0])
         except aiohttp.ClientError:
             await asyncio.sleep(1)
+        i += 1
 
                 # if r.status == 200:
                 #     status_code_wrong = False
@@ -87,18 +90,20 @@ async def fetch(s, url):
                 # print(products[0])
 
 
-async def fetch_alls(s, urls):
+async def fetch_alls(s, urls, valid_proxies):
     tasks = []
     for url in urls:
-        task = asyncio.create_task(fetch(s, url))
+        task = asyncio.create_task(fetch(s, url, valid_proxies))
         tasks.append(task)
     res = await asyncio.gather(*tasks)
     return res
 
 async def main():
+    valid_proxies = check_proxy("https://httpbin.org/ip")
+    print(valid_proxies)
     urls = range(1, 38)
     async with aiohttp.ClientSession() as session:
-        htmls = await fetch_alls(session, urls)
+        htmls = await fetch_alls(session, urls, valid_proxies)
         return htmls
 
 
