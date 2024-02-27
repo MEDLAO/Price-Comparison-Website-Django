@@ -16,68 +16,26 @@ NB_PAGES_AMAZON_EG = 37
 NB_TRIES_SAME_PAGE = 10
 
 
-def proxy_scraper():
-    response = requests.get("https://sslproxies.org/")
-
-    soup = BeautifulSoup(response.content, 'html.parser')
-    table = soup.find('table', class_="table table-striped table-bordered")
-
-    ip_addresses = table.find_all('td')[::8]
-    ports = table.find_all('td')[1::8]
-
-    ip_port_tuples = list(zip(map(lambda x:x.text, ip_addresses), map(lambda x:x.text, ports)))
-    ips_with_ports = list(map(lambda x:x[0]+':'+x[1], ip_port_tuples))
-    return ips_with_ports
-
-def proxy_generator():
-    # response = requests.get("https://sslproxies.org/")
-    # soup = BeautifulSoup(response.content, 'html.parser')
-    proxy_list = proxy_scraper()
-    choosen_proxy = choice(proxy_list)
-    proxy = {'http': choosen_proxy}
-    return proxy
-
-def check_proxy(url, **kwargs):
-    alternating_proxies = []
-    while len(alternating_proxies) < NB_PROXIES_ALTERNATE:
-        try:
-            proxy = proxy_generator()
-            print("Proxy currently being used: {}".format(proxy))
-            response = requests.get(url, proxies = proxy, **kwargs)
-            print(response.status_code)
-            print(response.text)
-            proxy['http'] = f"http://{proxy['http']}"
-            alternating_proxies.append(proxy['http'])
-            # sleep(randint(3, 7)) # Sleep a random number of seconds (between 1 and 5)
-
-            # if the request is successful, no exception is raised
-        except:
-            print("Connection error, looking for another proxy")
-            pass
-    return alternating_proxies
-
-async def fetch(s, url, valid_proxies):
+async def fetch(s, url):
     # create a user_agent object
     ua = UserAgent()
     # rotate user_agent
     headers = {"user-agent": ua.random}
 
-    i = 0
     data = None
     while data is None:
-        valid_proxy = valid_proxies[i % len(valid_proxies)]
         try:
-            async with s.get(f"https://amazon.eg/-/en/s?i=electronics&bbn=18018102031&rh=n%3A21832958031&fs=true&page={url}&language=en_AE", headers=headers, proxy=valid_proxy) as r:
+            async with s.get(f"https://amazon.eg/-/en/s?i=electronics&bbn=18018102031&rh=n%3A21832958031&fs=true&page={url}&language=en_AE", headers=headers) as r:
                 r.raise_for_status()
-                print(r.status)
                 data = await r.text()
+                print(r.status)
                 soup = BeautifulSoup(data, 'html.parser')
                 products = soup.find_all('div', class_='a-section a-spacing-base')
                 print(f'Product for page {url}')
                 print(products[0])
         except aiohttp.ClientError:
             await asyncio.sleep(1)
-        i += 1
+
 
                 # if r.status == 200:
                 #     status_code_wrong = False
@@ -90,20 +48,18 @@ async def fetch(s, url, valid_proxies):
                 # print(products[0])
 
 
-async def fetch_alls(s, urls, valid_proxies):
+async def fetch_alls(s, urls):
     tasks = []
     for url in urls:
-        task = asyncio.create_task(fetch(s, url, valid_proxies))
+        task = asyncio.create_task(fetch(s, url))
         tasks.append(task)
     res = await asyncio.gather(*tasks)
     return res
 
 async def main():
-    valid_proxies = check_proxy("https://httpbin.org/ip")
-    print(valid_proxies)
     urls = range(1, 38)
     async with aiohttp.ClientSession() as session:
-        htmls = await fetch_alls(session, urls, valid_proxies)
+        htmls = await fetch_alls(session, urls)
         return htmls
 
 
