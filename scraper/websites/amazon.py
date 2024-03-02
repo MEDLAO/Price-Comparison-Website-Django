@@ -3,10 +3,10 @@ from bs4 import BeautifulSoup
 import asyncio
 import aiohttp as aiohttp
 import re
-from utils import BRANDS_EN, BRANDS_AR
+from utils import BRANDS_EN, BRANDS_AR, COLORS_EN, COLORS_AR
 
 
-async def fetch(s, url):
+async def fetch_amazon(s, url):
     # create a user_agent object
     ua = UserAgent()
     # rotate user_agent
@@ -65,5 +65,3 @@ async def fetch(s, url):
 
         except aiohttp.ClientError:
             await asyncio.sleep(1)
-
-
