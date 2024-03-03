@@ -1,9 +1,13 @@
+from scraper.websites.utils import *
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
-import asyncio
 import aiohttp as aiohttp
-import re
-from utils import BRANDS_EN, BRANDS_AR, COLORS_EN, COLORS_AR
+
+
+HOME_URL = "https://amazon.eg"
+AMAZON_PRODUCT_URL_AR = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=ar_AE&ref=lp_21832958031_sar"
+AMAZON_PRODUCT_URL_EN = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=en_AE&ref=lp_21832958031_sar"
+NB_PAGES_AMAZON_EG = 37
 
 
 async def fetch_amazon(s, url):
