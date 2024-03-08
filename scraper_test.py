@@ -7,10 +7,10 @@ driver = webdriver.Chrome()
 driver.get("https://www.noon.com/egypt-en/search/?q=smart%20watch&page=3")
 # sc-5c17cc27-0 eCGMdH wrapper productContainer
 get_source = driver.page_source
-products = driver.find_elements(By.CSS_SELECTOR, 'span.productContainer')
-for product in products:
-    description = product.find_element(By.CSS_SELECTOR, "img")
-    print(description.get_attribute('alt'))
+product = driver.find_element(By.CSS_SELECTOR, 'span.productContainer')
+images = product.find_elements(By.CSS_SELECTOR, 'img')
+for image in images:
+    print(image.get_attribute('src'))
 
 # nb_products = len(products)
 # print(nb_products)
