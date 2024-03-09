@@ -8,10 +8,12 @@ driver.get("https://www.noon.com/egypt-en/search/?q=smart%20watch&page=3")
 # sc-5c17cc27-0 eCGMdH wrapper productContainer
 get_source = driver.page_source
 product = driver.find_element(By.CSS_SELECTOR, 'span.productContainer')
-images = product.find_elements(By.CSS_SELECTOR, 'img')
-for image in images:
-    print(image.get_attribute('src'))
-
+images = driver.find_elements(By.CSS_SELECTOR, 'img')
+# for image in images:
+#     print(image.get_attribute('alt'))
+links = driver.find_elements(By.CSS_SELECTOR, "[id^='productBox']")
+for link in links:
+    print(link.get_attribute('href'))
 # nb_products = len(products)
 # print(nb_products)
 
