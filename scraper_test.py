@@ -8,12 +8,19 @@ driver.get("https://www.noon.com/egypt-en/search/?q=smart%20watch&page=3")
 # sc-5c17cc27-0 eCGMdH wrapper productContainer
 get_source = driver.page_source
 product = driver.find_element(By.CSS_SELECTOR, 'span.productContainer')
-images = driver.find_elements(By.CSS_SELECTOR, 'img')
+images = driver.find_elements(By.CSS_SELECTOR, "div img")
 # for image in images:
-#     print(image.get_attribute('alt'))
-links = driver.find_elements(By.CSS_SELECTOR, "[id^='productBox']")
-for link in links:
-    print(link.get_attribute('href'))
+#     print(image.get_attribute('src'))
+
+links = driver.find_elements(By.CSS_SELECTOR, "[id^='productBox']") # attribute starts with
+# for link in links:
+#     print(link.get_attribute('href'))
+#     print(link.text)
+
+descriptions = driver.find_elements(By.CSS_SELECTOR, "[data-qa^='productImagePLP']")
+for description in descriptions:
+    print(description.get_attribute('data-qa'))
+
 # nb_products = len(products)
 # print(nb_products)
 
@@ -32,3 +39,5 @@ price = driver.find_element(By.CSS_SELECTOR, 'strong.amount')
 # rating <div class="sc-363ddf4f-2 jdbOPo">5.0</div>
 # price <div class="sc-8df39a2e-1 hCDaLm"><span class="currency">EGP </span><strong class="amount">1,400</strong></div>
 # add new colors and brands to the lists
+
+# <img src="https://f.nooncdn.com/p/pzsku/Z3D5583C3993D781D3BE5Z/45/_/1707563204/da956346-b834-48b2-b5f9-056f23e2981e.jpg?format=avif&amp;width=240" alt="W&amp;O X9 Pro 2 (Super AMOLED) Screen Smart Watch (45mm/2.02inch) Screen | Space Aluminum Case , black strap " width="100%" height="100%" class="sc-b2e95a1f-1 ewpZHl">
