@@ -7,28 +7,40 @@ driver = webdriver.Chrome()
 driver.get("https://www.noon.com/egypt-en/search/?q=smart%20watch&page=3")
 # sc-5c17cc27-0 eCGMdH wrapper productContainer
 get_source = driver.page_source
-product = driver.find_element(By.CSS_SELECTOR, 'span.productContainer')
-images = driver.find_elements(By.CSS_SELECTOR, "div img")
+products = driver.find_elements(By.CSS_SELECTOR, 'span.productContainer')
+for product in products[:3]:
+    images = product.find_elements(By.CSS_SELECTOR, "img[src^='https://f.nooncdn.com/p/']")
+    for image in images:
+        print(image.get_attribute('src'))
+    link = product.find_element(By.CSS_SELECTOR, "[id^='productBox']").get_attribute('href')  # attribute starts with
+    print(link)
+    rating = product.find_element(By.CSS_SELECTOR, "[class='sc-363ddf4f-2 jdbOPo']").text
+    print(rating)
+    price = product.find_element(By.CSS_SELECTOR, 'strong.amount').text
+    print(price)
+    description = product.find_element(By.CSS_SELECTOR, "[data-qa^='productImagePLP']").get_attribute('data-qa')
+    print(description)
+
+# images = driver.find_elements(By.CSS_SELECTOR, "div img")
 # for image in images:
 #     print(image.get_attribute('src'))
 
-links = driver.find_elements(By.CSS_SELECTOR, "[id^='productBox']") # attribute starts with
+# links = driver.find_elements(By.CSS_SELECTOR, "[id^='productBox']") # attribute starts with
 # for link in links:
 #     print(link.get_attribute('href'))
 #     print(link.text)
 
-descriptions = driver.find_elements(By.CSS_SELECTOR, "[data-qa^='productImagePLP']")
-for description in descriptions:
-    print(description.get_attribute('data-qa'))
+# descriptions = driver.find_elements(By.CSS_SELECTOR, "[data-qa^='productImagePLP']")
+# for description in descriptions:
+#     print(description.get_attribute('data-qa'))
 
 # nb_products = len(products)
 # print(nb_products)
 
 # products_text = []
-# for product in products:
-#     products_text.append(product.text.split("\n"))
-rating = driver.find_element(By.CSS_SELECTOR, 'div.sc-363ddf4f-2')
-price = driver.find_element(By.CSS_SELECTOR, 'strong.amount')
+
+# rating = driver.find_element(By.CSS_SELECTOR, 'div.sc-363ddf4f-2')
+# price = driver.find_element(By.CSS_SELECTOR, 'strong.amount')
 
 
 # driver.find_element_by_xpath("//div[@id='a']//a[@class='click']")
