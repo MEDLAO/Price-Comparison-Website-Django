@@ -42,17 +42,19 @@ async def fetch_amazon(s, url):
                         print(description)
 
                         #brand
-                        for brand in BRANDS_EN:
-                            if (brand in description) or (brand.lower() in description) or (brand.upper() in description):
-                                print(brand)
-                                break
+                        find_product_attribute(BRANDS_EN, description)
+                        # for brand in BRANDS_EN:
+                        #     if (brand in description) or (brand.lower() in description) or (brand.upper() in description):
+                        #         print(brand)
+                        #         break
 
 
                         #color
-                        for color in COLORS_EN:
-                            if (color in description) or (color.lower() in description) or (color.upper() in description):
-                                print(color)
-                                break
+                        find_product_attribute(COLORS_EN, description)
+                        # for color in COLORS_EN:
+                        #     if (color in description) or (color.lower() in description) or (color.upper() in description):
+                        #         print(color)
+                        #         break
 
 
                     # image
