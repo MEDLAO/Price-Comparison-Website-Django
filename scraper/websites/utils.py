@@ -8,10 +8,10 @@ import re
 NB_PROXIES_ALTERNATE = 20
 NB_TRIES_SAME_PAGE = 10
 
-BRANDS_EN = ["Oraimo", "Xiaomi", "HUAWEI", "Joyroom", "SAMSUNG", "Honor", "Amazfit", "JOYROOM", "Apple"]
+BRANDS_EN = ["Oraimo", "Xiaomi", "HUAWEI", "Joyroom", "SAMSUNG", "Honor", "Amazfit", "Apple", "Tommy Hilfiger", "Diesel", "Fossil", "Casio", "G-shock", "Guess", "Michael Kors", "Barbie"]
 COLORS_EN = ["Beige", "Black", "Blue", "Brown", "Gold", "Green", "Grey", "Off-White", "Orange", "Pink", "Purple", "Red", "Silver", "Turquoise", "White", "Yellow"]
 
-BRANDS_AR = ["اورايمو", "شاومي", "هواوى" , "جوي رووم", "سامسونج", "اونر", "امازفيت", "جوي رووم", "ابل"]
+BRANDS_AR = ["اورايمو", "شاومي", "هواوى" , "جوي رووم", "سامسونج", "اونر", "امازفيت", "جوي رووم", "ابل", "تومي هيلفيغر", "ديزل", "فوسيل", "كاسيو", "جي شوك", "جس", "مايكل كورس", "باربي"]
 COLORS_AR = ["بيج", "أسود", "أزرق", "بني", "ذهبي", "متعدد", "أوف ويت", "برتقالي", "زهري", "بنفسجي", "أحمر", "فضي", "فبروزي", "أبيض" ,"أصفر", "أخضر" ,"رمادي"]
 
 
