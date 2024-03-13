@@ -1,10 +1,11 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from scraper.websites.utils import *
 
 
 driver = webdriver.Chrome()
 
-driver.get("https://www.noon.com/egypt-en/search/?q=smart%20watch&page=3")
+driver.get("https://www.noon.com/egypt-en/search/?q=smart%20watch&page=5")
 # sc-5c17cc27-0 eCGMdH wrapper productContainer
 get_source = driver.page_source
 products = driver.find_elements(By.CSS_SELECTOR, 'span.productContainer')
@@ -20,7 +21,10 @@ for product in products[:3]:
     print(price)
     description = product.find_element(By.CSS_SELECTOR, "[data-qa^='productImagePLP']").get_attribute('data-qa')
     print(description)
-
+    brand = find_product_attribute(BRANDS_EN, description)
+    print(brand)
+    color = find_product_attribute(COLORS_EN, description)
+    print(color)
 # images = driver.find_elements(By.CSS_SELECTOR, "div img")
 # for image in images:
 #     print(image.get_attribute('src'))

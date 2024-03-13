@@ -18,7 +18,7 @@ COLORS_AR = ["بيج", "أسود", "أزرق", "بني", "ذهبي", "متعدد
 def find_product_attribute(attribute_list, description_text):
     for attribute in attribute_list:
         if (attribute in description_text) or (attribute.lower() in description_text) or (attribute.upper() in description_text):
-            print(attribute)
+            return attribute
             break
 
 async def fetch_alls(s, urls, fetch_function):
