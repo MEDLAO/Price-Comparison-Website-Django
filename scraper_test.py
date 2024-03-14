@@ -1,11 +1,14 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from scraper.websites.utils import *
+from time import sleep
 
 
 driver = webdriver.Chrome()
 
 driver.get("https://www.noon.com/egypt-en/search/?q=smart%20watch&page=5")
+# use delay function to get all tags
+driver.implicitly_wait(20)
 # sc-5c17cc27-0 eCGMdH wrapper productContainer
 get_source = driver.page_source
 products = driver.find_elements(By.CSS_SELECTOR, 'span.productContainer')
@@ -15,16 +18,22 @@ for product in products[:3]:
         print(image.get_attribute('src'))
     link = product.find_element(By.CSS_SELECTOR, "[id^='productBox']").get_attribute('href')  # attribute starts with
     print(link)
-    rating = product.find_element(By.CSS_SELECTOR, "[class='sc-363ddf4f-2 jdbOPo']").text
+    try:
+        rating = product.find_element(By.CSS_SELECTOR, "[class='sc-363ddf4f-2 jdbOPo']").text
+    except Exception:
+        rating = None
     print(rating)
     price = product.find_element(By.CSS_SELECTOR, 'strong.amount').text
     print(price)
     description = product.find_element(By.CSS_SELECTOR, "[data-qa^='productImagePLP']").get_attribute('data-qa')
+    description = re.sub(r'productImagePLP_', '', description)
     print(description)
     brand = find_product_attribute(BRANDS_EN, description)
     print(brand)
     color = find_product_attribute(COLORS_EN, description)
     print(color)
+
+
 # images = driver.find_elements(By.CSS_SELECTOR, "div img")
 # for image in images:
 #     print(image.get_attribute('src'))
