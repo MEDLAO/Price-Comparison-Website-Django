@@ -2,9 +2,8 @@ from scraper.websites.utils import *
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import aiohttp as aiohttp
-import pyppeteer
-pyppeteer.chromium_downloader.download_chromium()
-from pyppeteer import launch
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 
 NOON_PRODUCT_URL_AR = "https://www.noon.com/egypt-ar/search/?q=smart%20watch"
@@ -12,18 +11,22 @@ NOON_PRODUCT_URL_EN = "https://www.noon.com/egypt-en/search/?q=smart%20watch"
 NB_PAGES_NOON_EG = 16
 
 
-async def fetch_noon(url):
-    browser = await launch({'autoClose': False, })
-    # browser = await launch()
-    page = await browser.newPage()
-    await page.goto(f"https://www.noon.com/egypt-en/search/?q=smart%20watch&page={url}")
-    await page.screenshot({'path': 'screenshot.png'})
-    await browser.close()
+async def fetch_noon(s, url):
+    # create a user_agent object
+    ua = UserAgent()
+    # rotate user_agent
+    headers = {"user-agent": ua.random}
 
-async def fetch_alls_noon(urls, fetch_function):
-    tasks = []
-    for url in urls:
-        task = asyncio.create_task(fetch_function(url))
-        tasks.append(task)
-    res = await asyncio.gather(*tasks)
-    return res
+    data = None
+    while data is None:
+        try:
+            driver =  await webdriver.Chrome()
+
+            async with s.get(f"https://www.noon.com/egypt-en/search/?q=smart%20watch&page={url}", headers=headers) as r:
+                r.raise_for_status()
+                data = await r.text()
+                print(r.status)
+                # soup = BeautifulSoup(data, 'html.parser')
+                # print(soup.prettify())
+        except aiohttp.ClientError:
+            await asyncio.sleep(1)

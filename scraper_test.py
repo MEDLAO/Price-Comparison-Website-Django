@@ -1,37 +1,54 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from scraper.websites.utils import *
-from time import sleep
+from fake_useragent import UserAgent
+from selenium.webdriver.chrome.options import Options
 
 
-driver = webdriver.Chrome()
+# create a user_agent object
+ua = UserAgent()
+# # rotate user_agent
+# headers = {"user-agent": ua.random}
 
-driver.get("https://www.noon.com/egypt-en/search/?q=smart%20watch&page=5")
-# use delay function to get all tags
-driver.implicitly_wait(20)
-# sc-5c17cc27-0 eCGMdH wrapper productContainer
-get_source = driver.page_source
-products = driver.find_elements(By.CSS_SELECTOR, 'span.productContainer')
-for product in products[:3]:
-    images = product.find_elements(By.CSS_SELECTOR, "img[src^='https://f.nooncdn.com/p/']")
-    for image in images:
-        print(image.get_attribute('src'))
-    link = product.find_element(By.CSS_SELECTOR, "[id^='productBox']").get_attribute('href')  # attribute starts with
-    print(link)
-    try:
-        rating = product.find_element(By.CSS_SELECTOR, "[class='sc-363ddf4f-2 jdbOPo']").text
-    except Exception:
-        rating = None
-    print(rating)
-    price = product.find_element(By.CSS_SELECTOR, 'strong.amount').text
-    print(price)
-    description = product.find_element(By.CSS_SELECTOR, "[data-qa^='productImagePLP']").get_attribute('data-qa')
-    description = re.sub(r'productImagePLP_', '', description)
-    print(description)
-    brand = find_product_attribute(BRANDS_EN, description)
-    print(brand)
-    color = find_product_attribute(COLORS_EN, description)
-    print(color)
+# Set up Chrome options
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+
+
+for i in range(1, 2):
+    # Choose a random User-Agent from the list
+    random_user_agent = ua.random
+    chrome_options.add_argument(f"--user-agent={random_user_agent}")
+
+    driver = webdriver.Chrome(options=chrome_options)
+
+    print(f"Page {i} : ")
+    driver.get(f"https://www.noon.com/egypt-en/search/?q=smart%20watch&page={i}")
+    # use delay function to get all tags
+    driver.implicitly_wait(5)
+    # sc-5c17cc27-0 eCGMdH wrapper productContainer
+    get_source = driver.page_source
+    products = driver.find_elements(By.CSS_SELECTOR, 'span.productContainer')
+    for product in products:
+        images = product.find_elements(By.CSS_SELECTOR, "img[src^='https://f.nooncdn.com/p/']")
+        for image in images:
+            print(image.get_attribute('src'))
+        link = product.find_element(By.CSS_SELECTOR, "[id^='productBox']").get_attribute('href')  # attribute starts with
+        print(link)
+        try:
+            rating = product.find_element(By.CSS_SELECTOR, "[class='sc-363ddf4f-2 jdbOPo']").text
+        except Exception:
+            rating = None
+        print(rating)
+        price = product.find_element(By.CSS_SELECTOR, 'strong.amount').text
+        print(price)
+        description = product.find_element(By.CSS_SELECTOR, "[data-qa^='productImagePLP']").get_attribute('data-qa')
+        description = re.sub(r'productImagePLP_', '', description)
+        print(description)
+        brand = find_product_attribute(BRANDS_EN, description)
+        print(brand)
+        color = find_product_attribute(COLORS_EN, description)
+        print(color)
 
 
 # images = driver.find_elements(By.CSS_SELECTOR, "div img")
