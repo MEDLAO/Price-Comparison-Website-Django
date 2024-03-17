@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from scraper.websites.utils import *
 from fake_useragent import UserAgent
 from selenium.webdriver.chrome.options import Options
+from multiprocessing import Pool
 
 
 # create a user_agent object
@@ -15,21 +16,20 @@ chrome_options = Options()
 chrome_options.add_argument("--headless")
 
 
-for i in range(1, 2):
+def noon_scrape(url):
     # Choose a random User-Agent from the list
     random_user_agent = ua.random
     chrome_options.add_argument(f"--user-agent={random_user_agent}")
 
     driver = webdriver.Chrome(options=chrome_options)
 
-    print(f"Page {i} : ")
-    driver.get(f"https://www.noon.com/egypt-en/search/?q=smart%20watch&page={i}")
+    driver.get(url)
     # use delay function to get all tags
     driver.implicitly_wait(5)
     # sc-5c17cc27-0 eCGMdH wrapper productContainer
     get_source = driver.page_source
     products = driver.find_elements(By.CSS_SELECTOR, 'span.productContainer')
-    for product in products:
+    for product in products[:1]:
         images = product.find_elements(By.CSS_SELECTOR, "img[src^='https://f.nooncdn.com/p/']")
         for image in images:
             print(image.get_attribute('src'))
@@ -50,6 +50,13 @@ for i in range(1, 2):
         color = find_product_attribute(COLORS_EN, description)
         print(color)
 
+
+if __name__ == '__main__':
+    urls = ["https://www.noon.com/egypt-en/search/?q=smart%20watch&page=1",
+            "https://www.noon.com/egypt-en/search/?q=smart%20watch&page=2",
+            "https://www.noon.com/egypt-en/search/?q=smart%20watch&page=3"]
+    with Pool(5) as p:
+        print(p.map(noon_scrape, urls))
 
 # images = driver.find_elements(By.CSS_SELECTOR, "div img")
 # for image in images:
