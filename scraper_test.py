@@ -3,23 +3,27 @@ from selenium.webdriver.common.by import By
 from scraper.websites.utils import *
 from fake_useragent import UserAgent
 from selenium.webdriver.chrome.options import Options
+import re
 from multiprocessing import Pool
 
 
-# create a user_agent object
-ua = UserAgent()
-# # rotate user_agent
-# headers = {"user-agent": ua.random}
-
-# Set up Chrome options
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-
-
 def noon_scrape(url):
-    # Choose a random User-Agent from the list
+
+    # Set up Chrome options
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+
+    # create a user_agent object
+    ua = UserAgent()
+
+    # Get a random User-Agent
     random_user_agent = ua.random
     chrome_options.add_argument(f"--user-agent={random_user_agent}")
+
+    # free proxy server URL
+    # valid_proxies = check_proxy("https://httpbin.org/ip")
+    # proxy_server_url = choice(valid_proxies)
+    # chrome_options.add_argument(f"--proxy-server={proxy_server_url}")
 
     driver = webdriver.Chrome(options=chrome_options)
 
@@ -28,34 +32,45 @@ def noon_scrape(url):
     driver.implicitly_wait(5)
     # sc-5c17cc27-0 eCGMdH wrapper productContainer
     get_source = driver.page_source
+    dict_products = {}
     products = driver.find_elements(By.CSS_SELECTOR, 'span.productContainer')
     for product in products[:1]:
         images = product.find_elements(By.CSS_SELECTOR, "img[src^='https://f.nooncdn.com/p/']")
+        dict_products["image"] = []
         for image in images:
-            print(image.get_attribute('src'))
+            # print(image.get_attribute('src'))
+            dict_products["image"].append(image.get_attribute('src'))
         link = product.find_element(By.CSS_SELECTOR, "[id^='productBox']").get_attribute('href')  # attribute starts with
-        print(link)
+        # print(link)
+        dict_products["link"] = link
         try:
             rating = product.find_element(By.CSS_SELECTOR, "[class='sc-363ddf4f-2 jdbOPo']").text
         except Exception:
             rating = None
-        print(rating)
+        # print(rating)
+        dict_products["rating"] = rating
         price = product.find_element(By.CSS_SELECTOR, 'strong.amount').text
-        print(price)
+        # print(price)
+        dict_products["price"] = price
         description = product.find_element(By.CSS_SELECTOR, "[data-qa^='productImagePLP']").get_attribute('data-qa')
         description = re.sub(r'productImagePLP_', '', description)
-        print(description)
+        # print(description)
+        dict_products["description"] = description
         brand = find_product_attribute(BRANDS_EN, description)
-        print(brand)
+        # print(brand)
+        dict_products["brand"] = brand
         color = find_product_attribute(COLORS_EN, description)
-        print(color)
+        # print(color)
+        dict_products["color"] = color
+    print(dict_products)
 
+# noon_scrape("https://www.noon.com/egypt-en/search/?q=smart%20watch&page=2")
 
 if __name__ == '__main__':
     urls = ["https://www.noon.com/egypt-en/search/?q=smart%20watch&page=1",
             "https://www.noon.com/egypt-en/search/?q=smart%20watch&page=2",
             "https://www.noon.com/egypt-en/search/?q=smart%20watch&page=3"]
-    with Pool(5) as p:
+    with Pool(3) as p:
         print(p.map(noon_scrape, urls))
 
 # images = driver.find_elements(By.CSS_SELECTOR, "div img")

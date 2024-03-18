@@ -1,10 +1,7 @@
-from random import choice
 import requests
 from bs4 import BeautifulSoup
-import re
-from random import randint
-from time import sleep
 from fake_useragent import UserAgent
+from scraper.websites.utils import *
 
 
 HOME_URL = "https://amazon.eg"
@@ -14,46 +11,6 @@ NB_PROXIES_ALTERNATE = 20
 NB_PAGES_AMAZON_EG = 37
 NB_TRIES_SAME_PAGE = 15
 
-
-def proxy_scraper():
-    response = requests.get("https://sslproxies.org/")
-
-    soup = BeautifulSoup(response.content, 'html.parser')
-    table = soup.find('table', class_="table table-striped table-bordered")
-
-    ip_addresses = table.find_all('td')[::8]
-    ports = table.find_all('td')[1::8]
-
-    ip_port_tuples = list(zip(map(lambda x:x.text, ip_addresses), map(lambda x:x.text, ports)))
-    ips_with_ports = list(map(lambda x:x[0]+':'+x[1], ip_port_tuples))
-    return ips_with_ports
-
-def proxy_generator():
-    # response = requests.get("https://sslproxies.org/")
-    # soup = BeautifulSoup(response.content, 'html.parser')
-    proxy_list = proxy_scraper()
-    choosen_proxy = choice(proxy_list)
-    proxy = {'http': choosen_proxy}
-    return proxy
-
-def check_proxy(url, **kwargs):
-    alternating_proxies = []
-    while len(alternating_proxies) < NB_PROXIES_ALTERNATE:
-        try:
-            proxy = proxy_generator()
-            print("Proxy currently being used: {}".format(proxy))
-            response = requests.get(url, proxies = proxy, **kwargs)
-            print(response.status_code)
-            print(response.text)
-            proxy['http'] = f"http://{proxy['http']}"
-            alternating_proxies.append(proxy)
-            sleep(randint(3, 7)) # Sleep a random number of seconds (between 1 and 5)
-
-            # if the request is successful, no exception is raised
-        except:
-            print("Connection error, looking for another proxy")
-            pass
-    return alternating_proxies
 
 def data_scraper(url_scrap):
     # get a list of proxies

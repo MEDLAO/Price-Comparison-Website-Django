@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 
 NOON_PRODUCT_URL_AR = "https://www.noon.com/egypt-ar/search/?q=smart%20watch"
 NOON_PRODUCT_URL_EN = "https://www.noon.com/egypt-en/search/?q=smart%20watch"
-NB_PAGES_NOON_EG = 16
+NB_PAGES_NOON_EG = 15
 
 
 async def fetch_noon(s, url):
