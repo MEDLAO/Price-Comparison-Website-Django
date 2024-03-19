@@ -29,7 +29,7 @@ def noon_scrape(url):
 
     driver.get(url)
     # use delay function to get all tags
-    driver.implicitly_wait(5)
+    driver.implicitly_wait(10)
     # sc-5c17cc27-0 eCGMdH wrapper productContainer
     get_source = driver.page_source
     dict_products = {}
