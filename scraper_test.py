@@ -5,9 +5,29 @@ from fake_useragent import UserAgent
 from selenium.webdriver.chrome.options import Options
 import re
 from multiprocessing import Pool
+import requests
+from bs4 import BeautifulSoup
+import asyncio
+from pyppeteer import launch
 
 
-def noon_scrape(url):
+async def scrape(url):
+    browser = await launch()
+    page = await browser.newPage()
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    await page.setUserAgent(user_agent)
+    await page.goto(url)
+    content = await page.content()
+    await browser.close()
+    return content
+
+async def main():
+    content = await scrape('https://www.jumia.com.eg/catalog/?q=smart+watch')
+    print(content)
+
+asyncio.run(main())
+
+"""def noon_scrape(url):
 
     # Set up Chrome options
     chrome_options = Options()
@@ -29,12 +49,12 @@ def noon_scrape(url):
 
     driver.get(url)
     # use delay function to get all tags
-    driver.implicitly_wait(10)
+    driver.implicitly_wait(20)
     # sc-5c17cc27-0 eCGMdH wrapper productContainer
     get_source = driver.page_source
     dict_products = {}
     products = driver.find_elements(By.CSS_SELECTOR, 'span.productContainer')
-    for product in products[:1]:
+    for product in products[:2]:
         images = product.find_elements(By.CSS_SELECTOR, "img[src^='https://f.nooncdn.com/p/']")
         dict_products["image"] = []
         for image in images:
@@ -64,14 +84,13 @@ def noon_scrape(url):
         dict_products["color"] = color
     print(dict_products)
 
-# noon_scrape("https://www.noon.com/egypt-en/search/?q=smart%20watch&page=2")
+for i in range(1, 15):
+    noon_scrape(f"https://www.noon.com/egypt-en/search/?q=smart%20watch&page={i}")"""
 
-if __name__ == '__main__':
-    urls = ["https://www.noon.com/egypt-en/search/?q=smart%20watch&page=1",
-            "https://www.noon.com/egypt-en/search/?q=smart%20watch&page=2",
-            "https://www.noon.com/egypt-en/search/?q=smart%20watch&page=3"]
-    with Pool(3) as p:
-        print(p.map(noon_scrape, urls))
+# if __name__ == '__main__':
+#     urls = [f"https://www.noon.com/egypt-en/search/?q=smart%20watch&page={i}" for i in range(1, 15)]
+#     with Pool(4) as p:
+#         print(p.map(noon_scrape, urls)
 
 # images = driver.find_elements(By.CSS_SELECTOR, "div img")
 # for image in images:
