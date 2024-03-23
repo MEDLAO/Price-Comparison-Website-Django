@@ -20,9 +20,9 @@ async def scrape(url):
     content = await page.content()
     await browser.close()
     return content
-
+# https://www.jumia.com.eg/catalog/?q=smart+watch
 async def main():
-    content = await scrape('https://www.jumia.com.eg/catalog/?q=smart+watch')
+    content = await scrape('https://www.noon.com/egypt-en/search/?q=smart%20watch')
     print(content)
 
 asyncio.run(main())
