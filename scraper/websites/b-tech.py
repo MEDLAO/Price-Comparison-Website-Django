@@ -4,10 +4,10 @@ from bs4 import BeautifulSoup
 import aiohttp as aiohttp
 
 
-HOME_PAGE_URL_AMAZON = "https://amazon.eg"
-AMAZON_PRODUCT_URL_AR = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=ar_AE&ref=lp_21832958031_sar"
-AMAZON_PRODUCT_URL_EN = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=en_AE&ref=lp_21832958031_sar"
-NB_PAGES_AMAZON_EG = 37
+HOME_PAGE_URL_BTECH = "https://btech.com/en/"
+BTECH_PRODUCT_URL_AR = "https://btech.com/ar/catalogsearch/result/index/?q=smart+watches"
+BTECH_PRODUCT_URL_EN = "https://btech.com/en/catalogsearch/result/?q=smart%20watches"
+# NB_PAGES_BTECH_EG =
 
 
 async def fetch_btech(s, url):
