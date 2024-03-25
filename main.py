@@ -20,7 +20,9 @@ async def fetch_btech(s, url):
                 data = await r.text()
                 print(r.status)
                 soup = BeautifulSoup(data, 'html.parser')
-                print(soup.prettify())
+                div = soup.find('div', id='product_view_1')
+                print(div)
+                # print(soup.prettify())
 
         except aiohttp.ClientError:
             await asyncio.sleep(1)
