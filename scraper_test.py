@@ -11,11 +11,13 @@ import asyncio
 import aiohttp as aiohttp
 from pyppeteer import launch
 
-# ua = UserAgent()
-# headers = {"user-agent": ua.random}
-# response = requests.get('https://btech.com/en/catalogsearch/result/?q=smart%20watches', headers=headers)
+ua = UserAgent()
+headers = {"user-agent": ua.random}
+payload = {"messages": {"messages": [], "data_id": 1711549168 },"company": {"data_id": 1711549168}}
+response = requests.get('https://btech.com/en/catalogsearch/result/?q=smart%20watches', headers=headers, params=payload)
 # data = response.json()
 # print(data)
+print(response.text)
 
 async def fetch_btech(s, url):
     # create a user_agent object
@@ -34,8 +36,8 @@ async def fetch_btech(s, url):
                 # print(soup.prettify())
                 # div = soup.find('div', id='product_view_20')
                 # print(div)
-                script = soup.find('script')
-                print(script)
+                # script = soup.find('script')
+                # print(script)
         except aiohttp.ClientError:
             await asyncio.sleep(1)
 
@@ -44,7 +46,7 @@ async def main():
     async with aiohttp.ClientSession() as session:
         await fetch_btech(session, 'https://btech.com/en/catalogsearch/result/?q=smart%20watches')
 
-asyncio.run(main())
+# asyncio.run(main())
 
 
 """async def scrape(url):
