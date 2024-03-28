@@ -12,9 +12,8 @@ import aiohttp as aiohttp
 from pyppeteer import launch
 
 ua = UserAgent()
-headers = {"user-agent": ua.random}
-payload = {"messages": {"messages": [], "data_id": 1711549168 },"company": {"data_id": 1711549168}}
-response = requests.get('https://btech.com/en/catalogsearch/result/?q=smart%20watches', headers=headers, params=payload)
+headers = {"user-agent": ua.random, 'Authorization': 'Api-Key client-SwdUQtQxWRR0i6jWZ5sfoB5M9v9ZpVEH'}
+response = requests.get('https://api.lab.amplitude.com/sdk/vardata', headers=headers)
 # data = response.json()
 # print(data)
 print(response.text)
