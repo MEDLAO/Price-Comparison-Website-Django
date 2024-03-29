@@ -11,58 +11,58 @@ import asyncio
 import aiohttp as aiohttp
 from pyppeteer import launch
 
-ua = UserAgent()
-headers = {"user-agent": ua.random, 'Authorization': 'Api-Key client-SwdUQtQxWRR0i6jWZ5sfoB5M9v9ZpVEH'}
-response = requests.get('https://api.lab.amplitude.com/sdk/vardata', headers=headers)
-# data = response.json()
-# print(data)
-print(response.text)
 
-async def fetch_btech(s, url):
-    # create a user_agent object
-    ua = UserAgent()
-    # rotate user_agent
-    headers = {"user-agent": ua.random}
-
-    data = None
-    while data is None:
-        try:
-            async with s.get(url, headers=headers) as r:
-                r.raise_for_status()
-                data = await r.text()
-                print(r.status)
-                soup = BeautifulSoup(data, 'html.parser')
-                # print(soup.prettify())
-                # div = soup.find('div', id='product_view_20')
-                # print(div)
-                # script = soup.find('script')
-                # print(script)
-        except aiohttp.ClientError:
-            await asyncio.sleep(1)
-
-
-async def main():
-    async with aiohttp.ClientSession() as session:
-        await fetch_btech(session, 'https://btech.com/en/catalogsearch/result/?q=smart%20watches')
-
-# asyncio.run(main())
+# async def fetch_btech(s, url):
+#     # create a user_agent object
+#     ua = UserAgent()
+#     # rotate user_agent
+#     headers = {"user-agent": ua.random}
+#
+#     data = None
+#     while data is None:
+#         try:
+#             async with s.get(url, headers=headers) as r:
+#                 r.raise_for_status()
+#                 data = await r.text()
+#                 print(r.status)
+#                 soup = BeautifulSoup(data, 'html.parser')
+#                 # print(soup.prettify())
+#                 # div = soup.find('div', id='product_view_20')
+#                 # print(div)
+#                 # script = soup.find('script')
+#                 # print(script)
+#         except aiohttp.ClientError:
+#             await asyncio.sleep(1)
+#
+#
+# async def main():
+#     async with aiohttp.ClientSession() as session:
+#         await fetch_btech(session, 'https://btech.com/en/catalogsearch/result/?q=smart%20watches')
+#
+# # asyncio.run(main())
 
 
-"""async def scrape(url):
+async def scrape(url):
     browser = await launch()
     page = await browser.newPage()
+    # create a user_agent object
+    # user_agent = UserAgent()
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     await page.setUserAgent(user_agent)
     await page.goto(url)
+    ## Click Button
+    await page.waitForSelector('.find-search-show-more-remain-count')
+    await page.click('div > span.find-search-show-more-remain-count')
     content = await page.content()
     await browser.close()
     return content
 # https://www.jumia.com.eg/catalog/?q=smart+watch
+# https://www.noon.com/egypt-en/search/?q=smart%20watch
 async def main():
-    content = await scrape('https://www.noon.com/egypt-en/search/?q=smart%20watch')
+    content = await scrape('https://btech.com/en/catalogsearch/result/?q=smart%20watches')
     print(content)
 
-asyncio.run(main())"""
+asyncio.run(main())
 
 """def noon_scrape(url):
 
