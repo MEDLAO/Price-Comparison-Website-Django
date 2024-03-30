@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from scraper.websites.utils import *
 from fake_useragent import UserAgent
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support import expected_conditions as EC
 import re
 from multiprocessing import Pool
 import requests
@@ -42,7 +43,7 @@ from pyppeteer import launch
 # # asyncio.run(main())
 
 
-async def scrape(url):
+"""async def scrape(url):
     browser = await launch()
     page = await browser.newPage()
     # create a user_agent object
@@ -51,8 +52,8 @@ async def scrape(url):
     await page.setUserAgent(user_agent)
     await page.goto(url)
     ## Click Button
-    await page.waitForSelector('.find-search-show-more-remain-count')
-    await page.click('div > span.find-search-show-more-remain-count')
+    await page.waitForSelector('.find-load-button.btn-outline.primary.medium')
+    await page.click(' div.find-load-button.btn-outline.primary.medium > span.find-search-show-more-remain-count')
     content = await page.content()
     await browser.close()
     return content
@@ -63,8 +64,8 @@ async def main():
     print(content)
 
 asyncio.run(main())
-
-"""def noon_scrape(url):
+"""
+def btech_scrape(url):
 
     # Set up Chrome options
     chrome_options = Options()
@@ -87,42 +88,50 @@ asyncio.run(main())
     driver.get(url)
     # use delay function to get all tags
     driver.implicitly_wait(20)
-    # sc-5c17cc27-0 eCGMdH wrapper productContainer
-    get_source = driver.page_source
-    dict_products = {}
-    products = driver.find_elements(By.CSS_SELECTOR, 'span.productContainer')
-    for product in products[:2]:
-        images = product.find_elements(By.CSS_SELECTOR, "img[src^='https://f.nooncdn.com/p/']")
-        dict_products["image"] = []
-        for image in images:
-            # print(image.get_attribute('src'))
-            dict_products["image"].append(image.get_attribute('src'))
-        link = product.find_element(By.CSS_SELECTOR, "[id^='productBox']").get_attribute('href')  # attribute starts with
-        # print(link)
-        dict_products["link"] = link
-        try:
-            rating = product.find_element(By.CSS_SELECTOR, "[class='sc-363ddf4f-2 jdbOPo']").text
-        except Exception:
-            rating = None
-        # print(rating)
-        dict_products["rating"] = rating
-        price = product.find_element(By.CSS_SELECTOR, 'strong.amount').text
-        # print(price)
-        dict_products["price"] = price
-        description = product.find_element(By.CSS_SELECTOR, "[data-qa^='productImagePLP']").get_attribute('data-qa')
-        description = re.sub(r'productImagePLP_', '', description)
-        # print(description)
-        dict_products["description"] = description
-        brand = find_product_attribute(BRANDS_EN, description)
-        # print(brand)
-        dict_products["brand"] = brand
-        color = find_product_attribute(COLORS_EN, description)
-        # print(color)
-        dict_products["color"] = color
-    print(dict_products)
 
-for i in range(1, 15):
-    noon_scrape(f"https://www.noon.com/egypt-en/search/?q=smart%20watch&page={i}")"""
+    # click on button with the class name
+    button = driver.find_element(By.CLASS_NAME, "find-load-button.btn-outline.primary.medium")
+    button.click()
+    driver.implicitly_wait(10)
+    get_source = driver.page_source
+    print(get_source)
+
+    # sc-5c17cc27-0 eCGMdH wrapper productContainer
+    # get_source = driver.page_source
+    # dict_products = {}
+    # products = driver.find_elements(By.CSS_SELECTOR, 'span.productContainer')
+    # for product in products[:2]:
+    #     images = product.find_elements(By.CSS_SELECTOR, "img[src^='https://f.nooncdn.com/p/']")
+    #     dict_products["image"] = []
+    #     for image in images:
+    #         # print(image.get_attribute('src'))
+    #         dict_products["image"].append(image.get_attribute('src'))
+    #     link = product.find_element(By.CSS_SELECTOR, "[id^='productBox']").get_attribute('href')  # attribute starts with
+    #     # print(link)
+    #     dict_products["link"] = link
+    #     try:
+    #         rating = product.find_element(By.CSS_SELECTOR, "[class='sc-363ddf4f-2 jdbOPo']").text
+    #     except Exception:
+    #         rating = None
+        # print(rating)
+        # dict_products["rating"] = rating
+        # price = product.find_element(By.CSS_SELECTOR, 'strong.amount').text
+        # print(price)
+        # dict_products["price"] = price
+        # description = product.find_element(By.CSS_SELECTOR, "[data-qa^='productImagePLP']").get_attribute('data-qa')
+        # description = re.sub(r'productImagePLP_', '', description)
+        # print(description)
+        # dict_products["description"] = description
+        # brand = find_product_attribute(BRANDS_EN, description)
+        # print(brand)
+        # dict_products["brand"] = brand
+        # color = find_product_attribute(COLORS_EN, description)
+        # print(color)
+        # dict_products["color"] = color
+    # print(dict_products)
+
+# for i in range(1, 15):
+btech_scrape(f"https://btech.com/en/catalogsearch/result/?q=smart%20watches")
 
 # if __name__ == '__main__':
 #     urls = [f"https://www.noon.com/egypt-en/search/?q=smart%20watch&page={i}" for i in range(1, 15)]
