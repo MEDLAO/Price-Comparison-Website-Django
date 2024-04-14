@@ -70,7 +70,9 @@ def ehabgroup_scrape(url):
 
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, "lxml")
-    print(soup.prettify())
+    products = soup.find_all('li', class_='item product product-item')
+    print(products)
+    print(len(products))
 
 
     # # Set up Chrome options
