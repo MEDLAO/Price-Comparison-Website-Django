@@ -65,36 +65,42 @@ async def main():
 
 asyncio.run(main())
 """
-def btech_scrape(url):
+def ehabgroup_scrape(url):
+    headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"}
 
-    # Set up Chrome options
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.content, "lxml")
+    print(soup.prettify())
 
-    # create a user_agent object
-    ua = UserAgent()
 
-    # Get a random User-Agent
-    random_user_agent = ua.random
-    chrome_options.add_argument(f"--user-agent={random_user_agent}")
-
-    # free proxy server URL
-    # valid_proxies = check_proxy("https://httpbin.org/ip")
-    # proxy_server_url = choice(valid_proxies)
-    # chrome_options.add_argument(f"--proxy-server={proxy_server_url}")
-
-    driver = webdriver.Chrome(options=chrome_options)
-
-    driver.get(url)
-    # use delay function to get all tags
-    driver.implicitly_wait(20)
-
-    # click on button with the class name
-    button = driver.find_element(By.CLASS_NAME, "find-load-button.btn-outline.primary.medium")
-    button.click()
-    driver.implicitly_wait(10)
-    get_source = driver.page_source
-    print(get_source)
+    # # Set up Chrome options
+    # chrome_options = Options()
+    # chrome_options.add_argument("--headless")
+    #
+    # # create a user_agent object
+    # ua = UserAgent()
+    #
+    # # Get a random User-Agent
+    # random_user_agent = ua.random
+    # chrome_options.add_argument(f"--user-agent={random_user_agent}")
+    #
+    # # free proxy server URL
+    # # valid_proxies = check_proxy("https://httpbin.org/ip")
+    # # proxy_server_url = choice(valid_proxies)
+    # # chrome_options.add_argument(f"--proxy-server={proxy_server_url}")
+    #
+    # driver = webdriver.Chrome(options=chrome_options)
+    #
+    # driver.get(url)
+    # # use delay function to get all tags
+    # driver.implicitly_wait(20)
+    #
+    # # click on button with the class name
+    # button = driver.find_element(By.CLASS_NAME, "find-load-button.btn-outline.primary.medium")
+    # button.click()
+    # driver.implicitly_wait(10)
+    # get_source = driver.page_source
+    # print(get_source)
 
     # sc-5c17cc27-0 eCGMdH wrapper productContainer
     # get_source = driver.page_source
@@ -131,7 +137,7 @@ def btech_scrape(url):
     # print(dict_products)
 
 # for i in range(1, 15):
-btech_scrape(f"https://btech.com/en/catalogsearch/result/?q=smart%20watches")
+ehabgroup_scrape(f"https://ehabgroup.com/index.php/accessories/smart-wearables/smart-watches.html?_=1713109998576")
 
 # if __name__ == '__main__':
 #     urls = [f"https://www.noon.com/egypt-en/search/?q=smart%20watch&page={i}" for i in range(1, 15)]
