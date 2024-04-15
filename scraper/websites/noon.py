@@ -1,4 +1,4 @@
-from scraper.websites.utils import *
+from utils import *
 import asyncio
 from pyppeteer import launch
 from fake_useragent import UserAgent
@@ -14,7 +14,7 @@ NOON_PRODUCT_URL_EN = "https://www.noon.com/egypt-en/search/?q=smart%20watch"
 NB_PAGES_NOON_EG = 14
 
 
-async def scrape(url):
+async def noon_scrape(url):
     # create a user_agent object
     ua = UserAgent()
     browser = await launch()
@@ -22,15 +22,18 @@ async def scrape(url):
     user_agent = ua.random
     await page.setUserAgent(user_agent)
     await page.goto(url)
-    content = await page.content()
+    # content = await page.content()
+    products = await page.querySelectorAll(".sc-424bebc3-0.dvQhRS")
+    first_product = products[0]
+    fp_txt = await page.evaluate('(first_product) => first_product.innerText', first_product)
     await browser.close()
-    return content
+    return first_product
 
 async def main_noon_jumia():
-    content = await scrape('https://www.noon.com/egypt-en/search/?q=smart%20watch')
-    print(content)
+    fp_text = await noon_scrape('https://www.noon.com/egypt-en/search/?q=smart%20watch')
+    print(fp_text)
 
-asyncio.run(main())
+asyncio.run(main_noon_jumia())
 
 """async def fetch_noon(s, url):
     # create a user_agent object

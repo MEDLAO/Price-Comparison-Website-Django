@@ -9,7 +9,7 @@ JUMIA_PRODUCT_URL_EN = "https://www.jumia.com.eg/catalog/?q=smart+watches"
 NB_PAGES_JUMIA_EG = 50
 
 
-async def scrape(url):
+async def jumia_scrape(url):
     ua = UserAgent()
     browser = await launch()
     page = await browser.newPage()
@@ -21,7 +21,7 @@ async def scrape(url):
     return content
 
 async def main_noon_jumia():
-    content = await scrape('https://www.jumia.com.eg/catalog/?q=smart+watch')
+    content = await jumia_scrape('https://www.jumia.com.eg/catalog/?q=smart+watch')
     print(content)
 
 asyncio.run(main())
