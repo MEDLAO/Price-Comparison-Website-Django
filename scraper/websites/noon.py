@@ -22,18 +22,27 @@ async def noon_scrape(url):
     user_agent = ua.random
     await page.setUserAgent(user_agent)
     await page.goto(url)
-    # content = await page.content()
-    products = await page.querySelectorAll(".sc-424bebc3-0.dvQhRS")
-    first_product = products[0]
-    fp_txt = await page.evaluate('(first_product) => first_product.innerText', first_product)
+    html = await page.content()
     await browser.close()
-    return first_product
+    return html
 
-async def main_noon_jumia():
-    fp_text = await noon_scrape('https://www.noon.com/egypt-en/search/?q=smart%20watch')
-    print(fp_text)
+html_response = asyncio.run(noon_scrape('https://www.noon.com/egypt-en/search/?q=smart%20watch'))
+# print(html_response)
 
-asyncio.run(main_noon_jumia())
+    # content = await page.content()
+    # products = await page.querySelectorAll(".sc-424bebc3-0 .dvQhRS")
+    # price
+    # description
+    # brand
+    # color
+    # image
+    # link
+
+## Load HTML Response into BeautifulSoup
+soup = BeautifulSoup(html_response, "html.parser")
+# print(soup.prettify())
+prices = soup.find_all("strong", class_="amount")
+print(prices)
 
 """async def fetch_noon(s, url):
     # create a user_agent object
