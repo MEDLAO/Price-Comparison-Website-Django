@@ -3,6 +3,7 @@ import asyncio
 from pyppeteer import launch
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
+import re
 import aiohttp as aiohttp
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -30,7 +31,6 @@ html_response = asyncio.run(noon_scrape('https://www.noon.com/egypt-en/search/?q
 # print(html_response)
 
     # content = await page.content()
-    # products = await page.querySelectorAll(".sc-424bebc3-0 .dvQhRS")
     # price
     # description
     # brand
@@ -41,8 +41,27 @@ html_response = asyncio.run(noon_scrape('https://www.noon.com/egypt-en/search/?q
 ## Load HTML Response into BeautifulSoup
 soup = BeautifulSoup(html_response, "html.parser")
 # print(soup.prettify())
-prices = soup.find_all("strong", class_="amount")
-print(prices)
+products = soup.find_all("div", class_=".sc-424bebc3-0 .dvQhRS")
+for product in products:
+    price = product.find("strong", class_="amount")
+    print(price)
+
+    description_with_html_tag = product.find("div", class_="sc-b07dc364-24 jyQuMr")
+    description = description_with_html_tag.attrs['data-qa']
+    print(description)
+    # <div data-qa="product-name" title="Wearfit Pro X8 Ultra MAX Smartwatch Screen 2.2 Inch 485*520 Pixels - Wearfit PRO - Bluetooth V5.2 (Gold) " class="sc-b07dc364-24 jyQuMr">
+
+    image_with_html_tag = product.find('img', class_='sc-d13a0e88-1 cindWc')
+    if image_with_html_tag:
+        image = image_with_html_tag.attrs['src']
+        print(image)
+
+    link_with_html_tag = product.find_all("div", id=re.compile("^productBox"))
+    if link_with_html_tag:
+        link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
+        print(link)
+
+
 
 """async def fetch_noon(s, url):
     # create a user_agent object
