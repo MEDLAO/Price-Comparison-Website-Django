@@ -41,25 +41,28 @@ html_response = asyncio.run(noon_scrape('https://www.noon.com/egypt-en/search/?q
 ## Load HTML Response into BeautifulSoup
 soup = BeautifulSoup(html_response, "html.parser")
 # print(soup.prettify())
-products = soup.find_all("div", class_=".sc-424bebc3-0 .dvQhRS")
+products = soup.find_all("div", class_="sc-424bebc3-0 dvQhRS")
+# print(products)
 for product in products:
-    price = product.find("strong", class_="amount")
-    print(price)
+    price = product.find("strong", class_="amount").get_text()
+    # print(price)
 
     description_with_html_tag = product.find("div", class_="sc-b07dc364-24 jyQuMr")
-    description = description_with_html_tag.attrs['data-qa']
-    print(description)
+    description = description_with_html_tag.attrs['title']
+    # print(description)
     # <div data-qa="product-name" title="Wearfit Pro X8 Ultra MAX Smartwatch Screen 2.2 Inch 485*520 Pixels - Wearfit PRO - Bluetooth V5.2 (Gold) " class="sc-b07dc364-24 jyQuMr">
 
-    image_with_html_tag = product.find('img', class_='sc-d13a0e88-1 cindWc')
+    image_with_html_tag = product.find('img', attrs={'class': 'sc-d13a0e88-1 cindWc'} )
+    # attrs={'class': 'card-text p-2'}
+    # class_="sc-d13a0e88-1 cindWc"
     if image_with_html_tag:
-        image = image_with_html_tag.attrs['src']
+        image = image_with_html_tag
         print(image)
 
     link_with_html_tag = product.find_all("div", id=re.compile("^productBox"))
     if link_with_html_tag:
         link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
-        print(link)
+        # print(link)
 
 
 
