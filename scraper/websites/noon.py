@@ -52,18 +52,20 @@ for product in products:
     # print(description)
     # <div data-qa="product-name" title="Wearfit Pro X8 Ultra MAX Smartwatch Screen 2.2 Inch 485*520 Pixels - Wearfit PRO - Bluetooth V5.2 (Gold) " class="sc-b07dc364-24 jyQuMr">
 
-    image_with_html_tag = product.find('img', attrs={'class': 'sc-d13a0e88-1 cindWc'} )
+    image_with_html_tag = product.find_all("img")
+    # , attrs = {'class': 'sc-d13a0e88-1 cindWc'}
     # attrs={'class': 'card-text p-2'}
     # class_="sc-d13a0e88-1 cindWc"
     if image_with_html_tag:
-        image = image_with_html_tag
-        print(image)
+        images = image_with_html_tag
+        print(product.img)
 
     link_with_html_tag = product.find_all("div", id=re.compile("^productBox"))
     if link_with_html_tag:
         link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
         # print(link)
 
+images = soup.find_all(img)
 
 
 """async def fetch_noon(s, url):
