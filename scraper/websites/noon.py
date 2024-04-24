@@ -41,32 +41,35 @@ html_response = asyncio.run(noon_scrape('https://www.noon.com/egypt-en/search/?q
 ## Load HTML Response into BeautifulSoup
 soup = BeautifulSoup(html_response, "html.parser")
 # print(soup.prettify())
-products = soup.find_all("div", class_="sc-424bebc3-0 dvQhRS")
+products = soup.select('div.sc-424bebc3-0.dvQhRS')
 # print(products)
 for product in products:
-    price = product.find("strong", class_="amount").get_text()
+    price = product.select_one('strong.amount').get_text()
     # print(price)
 
-    description_with_html_tag = product.find("div", class_="sc-b07dc364-24 jyQuMr")
+    description_with_html_tag = product.select_one('div.sc-b07dc364-24.jyQuMr')
     description = description_with_html_tag.attrs['title']
     # print(description)
     # <div data-qa="product-name" title="Wearfit Pro X8 Ultra MAX Smartwatch Screen 2.2 Inch 485*520 Pixels - Wearfit PRO - Bluetooth V5.2 (Gold) " class="sc-b07dc364-24 jyQuMr">
 
-    image_with_html_tag = product.find_all("img")
+    image_with_html_tag = product.select_one('img.sc-d13a0e88-1.cindWc')
     # , attrs = {'class': 'sc-d13a0e88-1 cindWc'}
     # attrs={'class': 'card-text p-2'}
     # class_="sc-d13a0e88-1 cindWc"
-    if image_with_html_tag:
-        images = image_with_html_tag
-        print(product.img)
+    # if image_with_html_tag:
+        # image = soup.select_one('div.sc-d8caf424-2.fJBKzl')
+        # img.sc-d13a0e88-1.cindWc
+        # print(image_with_html_tag)
+        # images = image_with_html_tag
+        # print(product.img)
 
-    link_with_html_tag = product.find_all("div", id=re.compile("^productBox"))
-    if link_with_html_tag:
-        link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
-        # print(link)
+    # link_with_html_tag = product.find_all("div", id=re.compile("^productBox"))
+    # if link_with_html_tag:
+    #     link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
+    #     # print(link)
 
-images = soup.find_all(img)
-
+divs_img = soup.select('div.lazyload-wrapper')
+print(divs_img)
 
 """async def fetch_noon(s, url):
     # create a user_agent object
