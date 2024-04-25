@@ -23,9 +23,11 @@ async def noon_scrape(url):
     user_agent = ua.random
     await page.setUserAgent(user_agent)
     await page.goto(url)
-    html = await page.content()
-    await browser.close()
-    return html
+    images = await url.querySelectorAll("img .sc-d13a0e88-1")
+    print(images)
+    # html = await page.content()
+    # await browser.close()
+    # return html
 
 html_response = asyncio.run(noon_scrape('https://www.noon.com/egypt-en/search/?q=smart%20watch'))
 # print(html_response)
