@@ -18,10 +18,6 @@ async def jumia_scrape(url):
     await page.goto(url)
     content = await page.content()
     await browser.close()
-    return content
-
-async def main_noon_jumia():
-    content = await jumia_scrape('https://www.jumia.com.eg/catalog/?q=smart+watch')
     print(content)
 
-asyncio.run(main())
+asyncio.run(jumia_scrape('https://www.jumia.com.eg/catalog/?q=smart+watch'))
