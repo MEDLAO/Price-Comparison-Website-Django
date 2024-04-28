@@ -24,8 +24,9 @@ async def noon_scrape(url):
     await page.setUserAgent(user_agent)
     await page.goto(url)
     content = await page.content()
+    products = await page.querySelectorAll('.productContainer')
     await browser.close()
-    print(content)
+    print(products)
 
 asyncio.run(noon_scrape('https://www.noon.com/egypt-en/search/?q=smart+20watch'))
 
