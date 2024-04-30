@@ -36,7 +36,9 @@ NB_PAGES_NOON_EG = 14
 driver = webdriver.Edge()
 driver.get('https://www.noon.com/egypt-en/search/?q=smart+20watch')
 # print(driver.page_source)
-print(driver.find_element(By.CLASS_NAME, "sc-d13a0e88-1 cindWc"))
+images = driver.find_elements(By.CLASS_NAME, "cindWc")
+for image in images:
+    print(image.get_attribute('src'))
 driver.quit()
 
     # content = await page.content()
