@@ -11,7 +11,7 @@ NB_PROXIES_ALTERNATE = 20
 NB_PAGES_AMAZON_EG = 37
 NB_TRIES_SAME_PAGE = 15
 
-# check date/time
+
 def data_scraper(url_scrap):
     # get a list of proxies
     valid_proxies = check_proxy("https://httpbin.org/ip")

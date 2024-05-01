@@ -15,31 +15,30 @@ NOON_PRODUCT_URL_EN = "https://www.noon.com/egypt-en/search/?q=smart%20watch"
 NB_PAGES_NOON_EG = 14
 
 
-# async def noon_scrape(url):
-#     # create a user_agent object
-#     ua = UserAgent()
-#     browser = await launch()
-#     page = await browser.newPage()
-#     user_agent = ua.random
-#     await page.setUserAgent(user_agent)
-#     await page.goto(url)
-#     content = await page.content()
-#     products = await page.querySelectorAll('.productContainer')
-#     for product in products:
-#         content = await page.evaluate('(product) => product.innerText', product)
-#         print(content)
-#     await browser.close()
-#
-#
-# asyncio.run(noon_scrape('https://www.noon.com/egypt-en/search/?q=smart+20watch'))
+async def noon_scrape(url):
+    # create a user_agent object
+    ua = UserAgent()
+    browser = await launch()
+    page = await browser.newPage()
+    user_agent = ua.random
+    await page.setUserAgent(user_agent)
+    await page.goto(url)
+    # content = await page.content()
+    product_images = await page.querySelectorAll('img.sc-d13a0e88-1.cMrpQt')
+    for image in product_images:
+        content = await page.evaluate('(image) => image.innerText', image)
+        print(content)
+    await browser.close()
 
-driver = webdriver.Edge()
-driver.get('https://www.noon.com/egypt-en/search/?q=smart+20watch')
-# print(driver.page_source)
-images = driver.find_elements(By.CLASS_NAME, "cindWc")
-for image in images:
-    print(image.get_attribute('src'))
-driver.quit()
+
+asyncio.run(noon_scrape('https://www.noon.com/egypt-en/watch-4-plus-bluetooth-call-smart-watch-2-01inch-hd-display-fitness-tracker-with-heart-rate-sleep-monitor-pedometer-ip68-waterproof-black/N70033897V/p/?o=ca2883ce8758d96e'))
+
+# driver = webdriver.Edge()
+# driver.get('https://www.noon.com/egypt-en/search/?q=smart+20watch')
+# # print(driver.page_source)
+# images = driver.find_elements(By.CSS_SELECTOR, "div.lazyload-wrapper > div > img.sc-d13a0e88-1.cindWc")
+# print(len(images))
+# driver.quit()
 
     # content = await page.content()
     # price
