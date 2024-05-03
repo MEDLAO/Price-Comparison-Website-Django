@@ -43,10 +43,3 @@ soup = BeautifulSoup(html)
 images = soup.find_all(class_='sc-d13a0e88-1 cindWc')
 print(images)
 
-    # content = await page.content()
-    # price
-    # description
-    # brand
-    # color
-    # image
-    # link
