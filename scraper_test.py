@@ -1,50 +1,41 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 from scraper.websites.utils import *
-from fake_useragent import UserAgent
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support import expected_conditions as EC
-import re
-from multiprocessing import Pool
 import requests
 from bs4 import BeautifulSoup
-import asyncio
-import aiohttp as aiohttp
-from pyppeteer import launch
 
 
-    # price
-    # description
-    # brand
-    # color
-    # image
-    # link
-
-def ehabgroup_scrape(url):
+def twob_scrape(url):
     headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"}
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, "lxml")
     products = soup.find_all("li", class_="item product product-item")
-    for product in products[:3]:
+    for product in products:
         # price
-        price = product.find("span", class_="price")
-        print(price)
+        price_with_html_tag = product.find("span", class_="price")
+        if price_with_html_tag:
+            price = price_with_html_tag.get_text()
+            print(price)
         # description
-        description = product.find("a", class_="product-item-link")
+        description = product.find("a", class_="product-item-link").get_text().lstrip()
         print(description)
         # brand
-        # brand =
+        brand = find_product_attribute(BRANDS_EN, description)
+        print(brand)
         # color
-        # color =
+        color = find_product_attribute(COLORS_EN, description)
+        print(color)
         # image
-        # image =
-        # link
-        # link =
 
-    # images = soup.find_all("img", class_="product-image-photo default_image porto-lazyload porto-lazyload-loaded")
+        image_with_html_tag =  product.find("img", class_="product-image-photo")
+        if image_with_html_tag:
+            image = image_with_html_tag.attrs['data-src']
+            print(image)
+        # link
+        link_with_html_tag = product.find("a")
+        if link_with_html_tag:
+            link = link_with_html_tag.attrs['href']
+            print(link)
+
     # print(response.text)
     print(len(products))
 
-ehabgroup_scrape(f"https://2b.com.eg/en/accessories/wearables/smart-watch.html")
-
-# <img class="product-image-photo default_image porto-lazyload porto-lazyload-loaded"
+twob_scrape(f"https://2b.com.eg/en/accessories/wearables/smart-watch.html")
