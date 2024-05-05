@@ -37,7 +37,8 @@ def jumia_scrape(url):
         link_with_html_tag = product.find("a", class_="core")
         if link_with_html_tag:
             link = link_with_html_tag.attrs['href']
-            print(link)
+            final_link = "https://www.jumia.com.eg/" + link
+            print(final_link)
 
     print(len(products))
     # print(response.text)
