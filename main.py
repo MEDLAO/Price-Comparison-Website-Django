@@ -6,9 +6,9 @@ import aiohttp as aiohttp
 
 
 async def main():
-    urls = range(1, 2)
+    urls = range(1, 3)
     async with aiohttp.ClientSession() as session:
-        htmls = await fetch_alls(session, urls, fetch_jumia)
+        htmls = await fetch_alls(session, urls, fetch_amazon)
         return htmls
 
 asyncio.run(main())

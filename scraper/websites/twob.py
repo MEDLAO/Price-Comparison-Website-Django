@@ -4,12 +4,7 @@ from bs4 import BeautifulSoup
 import aiohttp as aiohttp
 
 
-async def fetch_twob(s, url):
-    # create a user_agent object
-    ua = UserAgent()
-    # rotate user_agent
-    headers = {"user-agent": ua.random}
-
+async def fetch_twob(s, url, headers):
     data = None
     while data is None:
         try:
@@ -46,6 +41,7 @@ async def fetch_twob(s, url):
                     if link_with_html_tag:
                         link = link_with_html_tag.attrs['href']
                         print(link)
+                print(headers)
 
         except aiohttp.ClientError:
             await asyncio.sleep(1)

@@ -2,6 +2,7 @@ from scraper.websites.utils import *
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import aiohttp as aiohttp
+import re
 
 
 HOME_PAGE_URL_AMAZON = "https://amazon.eg"
@@ -10,12 +11,7 @@ AMAZON_PRODUCT_URL_EN = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958
 NB_PAGES_AMAZON_EG = 37
 
 
-async def fetch_amazon(s, url):
-    # create a user_agent object
-    ua = UserAgent()
-    # rotate user_agent
-    headers = {"user-agent": ua.random}
-
+async def fetch_amazon(s, url, headers):
     data = None
     while data is None:
         try:
@@ -26,7 +22,7 @@ async def fetch_amazon(s, url):
                 soup = BeautifulSoup(data, 'html.parser')
                 products = soup.find_all('div', class_='a-section a-spacing-base')
                 print(f'Product for page {url}')
-                for product in products[0]:
+                for product in products:
                     # price
                     price_with_html_tag = product.find('span', class_='a-offscreen')
                     if price_with_html_tag:
@@ -69,6 +65,7 @@ async def fetch_amazon(s, url):
                     if link_with_html_tag:
                         link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
                         print(link)
+                print(headers)
 
         except aiohttp.ClientError:
             await asyncio.sleep(1)

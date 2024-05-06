@@ -10,12 +10,7 @@ JUMIA_PRODUCT_URL_EN = "https://www.jumia.com.eg/catalog/?q=smart+watches"
 NB_PAGES_JUMIA_EG = 50
 
 
-async def fetch_jumia(s, url):
-    # create a user_agent object
-    ua = UserAgent()
-    # rotate user_agent
-    headers = {"user-agent": ua.random}
-
+async def fetch_jumia(s, url, headers):
     data = None
     while data is None:
         try:
@@ -57,8 +52,7 @@ async def fetch_jumia(s, url):
                         link = link_with_html_tag.attrs['href']
                         final_link = "https://www.jumia.com.eg/" + link
                         print(final_link)
+                print(headers)
 
-                # print(len(products))
-                # print(response.text)
         except aiohttp.ClientError:
             await asyncio.sleep(1)

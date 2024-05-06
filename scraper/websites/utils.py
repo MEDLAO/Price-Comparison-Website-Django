@@ -4,6 +4,7 @@ import asyncio
 from random import choice
 from time import sleep
 from random import randint
+from fake_useragent import UserAgent
 
 
 NB_PROXIES_ALTERNATE = 20
@@ -64,7 +65,11 @@ def find_product_attribute(attribute_list, description_text):
 async def fetch_alls(s, urls, fetch_function):
     tasks = []
     for url in urls:
-        task = asyncio.create_task(fetch_function(s, url))
+        # create a user_agent object
+        ua = UserAgent()
+        # rotate user_agent
+        headers = {"User-Agent": ua.random}
+        task = asyncio.create_task(fetch_function(s, url, headers))
         tasks.append(task)
     res = await asyncio.gather(*tasks)
     return res
