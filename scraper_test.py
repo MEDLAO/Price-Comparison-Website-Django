@@ -3,20 +3,22 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def jumia_scrape(url):
-    # headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"}
+def ehabgroup_scrape(url):
+    headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"}
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, "lxml")
-    products = soup.find_all("article", class_="prd _fb col c-prd")
+    products = soup.find_all("div", class_="product-item-info")
     for product in products:
+        a_links = product.find_all("a")
+
         # price
-        price_with_html_tag = product.find("div", class_="prc")
+        price_with_html_tag = product.find("span", class_="price")
         if price_with_html_tag:
             price = price_with_html_tag.get_text()
             print(price)
 
         # description
-        description = product.find("h3", class_="name").get_text()
+        description = a_links[1].get_text()
         print(description)
 
         # brand
@@ -28,19 +30,17 @@ def jumia_scrape(url):
         print(color)
 
         # image
-        image_with_html_tag =  product.find("img", class_="img")
+        image_with_html_tag =  product.find("img", class_="product-image-photo hover_image")
         if image_with_html_tag:
-            image = image_with_html_tag.attrs['data-src']
+            image = image_with_html_tag.attrs['src']
             print(image)
 
         # link
-        link_with_html_tag = product.find("a", class_="core")
-        if link_with_html_tag:
-            link = link_with_html_tag.attrs['href']
-            final_link = "https://www.jumia.com.eg/" + link
-            print(final_link)
+        link = a_links[0].attrs['href']
+        print(link)
 
-    print(len(products))
+    # print(len(products))
+    # print(products)
     # print(response.text)
 
-jumia_scrape(f"https://www.jumia.com.eg/catalog/?q=smart+watches")
+ehabgroup_scrape(f"https://ehabgroup.com/smart-wearables/smart-watches.html")
