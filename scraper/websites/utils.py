@@ -10,7 +10,7 @@ from fake_useragent import UserAgent
 NB_PROXIES_ALTERNATE = 20
 NB_TRIES_SAME_PAGE = 10
 
-BRANDS_EN = ["Oraimo", "Xiaomi", "HUAWEI", "Joyroom", "SAMSUNG", "Honor", "Amazfit", "Apple", "Tommy Hilfiger", "Diesel", "Fossil", "Casio", "G-shock", "Guess", "Michael Kors", "Barbie"]
+BRANDS_EN = ["Oraimo", "Xiaomi", "Huawei", "Joyroom", "Samsung", "Honor", "Amazfit", "Apple", "Tommy Hilfiger", "Diesel", "Fossil", "Casio", "G-shock", "Guess", "Michael Kors", "Barbie"]
 COLORS_EN = ["Beige", "Black", "Blue", "Brown", "Gold", "Green", "Grey", "Off-White", "Orange", "Pink", "Purple", "Red", "Silver", "Turquoise", "White", "Yellow"]
 
 BRANDS_AR = ["اورايمو", "شاومي", "هواوى" , "جوي رووم", "سامسونج", "اونر", "امازفيت", "جوي رووم", "ابل", "تومي هيلفيغر", "ديزل", "فوسيل", "كاسيو", "جي شوك", "جس", "مايكل كورس", "باربي"]
@@ -59,7 +59,7 @@ def check_proxy(url, **kwargs):
 
 def find_product_attribute(attribute_list, description_text):
     for attribute in attribute_list:
-        if ((attribute in description_text) or (attribute.lower() in description_text) or (attribute.upper() in description_text)) and (attribute not in "Bluetooth"):
+        if (attribute in description_text) or (attribute.lower() in description_text) or (attribute.upper() in description_text):
             return attribute
 
 async def fetch_alls(s, urls, fetch_function):

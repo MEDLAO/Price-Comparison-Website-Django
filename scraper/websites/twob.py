@@ -16,26 +16,31 @@ async def fetch_twob(s, url, headers):
                 products = soup.find_all("li", class_="item product product-item")
                 print(f'Product for page {url}')
                 for product in products:
+
                     # price
                     price_with_html_tag = product.find("span", class_="price")
                     if price_with_html_tag:
                         price = price_with_html_tag.get_text()
                         print(price)
+
                     # description
                     description = product.find("a", class_="product-item-link").get_text().lstrip()
                     print(description)
+
                     # brand
                     brand = find_product_attribute(BRANDS_EN, description)
                     print(brand)
+
                     # color
                     color = find_product_attribute(COLORS_EN, description)
                     print(color)
-                    # image
 
+                    # image
                     image_with_html_tag = product.find("img", class_="product-image-photo")
                     if image_with_html_tag:
                         image = image_with_html_tag.attrs['data-src']
                         print(image)
+
                     # link
                     link_with_html_tag = product.find("a")
                     if link_with_html_tag:
