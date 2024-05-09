@@ -34,6 +34,7 @@ async def fetch_ehabgroup(s, url, headers):
 
                         # description
                         description = description_with_html_tag.get_text()
+                        description = description.lstrip()
                         print(description)
 
                         # brand
