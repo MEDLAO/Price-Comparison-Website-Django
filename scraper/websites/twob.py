@@ -21,6 +21,7 @@ async def fetch_twob(s, url, headers):
                     price_with_html_tag = product.find("span", class_="price")
                     if price_with_html_tag:
                         price = price_with_html_tag.get_text()
+                        price = price[:3] + " " + price[3:]
                         print(price)
 
                     # description
