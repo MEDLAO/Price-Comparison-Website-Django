@@ -59,7 +59,7 @@ def check_proxy(url, **kwargs):
 
 def find_product_attribute(attribute_list, description_text):
     for attribute in attribute_list:
-        if (attribute in description_text) or (attribute.lower() in description_text) or (attribute.upper() in description_text):
+        if (attribute in description_text.split()) or (attribute.lower() in description_text.split()) or (attribute.upper() in description_text.split()):
             return attribute
 
 async def fetch_alls(s, urls, fetch_function):
