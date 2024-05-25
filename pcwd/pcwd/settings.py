@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import environ
+import os
 
 
 env = environ.Env()
@@ -89,6 +90,9 @@ DATABASES = {
         'PASSWORD': env("DB_PASSWORD"),
         'HOST': env("DB_HOST"),
         'PORT': env("DB_PORT"),
+        'OPTIONS': {
+            'options': env('DATABASE_OPTIONS'),
+        },
     }
 }
 
