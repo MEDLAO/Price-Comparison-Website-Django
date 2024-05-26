@@ -46,7 +46,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'product',
     'user',
+    'parler',
 ]
+
+LANGUAGES = (
+    ('en', 'English'),
+    ('ar', 'Arabic')
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

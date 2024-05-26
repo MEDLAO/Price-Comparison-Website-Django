@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.files.base import ContentFile
 import requests
+from parler.models import TranslatableModel, TranslatedFields
 
 
 class Website(models.Model):
@@ -22,30 +23,22 @@ class Website(models.Model):
    def __str__(self):
        return f'{self.WEBSITE_NAME} {self.COUNTRY}'
 
-class BaseProduct(models.Model):
-    CURRENCY = (
-        ('EGP', 'Egyptian Pound'),
-        ('USD', 'US Dollar'),
-        ('EUR', 'Euro'),
-    )
+class BaseProduct(TranslatableModel):
     PRODUCT_TYPE = (
         ('SW', 'Smart Watch'),
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    translations = TranslatedFields(
+        description = models.TextField(),
+        brand = models.CharField(max_length=50),
+        color = models.CharField(max_length=50),
+        currency = models.CharField(max_length=10),
+    )
     product_type = models.CharField(max_length=50, choices=PRODUCT_TYPE)
-    description = models.TextField()
-    brand = models.CharField(max_length=50)
-    color = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    currency = models.CharField(max_length=3, choices=CURRENCY, default='EGP')
-
-    class Meta:
-        abstract = True
 
 class ScrapedProduct(BaseProduct):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     website = models.ForeignKey(Website, on_delete=models.CASCADE)
     product_url = models.URLField(max_length=200)
     image_url = models.URLField(max_length=200)
