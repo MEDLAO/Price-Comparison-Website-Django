@@ -26,18 +26,19 @@ async def fetch_jumia(s, url, headers):
                     price_with_html_tag = product.find("div", class_="prc")
                     if price_with_html_tag:
                         price = price_with_html_tag.get_text()
+                        price = re.sub(r'جنيه|EGP', '', price)
+                        price = re.sub(r'[\s\u00A0\u200f]+', '', price)
+                        price = re.sub(r',', '', price).strip()
+                        price = float(price)
                         print(price)
 
                     # description
                     description = product.find("h3", class_="name").get_text()
                     print(description)
 
-                    # brand
-                    brand = find_product_attribute(BRANDS_EN, description)
+                    # brand, color
+                    brand, color = extract_brand_and_color(description, BRANDS_EN, COLORS_EN)
                     print(brand)
-
-                    # color
-                    color = find_product_attribute(COLORS_EN, description)
                     print(color)
 
                     # image

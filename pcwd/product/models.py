@@ -5,23 +5,24 @@ from parler.models import TranslatableModel, TranslatedFields
 
 
 class Website(models.Model):
-   WEBSITE_NAME = (
+    WEBSITE_NAME = (
        ('AM', 'Amazon'),
        ('EH', 'Ehabgroup'),
        ('JU', 'Jumia'),
        ('2B', '2B'),
-   )
-   COUNTRY = (
+    )
+    COUNTRY = (
        ('EG', 'Egypt'),
-   )
-   created_at = models.DateTimeField(auto_now_add=True)
-   updated_at = models.DateTimeField(auto_now=True)
-   name = models.CharField(max_length=50, choices=WEBSITE_NAME)
-   country = models.CharField(max_length=50, choices=COUNTRY)
-   url = models.URLField(max_length=200)
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=50, choices=WEBSITE_NAME)
+    country = models.CharField(max_length=50, choices=COUNTRY)
+    url = models.URLField(max_length=200)
 
-   def __str__(self):
-       return f'{self.WEBSITE_NAME} {self.COUNTRY}'
+    def __str__(self):
+        return f'{self.WEBSITE_NAME} {self.COUNTRY}'
+
 
 class BaseProduct(TranslatableModel):
     PRODUCT_TYPE = (
@@ -30,13 +31,14 @@ class BaseProduct(TranslatableModel):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     translations = TranslatedFields(
-        description = models.TextField(),
-        brand = models.CharField(max_length=50),
-        color = models.CharField(max_length=50),
-        currency = models.CharField(max_length=10),
+        description=models.TextField(),
+        brand=models.CharField(max_length=50),
+        color=models.CharField(max_length=50),
+        currency=models.CharField(max_length=10),
     )
-    product_type = models.CharField(max_length=50, choices=PRODUCT_TYPE)
+    product_type = models.CharField(max_length=50, choices=PRODUCT_TYPE, default='SW')
     price = models.DecimalField(max_digits=10, decimal_places=2)
+
 
 class ScrapedProduct(BaseProduct):
     website = models.ForeignKey(Website, on_delete=models.CASCADE)

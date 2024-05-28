@@ -15,7 +15,7 @@ async def fetch_amazon(s, url, headers):
     data = None
     while data is None:
         try:
-            async with s.get(f"https://amazon.eg/-/en/s?i=electronics&bbn=18018102031&rh=n%3A21832958031&fs=true&page={url}&language=en_AE", headers=headers) as r:
+            async with s.get(f"https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&page={url}&language=ar_AE&ref=lp_21832958031_sar", headers=headers) as r:
                 r.raise_for_status()
                 data = await r.text()
                 print(r.status)
@@ -27,7 +27,10 @@ async def fetch_amazon(s, url, headers):
                     price_with_html_tag = product.find('span', class_='a-offscreen')
                     if price_with_html_tag:
                         price = price_with_html_tag.get_text()
-                        price = re.sub(r'جنيه', '', price)
+                        price = re.sub(r'جنيه|EGP', '', price)
+                        price = re.sub(r'[\s\u00A0\u200f]+', '', price)
+                        price = re.sub(r',', '', price).strip()
+                        price = float(price)
                         print(price)
 
                     # description
@@ -37,22 +40,10 @@ async def fetch_amazon(s, url, headers):
                         description = description_with_html_tag.get_text()
                         print(description)
 
-                        #brand
-                        brand = find_product_attribute(BRANDS_EN, description)
+                        # brand, color
+                        brand, color = extract_brand_and_color(description, BRANDS_AR, COLORS_AR)
                         print(brand)
-                        # for brand in BRANDS_EN:
-                        #     if (brand in description) or (brand.lower() in description) or (brand.upper() in description):
-                        #         print(brand)
-                        #         break
-
-                        #color
-                        color = find_product_attribute(COLORS_EN, description)
                         print(color)
-                        # for color in COLORS_EN:
-                        #     if (color in description) or (color.lower() in description) or (color.upper() in description):
-                        #         print(color)
-                        #         break
-
 
                     # image
                     image_with_html_tag = product.find('img', class_='s-image')

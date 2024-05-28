@@ -2,19 +2,26 @@ from scraper.websites.utils import *
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import aiohttp as aiohttp
+from pcwd.product.models import Website, ScrapedProduct
+import os
 
 
-HOME_PAGE_URL_BTECH = "https://btech.com/en/"
-BTECH_PRODUCT_URL_AR = "https://btech.com/ar/catalogsearch/result/index/?q=smart+watches"
-BTECH_PRODUCT_URL_EN = "https://btech.com/en/catalogsearch/result/?q=smart%20watches"
-# NB_PAGES_BTECH_EG =
+# Set up Django environment
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pcwd.settings')
+django.setup()
+
+HOME_PAGE_URL_EHABGROUP = "https://ehabgroup.com/"
+EHABGROUP_URL_AR = "https://ehabgroup.com/ar/smart-wearables.html"
+EHABGROUP_URL_EN = "https://ehabgroup.com/smart-wearables.html"
+
+website_eh_en, _ = Website.objects.get_or_create(name='EH', country='EG', url=EHABGROUP_URL_EN)
 
 
 async def fetch_ehabgroup(s, url, headers):
     data = None
     while data is None:
         try:
-            async with s.get(f"https://ehabgroup.com/smart-wearables/smart-watches.html?p={url}", headers=headers) as r:
+            async with s.get(f"https://ehabgroup.com/smart-wearables.html?p={url}", headers=headers) as r:
                 r.raise_for_status()
                 data = await r.text()
                 print(r.status)
@@ -30,19 +37,23 @@ async def fetch_ehabgroup(s, url, headers):
                         price_with_html_tag = product.find("span", class_="price")
                         if price_with_html_tag:
                             price = price_with_html_tag.get_text()
+                            price = re.sub(r'جنيه|EGP', '', price)
+                            price = re.sub(r'[\s\u00A0\u200f]+', '', price)
+                            price = re.sub(r',', '', price).strip()
+                            price = float(price)
                             print(price)
+
+                            currency = 'EGP'
+                            print(currency)
 
                         # description
                         description = description_with_html_tag.get_text()
                         description = description.lstrip()
                         print(description)
 
-                        # brand
-                        brand = find_product_attribute(BRANDS_EN, description)
+                        # brand, color
+                        brand, color = extract_brand_and_color(description, BRANDS_EN, COLORS_EN)
                         print(brand)
-
-                        # color
-                        color = find_product_attribute(COLORS_EN, description)
                         print(color)
 
                         # image
@@ -55,6 +66,9 @@ async def fetch_ehabgroup(s, url, headers):
                         # link
                         link = a_links[0].attrs['href']
                         print(link)
+                    # instantiate ScrapedProduct while scraping
+                    create_scraped_product(website_eh_en, description, brand, color, currency, price, link, image)
+
                 print(headers)
 
         except aiohttp.ClientError:

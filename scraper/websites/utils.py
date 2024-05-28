@@ -1,20 +1,54 @@
 import requests
 from bs4 import BeautifulSoup
 import asyncio
+import re
 from random import choice
 from time import sleep
 from random import randint
 from fake_useragent import UserAgent
+from pcwd.product.models import Website, ScrapedProduct
 
 
 NB_PROXIES_ALTERNATE = 20
 NB_TRIES_SAME_PAGE = 10
 
-BRANDS_EN = ["Cardoo", "Devia", "Generic", "Imilab", "Redmi", "Kieslect", "Kospet", "Mibro", "Oraimo", "Xiaomi", "Huawei", "Joyroom", "Samsung", "Honor", "Amazfit", "Apple", "Tommy Hilfiger", "Diesel", "Fossil", "Casio", "G-shock", "Guess", "Michael Kors", "Barbie"]
-COLORS_EN = ["Beige", "Black", "Blue", "Brown", "Gold", "Green", "Grey", "Off-White", "Orange", "Pink", "Purple", "Red", "Silver", "Turquoise", "White", "Yellow"]
+BRANDS_EN = [
+    "Apple", "Samsung", "Huawei", "Sony", "Oppo", "Xiaomi", "Nokia", "Amazfit",
+    "Garmin", "Fitbit", "Realme", "OnePlus", "Lenovo", "Honor", "Motorola", "Infinix",
+    "Fossil", "Casio", "Rolex", "Hublot", "TAG Heuer", "Tissot", "Timex", "Seiko",
+    "Citizen", "Diesel", "Emporio Armani", "Michael Kors", "Skagen", "Suunto",
+    "Polar", "Withings", "Zepp", "Mobvoi", "Zeblaze", "Corn", "Joyroom", "Oraimo", "Kospet",
+    "Redmi", "Cardoo", "Devia", "Generic", "Imilab", "Kieslect", "Mibro", "Tommy Hilfiger",
+    "G-shock", "Guess", "Barbie"
+]
 
-BRANDS_AR = ["اورايمو", "شاومي", "هواوى" , "جوي رووم", "سامسونج", "اونر", "امازفيت", "جوي رووم", "ابل", "تومي هيلفيغر", "ديزل", "فوسيل", "كاسيو", "جي شوك", "جس", "مايكل كورس", "باربي"]
-COLORS_AR = ["بيج", "أسود", "أزرق", "بني", "ذهبي", "متعدد", "أوف ويت", "برتقالي", "زهري", "بنفسجي", "أحمر", "فضي", "فبروزي", "أبيض" ,"أصفر", "أخضر" ,"رمادي"]
+BRANDS_AR = [
+    "أبل", "سامسونج", "هواوي", "سوني", "أوبو", "شاومي", "نوكيا", "أمازفيت",
+    "غارمين", "فيتبيت", "ريلمي", "ون بلس", "لينوفو", "هونر", "موتورولا", "إنفينيكس",
+    "فوسيل", "كاسيو", "رولكس", "هوبلو", "تاغ هوير", "تيسو", "تايمكس", "سيكو",
+    "سيتيزن", "ديزل", "إمبريو أرماني", "مايكل كورس", "سكان", "سنتو",
+    "بولار", "ويذينجز", "زيب", "موبفوي", "زيبليز", "كورن", "جوي روم", "أورايمو", "كوسبت",
+    "ريدمى", "كاردو", "ديفيا", "جينيريك", "إيمي لاب", "كيسليكت", "ميبرو", "تومي هيلفيغر",
+    "جي-شوك", "جيس", "باربي"
+]
+
+COLORS_EN = [
+    "Black", "White", "Red", "Green", "Blue", "Silver", "Orange", "Yellow",
+    "Purple", "Pink", "Gold", "Brown", "Grey", "Beige", "Navy", "Maroon",
+    "Turquoise", "Teal", "Olive", "Coral", "Lavender", "Peach", "Cyan", "Magenta",
+    "Mystic Silver", "Natural Silver", "Mecha Gray", "Quiet Blue", "Performance Blue",
+    "Ceramic White", "Graphite Grey", "Mica Silver", "Cyan Lake", "Rock Grey",
+    "Midnight Black", "Light-Blue", "Blue-black", "Starlight", "Cyber Grey"
+]
+
+COLORS_AR = [
+    "أسود", "أبيض", "أحمر", "أخضر", "أزرق", "فضي", "برتقالي", "أصفر",
+    "أرجواني", "وردي", "ذهبي", "بني", "رمادي", "بيج", "كحلي", "ماروني",
+    "فيروزي", "أخضر مزرق", "زيتوني", "مرجاني", "لافندر", "خوخي", "سماوي", "قرمزي",
+    "فضي غامض", "فضي طبيعي", "رمادي ميكانيكي", "أزرق هادئ", "أزرق الأداء",
+    "أبيض خزفي", "رمادي جرافيتي", "فضي ميكا", "بحيرة سماوية", "رمادي صخري",
+    "أسود منتصف الليل", "أزرق فاتح", "أزرق غامق", "ضوء النجوم", "رمادي سيبر"
+]
 
 
 def proxy_scraper():
@@ -30,11 +64,13 @@ def proxy_scraper():
     ips_with_ports = list(map(lambda x:x[0]+':'+x[1], ip_port_tuples))
     return ips_with_ports
 
+
 def proxy_generator():
     proxy_list = proxy_scraper()
     chosen_proxy = choice(proxy_list)
     proxy = {'http': chosen_proxy}
     return proxy
+
 
 def check_proxy(url, **kwargs):
     alternating_proxies = []
@@ -57,10 +93,24 @@ def check_proxy(url, **kwargs):
         count += 1
     return alternating_proxies
 
+
 def find_product_attribute(attribute_list, description_text):
     for attribute in attribute_list:
         if (attribute in description_text.split()) or (attribute.lower() in description_text.split()) or (attribute.upper() in description_text.split()):
             return attribute
+
+
+def extract_brand_and_color(text, brands, colors):
+    # join the list into a regex pattern, using | to match any word in the list
+    brand_pattern = r'\b(?:' + '|'.join(map(re.escape, brands)) + r')\b'
+    color_pattern = r'\b(?:' + '|'.join(map(re.escape, colors)) + r')\b'
+
+    # search for patterns in the text and extract the matched strings
+    brand = re.search(brand_pattern, text, re.IGNORECASE)
+    color = re.search(color_pattern, text, re.IGNORECASE)
+
+    return brand.group(0).title() if brand else None, color.group(0).title() if color else None
+
 
 async def fetch_alls(s, urls, fetch_function):
     tasks = []
@@ -73,3 +123,16 @@ async def fetch_alls(s, urls, fetch_function):
         tasks.append(task)
     res = await asyncio.gather(*tasks)
     return res
+
+
+def create_scraped_product(website_obj, description_attr, brand_attr, color_attr, currency_attr, price_attr, product_url_attr, image_url_attr):
+    ScrapedProduct.objects.create(
+        website=website_obj,
+        product_url=product_url_attr,
+        image_url=image_url_attr,
+        description=description_attr,
+        brand=brand_attr,
+        color=color_attr,
+        currency=currency_attr,
+        price=price_attr,
+    )
