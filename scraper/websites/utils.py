@@ -6,7 +6,6 @@ from random import choice
 from time import sleep
 from random import randint
 from fake_useragent import UserAgent
-from pcwd.product.models import Website, ScrapedProduct
 
 
 NB_PROXIES_ALTERNATE = 20
@@ -79,7 +78,7 @@ def check_proxy(url, **kwargs):
         try:
             proxy = proxy_generator()
             print("Proxy currently being used: {}".format(proxy))
-            response = requests.get(url, proxies = proxy, **kwargs)
+            response = requests.get(url, proxies=proxy, **kwargs)
             print(response.status_code)
             print(response.text)
             proxy['http'] = f"http://{proxy['http']}"
@@ -114,25 +113,26 @@ def extract_brand_and_color(text, brands, colors):
 
 async def fetch_alls(s, urls, fetch_function):
     tasks = []
+    file = "scraper/products"
     for url in urls:
         # create a user_agent object
         ua = UserAgent()
         # rotate user_agent
         headers = {"User-Agent": ua.random}
-        task = asyncio.create_task(fetch_function(s, url, headers))
+        task = asyncio.create_task(fetch_function(s, url, headers, file))
         tasks.append(task)
     res = await asyncio.gather(*tasks)
     return res
 
 
-def create_scraped_product(website_obj, description_attr, brand_attr, color_attr, currency_attr, price_attr, product_url_attr, image_url_attr):
-    ScrapedProduct.objects.create(
-        website=website_obj,
-        product_url=product_url_attr,
-        image_url=image_url_attr,
-        description=description_attr,
-        brand=brand_attr,
-        color=color_attr,
-        currency=currency_attr,
-        price=price_attr,
-    )
+# def create_scraped_product(website_obj, description_attr, brand_attr, color_attr, currency_attr, price_attr, product_url_attr, image_url_attr):
+#     ScrapedProduct.objects.language('en').create(
+#         website=website_obj,
+#         product_url=product_url_attr,
+#         image_url=image_url_attr,
+#         description=description_attr,
+#         brand=brand_attr,
+#         color=color_attr,
+#         currency=currency_attr,
+#         price=price_attr,
+#     )

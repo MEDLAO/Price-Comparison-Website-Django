@@ -2,22 +2,19 @@ from scraper.websites.utils import *
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import aiohttp as aiohttp
-from pcwd.product.models import Website, ScrapedProduct
-import os
+import aiofiles
+import asyncio
+import json
 
-
-# Set up Django environment
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pcwd.settings')
-django.setup()
 
 HOME_PAGE_URL_EHABGROUP = "https://ehabgroup.com/"
 EHABGROUP_URL_AR = "https://ehabgroup.com/ar/smart-wearables.html"
 EHABGROUP_URL_EN = "https://ehabgroup.com/smart-wearables.html"
 
-website_eh_en, _ = Website.objects.get_or_create(name='EH', country='EG', url=EHABGROUP_URL_EN)
+# website_eh_en, _ = Website.objects.get_or_create(name='EH', country='EG', url=EHABGROUP_URL_EN)
 
 
-async def fetch_ehabgroup(s, url, headers):
+async def fetch_ehabgroup(s, url, headers, file):
     data = None
     while data is None:
         try:
@@ -66,8 +63,21 @@ async def fetch_ehabgroup(s, url, headers):
                         # link
                         link = a_links[0].attrs['href']
                         print(link)
-                    # instantiate ScrapedProduct while scraping
-                    create_scraped_product(website_eh_en, description, brand, color, currency, price, link, image)
+
+                        # create product dictionary
+                        product_data = {
+                            'description': description,
+                            'brand': brand,
+                            'color': color,
+                            'currency': 'EGP',
+                            'price': price,
+                            'product_url': link,
+                            'image_url': image
+                        }
+
+                        # write product data to file asynchronously
+                        async with aiofiles.open(file, 'a') as f:
+                            await f.write(json.dumps(product_data) + '\n')
 
                 print(headers)
 

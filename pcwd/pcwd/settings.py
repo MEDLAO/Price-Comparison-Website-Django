@@ -44,15 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'product',
-    'user',
+    'pcwd.product',
+    'pcwd.user',
     'parler',
 ]
 
-LANGUAGES = (
+LANGUAGES = [
     ('en', 'English'),
     ('ar', 'Arabic')
-)
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

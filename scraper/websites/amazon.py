@@ -56,7 +56,7 @@ async def fetch_amazon(s, url, headers):
                     if link_with_html_tag:
                         link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
                         print(link)
-                print(headers)
+                print(headers)  # ensure there is a user-agent per page
 
         except aiohttp.ClientError:
             await asyncio.sleep(1)
