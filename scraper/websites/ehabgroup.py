@@ -4,8 +4,8 @@ from bs4 import BeautifulSoup
 import aiohttp as aiohttp
 import aiofiles
 import asyncio
-import json
 import csv
+import convert_numbers
 
 
 HOME_PAGE_URL_EHABGROUP = "https://ehabgroup.com/"
@@ -17,7 +17,7 @@ async def fetch_ehabgroup(s, url, headers, file_path):
     data = None
     while data is None:
         try:
-            async with s.get(f"https://ehabgroup.com/smart-wearables.html?p={url}", headers=headers) as r:
+            async with s.get(f"https://ehabgroup.com/ar/smart-wearables.html?p={url}", headers=headers) as r:
                 r.raise_for_status()
                 data = await r.text()
                 print(r.status)
@@ -36,9 +36,10 @@ async def fetch_ehabgroup(s, url, headers, file_path):
                             price = re.sub(r'جنيه|EGP', '', price)
                             price = re.sub(r'[\s\u00A0\u200f]+', '', price)
                             price = re.sub(r',', '', price).strip()
+                            price = convert_arabic_price(price)
                             print(price)
 
-                            currency = 'EGP'
+                            currency = ' ج.م.'
                             print(currency)
 
                         # description
@@ -47,7 +48,7 @@ async def fetch_ehabgroup(s, url, headers, file_path):
                         print(description)
 
                         # brand, color
-                        brand, color = extract_brand_and_color(description, BRANDS_EN, COLORS_EN)
+                        brand, color = extract_brand_and_color(description, BRANDS_AR, COLORS_AR)
                         print(brand)
                         print(color)
 
@@ -63,7 +64,7 @@ async def fetch_ehabgroup(s, url, headers, file_path):
                         print(link)
 
                         # create product dictionary
-                        product_data = ['Ehab Group', description, brand, color, price, 'EGP', link, image]
+                        product_data = ['Ehab Group ar', description, brand, color, price, ' ج.م.', link, image]
 
                         # Write product data to the CSV file asynchronously
                         async with aiofiles.open(file_path, mode='a', newline='', encoding='utf-8') as f:

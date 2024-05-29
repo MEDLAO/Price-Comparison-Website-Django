@@ -10,7 +10,7 @@ import os
 
 async def main():
     urls = range(1, 3)
-    file_path = 'scraper/products.csv'
+    file_path = 'scraper/products-ar.csv'
     # define the header
     field_names = ['website', 'description', 'brand', 'color', 'price', 'currency', 'product_url', 'image_url']
 

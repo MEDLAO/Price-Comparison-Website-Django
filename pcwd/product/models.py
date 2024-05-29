@@ -1,8 +1,9 @@
+import os
 from django.db import models
 from django.core.files.base import ContentFile
 import requests
-import pandas as pd
 from parler.models import TranslatableModel, TranslatedFields
+from urllib.parse import urlparse
 
 
 class Website(models.Model):
@@ -45,7 +46,7 @@ class ScrapedProduct(BaseProduct):
     website = models.ForeignKey(Website, on_delete=models.CASCADE)
     product_url = models.URLField(max_length=200)
     image_url = models.URLField(max_length=200)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='product_images/', blank=True)
 
     def __str__(self):
         return f'{self.brand} {self.product_type} - Scraped from {self.website}'
@@ -54,6 +55,9 @@ class ScrapedProduct(BaseProduct):
         if self.image_url and not self.image:
             # Directly download the image content
             response = requests.get(self.image_url)
-            filename = self.image_url.split('/')[-1]  # Extract filename from URL
-            self.image.save(filename, ContentFile(response.content), save=False)  # Save image content to ImageField
+            if response.status_code == 200:
+                # Parse the URL to ignore query parameters
+                parsed_url = urlparse(self.image_url)
+                filename = os.path.basename(parsed_url.path)  # extract filename from the path, ignoring query parameters
+                self.image.save(filename, ContentFile(response.content), save=False)  # save image content to ImageField
         super().save(*args, **kwargs)

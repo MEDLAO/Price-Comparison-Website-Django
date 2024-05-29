@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import asyncio
 import re
+import convert_numbers
 from random import choice
 from time import sleep
 from random import randint
@@ -113,7 +114,6 @@ def extract_brand_and_color(text, brands, colors):
 
 async def fetch_alls(s, urls, fetch_function, file_path):
     tasks = []
-    file = "scraper/products.json"
     for url in urls:
         # create a user_agent object
         ua = UserAgent()
@@ -123,6 +123,18 @@ async def fetch_alls(s, urls, fetch_function, file_path):
         tasks.append(task)
     res = await asyncio.gather(*tasks)
     return res
+
+
+def convert_arabic_price(ar_price):
+    if '٫' in ar_price:
+        integer_part, decimal_part = ar_price.split('٫')
+        integer_part_en = convert_numbers.hindi_to_english(integer_part)
+        decimal_part_en = convert_numbers.hindi_to_english(decimal_part)
+        en_price = f"{integer_part_en}.{decimal_part_en}"
+    else:
+        # if the price is an integer, simply convert it
+        en_price = convert_numbers.hindi_to_english(ar_price)
+    return en_price
 
 
 # def create_scraped_product(website_obj, description_attr, brand_attr, color_attr, currency_attr, price_attr, product_url_attr, image_url_attr):

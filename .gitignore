@@ -6,4 +6,6 @@ db.sqlite3
 Free_Proxy_List.txt
 pcwd/pcwd/.env
 main2.py
-scraper/products.csv
+scraper/products-en.csv
+scraper/products-ar.csv
+pcwd/media/product_images/*
