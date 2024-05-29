@@ -111,15 +111,15 @@ def extract_brand_and_color(text, brands, colors):
     return brand.group(0).title() if brand else None, color.group(0).title() if color else None
 
 
-async def fetch_alls(s, urls, fetch_function):
+async def fetch_alls(s, urls, fetch_function, file_path):
     tasks = []
-    file = "scraper/products"
+    file = "scraper/products.json"
     for url in urls:
         # create a user_agent object
         ua = UserAgent()
         # rotate user_agent
         headers = {"User-Agent": ua.random}
-        task = asyncio.create_task(fetch_function(s, url, headers, file))
+        task = asyncio.create_task(fetch_function(s, url, headers, file_path))
         tasks.append(task)
     res = await asyncio.gather(*tasks)
     return res

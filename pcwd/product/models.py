@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.files.base import ContentFile
 import requests
+import pandas as pd
 from parler.models import TranslatableModel, TranslatedFields
 
 
@@ -32,8 +33,8 @@ class BaseProduct(TranslatableModel):
     updated_at = models.DateTimeField(auto_now=True)
     translations = TranslatedFields(
         description=models.TextField(),
-        brand=models.CharField(max_length=50),
-        color=models.CharField(max_length=50),
+        brand=models.CharField(max_length=50, blank=True),
+        color=models.CharField(max_length=50, blank=True),
         currency=models.CharField(max_length=10),
     )
     product_type = models.CharField(max_length=50, choices=PRODUCT_TYPE, default='SW')

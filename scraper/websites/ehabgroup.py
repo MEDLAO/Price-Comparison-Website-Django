@@ -5,16 +5,15 @@ import aiohttp as aiohttp
 import aiofiles
 import asyncio
 import json
+import csv
 
 
 HOME_PAGE_URL_EHABGROUP = "https://ehabgroup.com/"
 EHABGROUP_URL_AR = "https://ehabgroup.com/ar/smart-wearables.html"
 EHABGROUP_URL_EN = "https://ehabgroup.com/smart-wearables.html"
 
-# website_eh_en, _ = Website.objects.get_or_create(name='EH', country='EG', url=EHABGROUP_URL_EN)
 
-
-async def fetch_ehabgroup(s, url, headers, file):
+async def fetch_ehabgroup(s, url, headers, file_path):
     data = None
     while data is None:
         try:
@@ -37,7 +36,6 @@ async def fetch_ehabgroup(s, url, headers, file):
                             price = re.sub(r'جنيه|EGP', '', price)
                             price = re.sub(r'[\s\u00A0\u200f]+', '', price)
                             price = re.sub(r',', '', price).strip()
-                            price = float(price)
                             print(price)
 
                             currency = 'EGP'
@@ -65,19 +63,12 @@ async def fetch_ehabgroup(s, url, headers, file):
                         print(link)
 
                         # create product dictionary
-                        product_data = {
-                            'description': description,
-                            'brand': brand,
-                            'color': color,
-                            'currency': 'EGP',
-                            'price': price,
-                            'product_url': link,
-                            'image_url': image
-                        }
+                        product_data = ['Ehab Group', description, brand, color, price, 'EGP', link, image]
 
-                        # write product data to file asynchronously
-                        async with aiofiles.open(file, 'a') as f:
-                            await f.write(json.dumps(product_data) + '\n')
+                        # Write product data to the CSV file asynchronously
+                        async with aiofiles.open(file_path, mode='a', newline='', encoding='utf-8') as f:
+                            writer = csv.writer(f)
+                            await writer.writerow(product_data)
 
                 print(headers)
 

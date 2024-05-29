@@ -44,10 +44,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pcwd.product',
-    'pcwd.user',
+    'product',
+    'user',
     'parler',
 ]
+
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en'},
+        {'code': 'ar'},
+    ),
+    'default': {
+        'fallbacks': ['en'],  # defaults to PARLER_DEFAULT_LANGUAGE_CODE
+        'hide_untranslated': False,  # the default; let .active_translations() return fallbacks too
+    }
+}
 
 LANGUAGES = [
     ('en', 'English'),
