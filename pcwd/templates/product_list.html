@@ -1,138 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
+    {% load static %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;600;800&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-        }
-        .product-img {
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        .product-img:hover {
-            transform: scale(1.05);
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 50;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.8);
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.3s ease;
-        }
-        .modal-content {
-            max-width: 90%;
-            max-height: 80%;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-        .modal-content img {
-            max-height: 400px;
-            object-fit: cover;
-        }
-        .modal.show {
-            display: flex;
-            opacity: 1;
-        }
-        .modal.hide {
-            opacity: 0;
-            transform: scale(0.95);
-        }
-        .close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 40px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-        }
-        .text-white {
-            color: white;
-        }
-        .bg-black {
-            background-color: black;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body class="bg-black">
-    <h1 class="text-4xl text-center my-10 text-white">Product List</h1>
-    <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<body>
+    <div class="container">
+        <div class="product-grid">
             {% for product in products %}
-            <div class="relative max-w-sm rounded overflow-hidden shadow-lg bg-white group">
-                <img class="w-full product-img cursor-pointer" src="{{ product.image.url }}" alt="{{ product.description }}" onclick="showModal('{{ product.image.url }}', '{{ product.description | escapejs }}', '{{ product.brand | escapejs }}', '{{ product.color | escapejs }}', '{{ product.price | escapejs }} {{ product.currency | escapejs }}')">
-                <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-center p-4">
-                    <div>
-                        <h2 class="text-2xl font-bold">{{ product.description }}</h2>
-                        <p>{{ product.price }} {{ product.currency }}</p>
+                <div class="product-card" data-url="{{ product.image_url }}">
+                    <div class="product-image">
+                        <img src="{{ product.image.url }}" alt="{{ product.description }}">
+                        <div class="product-info">
+                            <p>{{ product.description }}</p>
+                            <p>{{ product.currency }} {{ product.price }} </p>
+                            <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">زر المحل</a>
+                        </div>
                     </div>
                 </div>
-            </div>
             {% endfor %}
         </div>
     </div>
-
-    <!-- Modal -->
-    <div id="myModal" class="modal">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <div class="modal-content">
-            <img id="modal-img" class="w-full h-64 object-cover mb-4">
-            <div id="caption" class="text-lg mb-2"></div>
-            <p id="brand" class="text-gray-700 mb-2"></p>
-            <p id="color" class="text-gray-700 mb-2"></p>
-            <p id="price" class="text-gray-700 mb-2"></p>
-        </div>
-    </div>
-
-    <script>
-        function showModal(src, description, brand, color, price) {
-            const modal = document.getElementById('myModal');
-            const modalImg = document.getElementById("modal-img");
-            const captionText = document.getElementById("caption");
-            const brandText = document.getElementById("brand");
-            const colorText = document.getElementById("color");
-            const priceText = document.getElementById("price");
-
-            modal.style.display = "flex";
-            modal.classList.remove('hide');
-            modal.classList.add('show');
-
-            modalImg.src = src;
-            captionText.textContent = description;
-            brandText.textContent = `Brand: ${brand}`;
-            colorText.textContent = `Color: ${color}`;
-            priceText.textContent = `Price: ${price}`;
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('myModal');
-            modal.classList.remove('show');
-            modal.classList.add('hide');
-            setTimeout(() => {
-                modal.style.display = "none";
-            }, 300);
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            const modal = document.getElementById('myModal');
-            modal.style.display = "none";
-        });
-    </script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

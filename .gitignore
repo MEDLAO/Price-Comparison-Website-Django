@@ -9,3 +9,5 @@ main2.py
 scraper/products-en.csv
 scraper/products-ar.csv
 pcwd/media/product_images/*
+pcwd/static/css/style.css
+pcwd/static/js/main.js

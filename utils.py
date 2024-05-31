@@ -3,7 +3,7 @@ import sys
 import django
 import pandas as pd
 # add the project directory to the Python path
-project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
+project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'pcwd/'))
 if project_path not in sys.path:
     sys.path.append(project_path)
 # set up Django environment
@@ -22,7 +22,7 @@ def import_products_from_csv(file_path_en, file_path_ar):
     df_en = pd.read_csv(file_path_en)
     df_ar = pd.read_csv(file_path_ar)
 
-    # Print column names to verify they are as expected
+    # print column names to verify they are as expected
     print("English CSV Columns:", df_en.columns)
     print("Arabic CSV Columns:", df_ar.columns)
 
