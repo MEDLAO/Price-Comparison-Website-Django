@@ -10,4 +10,4 @@ class ProductListView(ListView):
 
     def get_queryset(self):
         # Fetch all products and ensure translations are loaded
-        return ScrapedProduct.objects.language('ar').all()
+        return ScrapedProduct.objects.language('en').all()
