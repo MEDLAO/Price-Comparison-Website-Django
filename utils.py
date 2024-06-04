@@ -49,21 +49,29 @@ def import_products_from_csv(file_path_en, file_path_ar):
         # English translation
         scraped_product.translations.create(
             language_code='en',
-            product_url=row_en['product_url'],
             description=row_en['description'],
             brand=row_en['brand'],
             color=row_en['color'],
             currency=row_en['currency'],
         )
 
+        scraped_product.translation.create(
+            language_code='en',
+            product_url=row_en['product_url'],
+        )
+
         # Arabic translation
         scraped_product.translations.create(
             language_code='ar',
-            product_url=row_ar['product_url'],
             description=row_ar['description'],
             brand=row_ar['brand'],
             color=row_ar['color'],
             currency=row_ar['currency'],
+        )
+
+        scraped_product.translation.create(
+            language_code='ar',
+            product_url=row_ar['product_url'],
         )
 
 

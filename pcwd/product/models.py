@@ -44,7 +44,7 @@ class BaseProduct(TranslatableModel):
 
 class ScrapedProduct(BaseProduct):
     website = models.ForeignKey(Website, on_delete=models.CASCADE)
-    product_url = models.URLField(max_length=200)
+    translation = TranslatedFields(product_url=models.URLField(max_length=200))
     image_url = models.URLField(max_length=200)
     image = models.ImageField(upload_to='product_images/', blank=True)
 
