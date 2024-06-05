@@ -8,20 +8,20 @@ import re
 HOME_PAGE_URL_AMAZON = "https://amazon.eg"
 AMAZON_PRODUCT_URL_AR = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=ar_AE&ref=lp_21832958031_sar"
 AMAZON_PRODUCT_URL_EN = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=en_AE&ref=lp_21832958031_sar"
-NB_PAGES_AMAZON_EG = 37
+NB_PAGES_AMAZON_EG = 43
 
 
-async def fetch_amazon(s, url, headers):
+async def fetch_amazon(s, url, nb_page, headers):
     data = None
     while data is None:
         try:
-            async with s.get(f"https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&page={url}&language=ar_AE&ref=lp_21832958031_sar", headers=headers) as r:
+            async with s.get(url + f"&page={nb_page}", headers=headers) as r:
                 r.raise_for_status()
                 data = await r.text()
                 print(r.status)
                 soup = BeautifulSoup(data, 'html.parser')
                 products = soup.find_all('div', class_='a-section a-spacing-base')
-                print(f'Product for page {url}')
+                print(f'Product for page {nb_page}')
                 for product in products:
                     # price
                     price_with_html_tag = product.find('span', class_='a-offscreen')
@@ -30,7 +30,6 @@ async def fetch_amazon(s, url, headers):
                         price = re.sub(r'جنيه|EGP', '', price)
                         price = re.sub(r'[\s\u00A0\u200f]+', '', price)
                         price = re.sub(r',', '', price).strip()
-                        price = float(price)
                         print(price)
 
                     # description

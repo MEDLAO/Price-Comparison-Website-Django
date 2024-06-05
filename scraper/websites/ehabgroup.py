@@ -11,19 +11,20 @@ import convert_numbers
 HOME_PAGE_URL_EHABGROUP = "https://ehabgroup.com/"
 EHABGROUP_URL_AR = "https://ehabgroup.com/ar/smart-wearables.html"
 EHABGROUP_URL_EN = "https://ehabgroup.com/smart-wearables.html"
+NB_PAGES_EHABGROUP_EG = 2
 
 
-async def fetch_ehabgroup(s, url, headers, file_path):
+async def fetch_ehabgroup(s, url, nb_page, headers, file_path):
     data = None
     while data is None:
         try:
-            async with s.get(f"https://ehabgroup.com/ar/smart-wearables.html?p={url}", headers=headers) as r:
+            async with s.get(url + f"&page={nb_page}", headers=headers) as r:
                 r.raise_for_status()
                 data = await r.text()
                 print(r.status)
                 soup = BeautifulSoup(data, 'html.parser')
                 products = soup.find_all("div", class_="product-item-info")
-                print(f'Product for page {url}')
+                print(f'Product for page {nb_page}')
                 for product in products:
                     description_with_html_tag = product.find("a", class_="product-item-link")
                     if description_with_html_tag:

@@ -7,19 +7,20 @@ import aiohttp as aiohttp
 HOME_PAGE_URL_TWOB = "https://2b.com.eg/en/"
 TWOB_PRODUCT_URL_AR = "https://2b.com.eg/ar/mobile-and-tablet/wearables.html"
 TWOB_PRODUCT_URL_EN = "https://2b.com.eg/en/mobile-and-tablet/wearables.html"
+NB_PAGES_2B_EG = 5
 
 
-async def fetch_twob(s, url, headers):
+async def fetch_twob(s, url, nb_page, headers):
     data = None
     while data is None:
         try:
-            async with s.get(f"https://2b.com.eg/en/mobile-and-tablet/wearables.html?p={url}", headers=headers) as r:
+            async with s.get(url + f"&page={nb_page}", headers=headers) as r:
                 r.raise_for_status()
                 data = await r.text()
                 print(r.status)
                 soup = BeautifulSoup(data, 'html.parser')
                 products = soup.find_all("li", class_="item product product-item")
-                print(f'Product for page {url}')
+                print(f'Product for page {nb_page}')
                 for product in products:
 
                     # price
@@ -29,7 +30,6 @@ async def fetch_twob(s, url, headers):
                         price = re.sub(r'جنيه|EGP', '', price)
                         price = re.sub(r'[\s\u00A0\u200f]+', '', price)
                         price = re.sub(r',', '', price).strip()
-                        price = float(price)
                         print(price)
 
                     # description

@@ -10,17 +10,17 @@ JUMIA_PRODUCT_URL_EN = "https://www.jumia.com.eg/catalog/?q=smart+watches"
 NB_PAGES_JUMIA_EG = 50
 
 
-async def fetch_jumia(s, url, headers):
+async def fetch_jumia(s, url, nb_page, headers):
     data = None
     while data is None:
         try:
-            async with s.get(f"https://www.jumia.com.eg/catalog/?q=smart+watches&page={url}", headers=headers) as r:
+            async with s.get(url + f"&page={nb_page}", headers=headers) as r:
                 r.raise_for_status()
                 data = await r.text()
                 print(r.status)
                 soup = BeautifulSoup(data, 'html.parser')
                 products = soup.find_all("article", class_="prd _fb col c-prd")
-                print(f'Product for page {url}')
+                print(f'Product for page {nb_page}')
                 for product in products:
                     # price
                     price_with_html_tag = product.find("div", class_="prc")
@@ -29,7 +29,6 @@ async def fetch_jumia(s, url, headers):
                         price = re.sub(r'جنيه|EGP', '', price)
                         price = re.sub(r'[\s\u00A0\u200f]+', '', price)
                         price = re.sub(r',', '', price).strip()
-                        price = float(price)
                         print(price)
 
                     # description

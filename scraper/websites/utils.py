@@ -112,14 +112,14 @@ def extract_brand_and_color(text, brands, colors):
     return brand.group(0).title() if brand else None, color.group(0).title() if color else None
 
 
-async def fetch_alls(s, urls, fetch_function, file_path):
+async def fetch_alls(s, last_page, fetch_function, file_path):
     tasks = []
-    for url in urls:
+    for nb_page in range(1, last_page + 1):
         # create a user_agent object
         ua = UserAgent()
         # rotate user_agent
         headers = {"User-Agent": ua.random}
-        task = asyncio.create_task(fetch_function(s, url, headers, file_path))
+        task = asyncio.create_task(fetch_function(s, nb_page, headers, file_path))
         tasks.append(task)
     res = await asyncio.gather(*tasks)
     return res
@@ -135,16 +135,3 @@ def convert_arabic_price(ar_price):
         # if the price is an integer, simply convert it
         en_price = convert_numbers.hindi_to_english(ar_price)
     return en_price
-
-
-# def create_scraped_product(website_obj, description_attr, brand_attr, color_attr, currency_attr, price_attr, product_url_attr, image_url_attr):
-#     ScrapedProduct.objects.language('en').create(
-#         website=website_obj,
-#         product_url=product_url_attr,
-#         image_url=image_url_attr,
-#         description=description_attr,
-#         brand=brand_attr,
-#         color=color_attr,
-#         currency=currency_attr,
-#         price=price_attr,
-#     )
