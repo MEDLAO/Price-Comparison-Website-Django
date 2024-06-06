@@ -2,6 +2,9 @@ from scraper.websites.utils import *
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import aiohttp as aiohttp
+import aiofiles
+import asyncio
+import csv
 
 
 HOME_PAGE_URL_JUMIA = "https://www.jumia.com.eg/"
@@ -10,7 +13,7 @@ JUMIA_PRODUCT_URL_EN = "https://www.jumia.com.eg/catalog/?q=smart+watches"
 NB_PAGES_JUMIA_EG = 50
 
 
-async def fetch_jumia(s, url, nb_page, headers):
+async def fetch_jumia(s, url, nb_page, headers, file_path, brand_list, color_list, currency):
     data = None
     while data is None:
         try:
@@ -36,7 +39,7 @@ async def fetch_jumia(s, url, nb_page, headers):
                     print(description)
 
                     # brand, color
-                    brand, color = extract_brand_and_color(description, BRANDS_EN, COLORS_EN)
+                    brand, color = extract_brand_and_color(description, brand_list, color_list)
                     print(brand)
                     print(color)
 
@@ -52,6 +55,15 @@ async def fetch_jumia(s, url, nb_page, headers):
                         link = link_with_html_tag.attrs['href']
                         final_link = "https://www.jumia.com.eg/" + link
                         print(final_link)
+
+                        # create product dictionary
+                        product_data = [description, brand, color, price, currency, link, image]
+
+                        # write product data to the CSV file asynchronously
+                        async with aiofiles.open(file_path, mode='a', newline='', encoding='utf-8') as f:
+                            writer = csv.writer(f)
+                            await writer.writerow(product_data)
+
                 print(headers)
 
         except aiohttp.ClientError:

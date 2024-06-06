@@ -3,6 +3,9 @@ from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import aiohttp as aiohttp
 import re
+import aiofiles
+import asyncio
+import csv
 
 
 HOME_PAGE_URL_AMAZON = "https://amazon.eg"
@@ -11,7 +14,7 @@ AMAZON_PRODUCT_URL_EN = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958
 NB_PAGES_AMAZON_EG = 43
 
 
-async def fetch_amazon(s, url, nb_page, headers):
+async def fetch_amazon(s, url, nb_page, headers, file_path, brand_list, color_list, currency):
     data = None
     while data is None:
         try:
@@ -40,7 +43,7 @@ async def fetch_amazon(s, url, nb_page, headers):
                         print(description)
 
                         # brand, color
-                        brand, color = extract_brand_and_color(description, BRANDS_AR, COLORS_AR)
+                        brand, color = extract_brand_and_color(description, brand_list, color_list)
                         print(brand)
                         print(color)
 
@@ -55,6 +58,15 @@ async def fetch_amazon(s, url, nb_page, headers):
                     if link_with_html_tag:
                         link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
                         print(link)
+
+                    # create product dictionary
+                    product_data = [description, brand, color, price, currency, link, image]
+
+                    # write product data to the CSV file asynchronously
+                    async with aiofiles.open(file_path, mode='a', newline='', encoding='utf-8') as f:
+                        writer = csv.writer(f)
+                        await writer.writerow(product_data)
+
                 print(headers)  # ensure there is a user-agent per page
 
         except aiohttp.ClientError:

@@ -14,7 +14,7 @@ EHABGROUP_URL_EN = "https://ehabgroup.com/smart-wearables.html"
 NB_PAGES_EHABGROUP_EG = 2
 
 
-async def fetch_ehabgroup(s, url, nb_page, headers, file_path):
+async def fetch_ehabgroup(s, url, nb_page, headers, file_path, brand_list, color_list, currency):
     data = None
     while data is None:
         try:
@@ -40,8 +40,6 @@ async def fetch_ehabgroup(s, url, nb_page, headers, file_path):
                             price = convert_arabic_price(price)
                             print(price)
 
-                            currency = ' ج.م.'
-                            print(currency)
 
                         # description
                         description = description_with_html_tag.get_text()
@@ -49,7 +47,7 @@ async def fetch_ehabgroup(s, url, nb_page, headers, file_path):
                         print(description)
 
                         # brand, color
-                        brand, color = extract_brand_and_color(description, BRANDS_AR, COLORS_AR)
+                        brand, color = extract_brand_and_color(description, brand_list, color_list)
                         print(brand)
                         print(color)
 
@@ -65,9 +63,9 @@ async def fetch_ehabgroup(s, url, nb_page, headers, file_path):
                         print(link)
 
                         # create product dictionary
-                        product_data = ['Ehab Group ar', description, brand, color, price, ' ج.م.', link, image]
+                        product_data = [description, brand, color, price, currency, link, image]
 
-                        # Write product data to the CSV file asynchronously
+                        # write product data to the CSV file asynchronously
                         async with aiofiles.open(file_path, mode='a', newline='', encoding='utf-8') as f:
                             writer = csv.writer(f)
                             await writer.writerow(product_data)

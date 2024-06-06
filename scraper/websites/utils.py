@@ -112,14 +112,14 @@ def extract_brand_and_color(text, brands, colors):
     return brand.group(0).title() if brand else None, color.group(0).title() if color else None
 
 
-async def fetch_alls(s, last_page, fetch_function, file_path):
+async def fetch_alls(s, last_page, fetch_function, file_path, brand_list, color_list, currency):
     tasks = []
     for nb_page in range(1, last_page + 1):
         # create a user_agent object
         ua = UserAgent()
         # rotate user_agent
         headers = {"User-Agent": ua.random}
-        task = asyncio.create_task(fetch_function(s, nb_page, headers, file_path))
+        task = asyncio.create_task(fetch_function(s, nb_page, headers, file_path, brand_list, color_list, currency))
         tasks.append(task)
     res = await asyncio.gather(*tasks)
     return res
