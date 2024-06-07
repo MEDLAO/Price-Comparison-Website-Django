@@ -26,6 +26,14 @@ async def fetch_amazon(s, url, nb_page, headers, file_path, brand_list, color_li
                 products = soup.find_all('div', class_='a-section a-spacing-base')
                 print(f'Product for page {nb_page}')
                 for product in products:
+                    # initialize default values
+                    price = None
+                    description = None
+                    brand = None
+                    color = None
+                    link = None
+                    image = None
+
                     # price
                     price_with_html_tag = product.find('span', class_='a-offscreen')
                     if price_with_html_tag:

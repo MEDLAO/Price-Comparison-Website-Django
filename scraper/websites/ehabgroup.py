@@ -18,7 +18,7 @@ async def fetch_ehabgroup(s, url, nb_page, headers, file_path, brand_list, color
     data = None
     while data is None:
         try:
-            async with s.get(url + f"&page={nb_page}", headers=headers) as r:
+            async with s.get(url + f"?p={nb_page}", headers=headers) as r:
                 r.raise_for_status()
                 data = await r.text()
                 print(r.status)
@@ -26,6 +26,14 @@ async def fetch_ehabgroup(s, url, nb_page, headers, file_path, brand_list, color
                 products = soup.find_all("div", class_="product-item-info")
                 print(f'Product for page {nb_page}')
                 for product in products:
+                    # initialize default values
+                    price = None
+                    description = None
+                    brand = None
+                    color = None
+                    link = None
+                    image = None
+
                     description_with_html_tag = product.find("a", class_="product-item-link")
                     if description_with_html_tag:
                         a_links = product.find_all("a")

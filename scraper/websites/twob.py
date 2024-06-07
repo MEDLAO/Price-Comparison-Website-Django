@@ -17,7 +17,7 @@ async def fetch_twob(s, url, nb_page, headers, file_path, brand_list, color_list
     data = None
     while data is None:
         try:
-            async with s.get(url + f"&page={nb_page}", headers=headers) as r:
+            async with s.get(url + f"?p={nb_page}", headers=headers) as r:
                 r.raise_for_status()
                 data = await r.text()
                 print(r.status)
@@ -25,6 +25,13 @@ async def fetch_twob(s, url, nb_page, headers, file_path, brand_list, color_list
                 products = soup.find_all("li", class_="item product product-item")
                 print(f'Product for page {nb_page}')
                 for product in products:
+                    # initialize default values
+                    price = None
+                    description = None
+                    brand = None
+                    color = None
+                    link = None
+                    image = None
 
                     # price
                     price_with_html_tag = product.find("span", class_="price")

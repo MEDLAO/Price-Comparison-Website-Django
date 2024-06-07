@@ -25,6 +25,14 @@ async def fetch_jumia(s, url, nb_page, headers, file_path, brand_list, color_lis
                 products = soup.find_all("article", class_="prd _fb col c-prd")
                 print(f'Product for page {nb_page}')
                 for product in products:
+                    # initialize default values
+                    price = None
+                    description = None
+                    brand = None
+                    color = None
+                    final_link = None
+                    image = None
+
                     # price
                     price_with_html_tag = product.find("div", class_="prc")
                     if price_with_html_tag:
@@ -57,7 +65,7 @@ async def fetch_jumia(s, url, nb_page, headers, file_path, brand_list, color_lis
                         print(final_link)
 
                         # create product dictionary
-                        product_data = [description, brand, color, price, currency, link, image]
+                        product_data = [description, brand, color, price, currency, final_link, image]
 
                         # write product data to the CSV file asynchronously
                         async with aiofiles.open(file_path, mode='a', newline='', encoding='utf-8') as f:

@@ -60,8 +60,8 @@ def proxy_scraper():
     ip_addresses = table.find_all('td')[::8]
     ports = table.find_all('td')[1::8]
 
-    ip_port_tuples = list(zip(map(lambda x:x.text, ip_addresses), map(lambda x:x.text, ports)))
-    ips_with_ports = list(map(lambda x:x[0]+':'+x[1], ip_port_tuples))
+    ip_port_tuples = list(zip(map(lambda x: x.text, ip_addresses), map(lambda x: x.text, ports)))
+    ips_with_ports = list(map(lambda x: x[0]+':'+x[1], ip_port_tuples))
     return ips_with_ports
 
 
@@ -112,14 +112,14 @@ def extract_brand_and_color(text, brands, colors):
     return brand.group(0).title() if brand else None, color.group(0).title() if color else None
 
 
-async def fetch_alls(s, last_page, fetch_function, file_path, brand_list, color_list, currency):
+async def fetch_alls(s, url, last_page, fetch_function, file_path, brand_list, color_list, currency):
     tasks = []
     for nb_page in range(1, last_page + 1):
         # create a user_agent object
         ua = UserAgent()
         # rotate user_agent
         headers = {"User-Agent": ua.random}
-        task = asyncio.create_task(fetch_function(s, nb_page, headers, file_path, brand_list, color_list, currency))
+        task = asyncio.create_task(fetch_function(s, url, nb_page, headers, file_path, brand_list, color_list, currency))
         tasks.append(task)
     res = await asyncio.gather(*tasks)
     return res
