@@ -9,7 +9,7 @@ import os
 
 
 async def main():
-    file_paths = ['scraper/products-ar.csv']
+    file_paths = ['scraper/products-en.csv']
 
     data = {
         # 'en': {
@@ -33,8 +33,6 @@ async def main():
     # define the header
     field_names = ['description', 'brand', 'color', 'price', 'currency', 'product_url', 'image_url']
 
-    tasks = []
-
     for lang, file_path in zip(['ar'], file_paths):
         urls = data[lang]['urls']
         brands = data[lang]['brands']
@@ -48,9 +46,7 @@ async def main():
                     writer.writerow(field_names)
 
             async with aiohttp.ClientSession() as session:
-                task = await fetch_alls(session, url, last_page, function, file_path, brands, colors, currency)
-                tasks.append(task)
+                await fetch_alls(session, url, last_page, function, file_path, brands, colors, currency)
 
-    await asyncio.gather(*tasks)
 
 asyncio.run(main())

@@ -2,6 +2,7 @@ from scraper.websites.utils import *
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import aiohttp as aiohttp
+from urllib.parse import unquote
 import re
 import aiofiles
 import asyncio
@@ -47,7 +48,7 @@ async def fetch_amazon(s, url, nb_page, headers, file_path, brand_list, color_li
                     description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
                                                                             'a-text-normal')
                     if description_with_html_tag:
-                        description = description_with_html_tag.get_text()
+                        description = 'a' + description_with_html_tag.get_text()
                         print(description)
 
                         # brand, color
@@ -65,6 +66,7 @@ async def fetch_amazon(s, url, nb_page, headers, file_path, brand_list, color_li
                     link_with_html_tag = product.find('a', class_='a-link-normal s-no-outline')
                     if link_with_html_tag:
                         link = "https://www.amazon.eg" + link_with_html_tag.attrs['href']
+                        link = unquote(link)  # decode the url
                         print(link)
 
                     # create product dictionary
