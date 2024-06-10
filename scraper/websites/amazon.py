@@ -10,9 +10,9 @@ import csv
 
 
 HOME_PAGE_URL_AMAZON = "https://amazon.eg"
-AMAZON_PRODUCT_URL_AR = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=ar_AE&ref=lp_21832958031_sar"
-AMAZON_PRODUCT_URL_EN = "https://www.amazon.eg/s?bbn=18018102031&rh=n%3A21832958031&fs=true&language=en_AE&ref=lp_21832958031_sar"
-NB_PAGES_AMAZON_EG = 43
+AMAZON_PRODUCT_URL_AR = "https://www.amazon.eg/s?i=electronics&rh=n%3A21832878031&fs=true&language=ar"
+AMAZON_PRODUCT_URL_EN = "https://www.amazon.eg/s?i=electronics&rh=n%3A21832878031&fs=true&language=en"
+NB_PAGES_AMAZON_EG = 400
 
 
 async def fetch_amazon(s, url, nb_page, headers, file_path, brand_list, color_list, currency):
@@ -48,7 +48,7 @@ async def fetch_amazon(s, url, nb_page, headers, file_path, brand_list, color_li
                     description_with_html_tag = product.find('span', class_='a-size-base-plus a-color-base '
                                                                             'a-text-normal')
                     if description_with_html_tag:
-                        description = 'a' + description_with_html_tag.get_text()
+                        description = description_with_html_tag.get_text()
                         print(description)
 
                         # brand, color
