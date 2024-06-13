@@ -20,7 +20,7 @@ class Website(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=50, choices=WEBSITE_NAME)
     country = models.CharField(max_length=50, choices=COUNTRY)
-    url = models.URLField(max_length=200)
+    url = models.URLField(max_length=1000)
 
     def __str__(self):
         return f'{self.WEBSITE_NAME} {self.COUNTRY}'
@@ -44,12 +44,27 @@ class BaseProduct(TranslatableModel):
 
 class ScrapedProduct(BaseProduct):
     website = models.ForeignKey(Website, on_delete=models.CASCADE)
-    translation = TranslatedFields(product_url=models.URLField(max_length=200))
-    image_url = models.URLField(max_length=200)
+    translation = TranslatedFields(product_url=models.URLField(max_length=1000))
+    image_url = models.URLField(max_length=500)
     image = models.ImageField(upload_to='product_images/', blank=True)
 
     def __str__(self):
         return f'{self.brand} {self.product_type} - Scraped from {self.website}'
+
+    @staticmethod
+    def get_image_upload_path(instance, filename):
+        subfolder = None
+        # determine the subfolder based on the website
+        if instance.website.name == 'AM':
+            subfolder = 'amazon'
+        elif instance.website.name == 'JU':
+            subfolder = 'jumia'
+        elif instance.website.name == 'EH':
+            subfolder = 'ehabgroup'
+        elif instance.website.name == '2B':
+            subfolder = 'twob'
+        # construct the full upload path
+        return os.path.join('product_images', subfolder, filename)
 
     def save(self, *args, **kwargs):
         if self.image_url and not self.image:
@@ -59,5 +74,5 @@ class ScrapedProduct(BaseProduct):
                 # Parse the URL to ignore query parameters
                 parsed_url = urlparse(self.image_url)
                 filename = os.path.basename(parsed_url.path)  # extract filename from the path, ignoring query parameters
-                self.image.save(filename, ContentFile(response.content), save=False)  # save image content to ImageField
+                self.image.save(self.get_image_upload_path(self, filename), ContentFile(response.content), save=False)  # save image content to ImageField
         super().save(*args, **kwargs)

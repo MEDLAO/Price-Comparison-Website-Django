@@ -41,17 +41,17 @@ async def fetch_ehabgroup(s, url, nb_page, headers, file_path, brand_list, color
                         # price
                         price_with_html_tag = product.find("span", class_="price")
                         if price_with_html_tag:
-                            price = price_with_html_tag.get_text()
-                            price = re.sub(r'جنيه|EGP', '', price)
+                            price_with_currency = price_with_html_tag.get_text()
+                            price = re.sub(r'ج.م|EGP', '', price_with_currency)
                             price = re.sub(r'[\s\u00A0\u200f]+', '', price)
                             price = re.sub(r',', '', price).strip()
-                            price = convert_arabic_price(price)
+                            if 'ج.م' in price_with_currency:
+                                price = convert_arabic_price(price)
                             print(price)
-
 
                         # description
                         description = description_with_html_tag.get_text()
-                        description = description.lstrip()
+                        description = description.lstrip().rstrip()
                         print(description)
 
                         # brand, color
@@ -60,10 +60,9 @@ async def fetch_ehabgroup(s, url, nb_page, headers, file_path, brand_list, color
                         print(color)
 
                         # image
-                        image_with_html_tag = product.find("img",
-                                                           class_="product-image-photo hover_image")
+                        image_with_html_tag = product.find("img", class_="product-image-photo")
                         if image_with_html_tag:
-                            image = image_with_html_tag.attrs['src']
+                            image = image_with_html_tag.attrs['data-src']
                             print(image)
 
                         # link

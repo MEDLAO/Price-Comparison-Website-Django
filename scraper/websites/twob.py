@@ -43,7 +43,8 @@ async def fetch_twob(s, url, nb_page, headers, file_path, brand_list, color_list
                         print(price)
 
                     # description
-                    description = product.find("a", class_="product-item-link").get_text().lstrip()
+                    description = product.find("a", class_="product-item-link").get_text()
+                    description = description.lstrip().rstrip()
                     print(description)
 
                     # brand, color

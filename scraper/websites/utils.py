@@ -135,3 +135,14 @@ def convert_arabic_price(ar_price):
         # if the price is an integer, simply convert it
         en_price = convert_numbers.hindi_to_english(ar_price)
     return en_price
+
+
+def normalize_url(url):
+    if 'amazon.eg' in url:
+        parts = url.split('/')
+        dp_index = parts.index('dp')
+        return parts[dp_index + 1]  # product id
+    elif '2b.com' in url:
+        return url.replace('ar/', 'en/')
+    else:
+        return url.replace('ar/', '')
