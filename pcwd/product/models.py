@@ -64,14 +64,14 @@ class ScrapedProduct(BaseProduct):
         elif instance.website.name == '2B':
             subfolder = 'twob'
         # construct the full upload path
-        return os.path.join('product_images', subfolder, filename)
+        return os.path.join(subfolder, filename)
 
     def save(self, *args, **kwargs):
         if self.image_url and not self.image:
-            # Directly download the image content
+            # directly download the image content
             response = requests.get(self.image_url)
             if response.status_code == 200:
-                # Parse the URL to ignore query parameters
+                # parse the URL to ignore query parameters
                 parsed_url = urlparse(self.image_url)
                 filename = os.path.basename(parsed_url.path)  # extract filename from the path, ignoring query parameters
                 self.image.save(self.get_image_upload_path(self, filename), ContentFile(response.content), save=False)  # save image content to ImageField
