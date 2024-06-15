@@ -11,4 +11,5 @@ scraper/products-ar.csv
 pcwd/media/product_images/*
 pcwd/static/css/style.css
 pcwd/static/js/main.js
+pcwd/static/images/*
 .DS_Store

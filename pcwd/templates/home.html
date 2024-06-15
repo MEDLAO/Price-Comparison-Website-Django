@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+     <div class="background-image" style="background-image: url('{% static 'images/pcwd-image-2.png' %}');">
+        <div class="overlay">
+            <div class="button-container">
+                <a href="{% url 'product_list_en' %}" class="language-button left-button">Entry</a>
+                <a href="{% url 'product_list_ar' %}" class="language-button">دخول</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

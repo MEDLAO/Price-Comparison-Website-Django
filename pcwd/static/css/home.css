@@ -1,0 +1,76 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Nunito', sans-serif;
+}
+
+.background-image {
+    background-image: url('{% static "images/pcwd-image.png" %}');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.language-button {
+    width: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px; /* Reduced margin between buttons */
+    padding: 9px 18px; /* Slightly increased padding */
+    background-color: #01796F; /* Pine green color */
+    color: #fff; /* Use white text color */
+    text-decoration: none;
+    border-radius: 20px; /* More rounded */
+    transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in, transform 0.1s ease-in; /* Quicker transition */
+    font-size: 1em; /* Adjust font size */
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px; /* Added letter-spacing */
+    font-weight: 350; /* Added font-weight */
+    position: relative; /* For ripple effect */
+    overflow: hidden; /* For ripple effect */
+}
+
+.left-button {
+    margin-right: 35px;
+}
+
+.language-button:hover {
+    background-color: #23c483; /* Previous green color on hover */
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4); /* Use box-shadow from the provided snippet */
+    color: #fff;
+    transform: translateY(-7px);
+}
+
+.language-button:active {
+    background-color: #014D4E; /* Darker pine green color on click */
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .language-button {
+        width: 100px; /* Adjust width for tablets */
+    }
+}
+
+@media (max-width: 576px) {
+    .language-button {
+        width: 90px; /* Adjust width for mobile devices */
+    }
+}

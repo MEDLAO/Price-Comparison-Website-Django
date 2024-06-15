@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
+    <title>قائمة المنتجات</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
@@ -13,31 +13,10 @@
 <body>
     <header class="site-header">
         <nav class="menu">
-            <a href="#" class="menu-item">Home</a>
-            <div class="menu-item dropdown">
-                <a href="#">Products</a>
-                <div class="dropdown-content">
-                    <a href="#">Product 1</a>
-                    <a href="#">Product 2</a>
-                    <a href="#">Product 3</a>
-                </div>
-            </div>
-            <div class="menu-item dropdown">
-                <a href="#">About</a>
-                <div class="dropdown-content">
-                    <a href="#">Our Story</a>
-                    <a href="#">Team</a>
-                    <a href="#">Careers</a>
-                </div>
-            </div>
-            <div class="menu-item dropdown">
-                <a href="#">Contact</a>
-                <div class="dropdown-content">
-                    <a href="#">Email Us</a>
-                    <a href="#">Locations</a>
-                    <a href="#">Support</a>
-                </div>
-            </div>
+            <a href="#" class="menu-item" data-modal="modal1">الصفحة الرئيسية</a>
+            <a href="#" class="menu-item" data-modal="modal2">المنتجات</a>
+            <a href="#" class="menu-item" data-modal="modal3">حول</a>
+            <a href="#" class="menu-item" data-modal="modal4">اتصل</a>
         </nav>
     </header>
     <div class="container">
@@ -49,13 +28,22 @@
                         <div class="product-info">
                             <p class="description">{{ product.description }}</p>
                             <p class="price">{{ product.currency }} {{ product.price }}</p>
-                            <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
+                            <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">المتجر</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>محتوى النموذج هنا</p>
+        </div>
+    </div>
+
     <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

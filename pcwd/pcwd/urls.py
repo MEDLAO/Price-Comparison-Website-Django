@@ -17,12 +17,15 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from product.views import ProductListView
+from product.views import home, ProductListView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('products/', ProductListView.as_view(), name='product_list'),
+    path('', home, name='home'),
+    path('products/en/', ProductListView.as_view(), name='product_list_en'),
+    path('products/ar/', ProductListView.as_view(), name='product_list_ar')
+
 ]
 
 if settings.DEBUG:
