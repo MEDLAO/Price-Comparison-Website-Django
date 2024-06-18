@@ -44,6 +44,8 @@ async def fetch_jumia(s, url, nb_page, headers, file_path, brand_list, color_lis
 
                     # description
                     description = product.find("h3", class_="name").get_text()
+                    if '،' in description:
+                        description.replace(',', '،')
                     print(description)
 
                     # brand, color

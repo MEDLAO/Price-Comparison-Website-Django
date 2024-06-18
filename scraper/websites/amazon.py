@@ -49,6 +49,8 @@ async def fetch_amazon(s, url, nb_page, headers, file_path, brand_list, color_li
                                                                             'a-text-normal')
                     if description_with_html_tag:
                         description = description_with_html_tag.get_text()
+                        if '،' in description:
+                            description.replace(',', '،')
                         print(description)
 
                         # brand, color

@@ -27,7 +27,11 @@
                             <img src="{{ product.image.url }}" alt="{{ product.description }}">
                             <div class="product-info">
                                 <p class="description">{{ product.description }}</p>
-                                <p class="price">{{ product.currency }} {{ product.price }}</p>
+                                {% if product.price %}
+                                    <p class="price">{{ product.currency }} {{ product.price }}</p>
+                                {% else %}
+                                    <p class="price">{{ product.currency }}</p>
+                                {% endif %}
                                 <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
                             </div>
                         </div>

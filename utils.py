@@ -41,54 +41,58 @@ def import_products_from_csv(file_path_en, file_path_ar):
     df_ar.set_index('normalized_url', inplace=True)
     # 1:2, 9605:9606, 11620:11621, 11843:11844
     # iterate over the English DataFrame and match with the Arabic DataFrame
-    for new_index, row_en in df_en.iloc[11844:11850].iterrows():
-        # get the corresponding Arabic row using the normalized URL
-        row_ar = df_ar.loc[new_index]
+    for new_index, row_en in df_en.iterrows():
+        try:
+            # get the corresponding Arabic row using the normalized URL
+            row_ar = df_ar.loc[new_index]
 
-        website = None
-        if 'amazon' in row_en['product_url']:
-            website = website_amazon
-        elif 'jumia' in row_en['product_url']:
-            website = website_jumia
-        elif 'ehabgroup' in row_en['product_url']:
-            website = website_ehabgroup
-        elif '2b' in row_en['product_url']:
-            website = website_twob
+            website = None
+            if 'amazon' in row_en['product_url']:
+                website = website_amazon
+            elif 'jumia' in row_en['product_url']:
+                website = website_jumia
+            elif 'ehabgroup' in row_en['product_url']:
+                website = website_ehabgroup
+            elif '2b' in row_en['product_url']:
+                website = website_twob
 
-        # create ScrapedProduct instance
-        scraped_product = ScrapedProduct.objects.create(
-            website=website,
-            image_url=row_en['image_url'],
-            price=row_en['price'],
-        )
+            # create ScrapedProduct instance
+            scraped_product = ScrapedProduct.objects.create(
+                website=website,
+                image_url=row_en['image_url'],
+                price=float(row_en['price']) if row_en['price'] else None,
+            )
 
-        # English translation
-        scraped_product.translations.create(
-            language_code='en',
-            description=row_en['description'],
-            brand=row_en['brand'],
-            color=row_en['color'],
-            currency=row_en['currency'],
-        )
+            # English translation
+            scraped_product.translations.create(
+                language_code='en',
+                description=row_en['description'],
+                brand=row_en['brand'],
+                color=row_en['color'],
+                currency=row_en['currency'],
+            )
 
-        scraped_product.translation.create(
-            language_code='en',
-            product_url=row_en['product_url'],
-        )
+            scraped_product.translation.create(
+                language_code='en',
+                product_url=row_en['product_url'],
+            )
 
-        # Arabic translation
-        scraped_product.translations.create(
-            language_code='ar',
-            description=row_ar['description'],
-            brand=row_ar['brand'],
-            color=row_ar['color'],
-            currency=row_ar['currency'],
-        )
+            # Arabic translation
+            scraped_product.translations.create(
+                language_code='ar',
+                description=row_ar['description'],
+                brand=row_ar['brand'],
+                color=row_ar['color'],
+                currency=row_ar['currency'],
+            )
 
-        scraped_product.translation.create(
-            language_code='ar',
-            product_url=row_ar['product_url'],
-        )
+            scraped_product.translation.create(
+                language_code='ar',
+                product_url=row_ar['product_url'],
+            )
+
+        except KeyError as e:
+            print(f"KeyError: {e} - corresponding row not found in Arabic csv")
 
 
 # call the function with the paths to the English and Arabic CSV files

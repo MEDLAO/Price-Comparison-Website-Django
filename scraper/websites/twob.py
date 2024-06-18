@@ -45,6 +45,8 @@ async def fetch_twob(s, url, nb_page, headers, file_path, brand_list, color_list
                     # description
                     description = product.find("a", class_="product-item-link").get_text()
                     description = description.lstrip().rstrip()
+                    if '،' in description:
+                        description.replace(',', '،')
                     print(description)
 
                     # brand, color

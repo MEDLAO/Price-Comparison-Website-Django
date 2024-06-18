@@ -52,6 +52,8 @@ async def fetch_ehabgroup(s, url, nb_page, headers, file_path, brand_list, color
                         # description
                         description = description_with_html_tag.get_text()
                         description = description.lstrip().rstrip()
+                        if '،' in description:
+                            description.replace(',', '،')
                         print(description)
 
                         # brand, color
