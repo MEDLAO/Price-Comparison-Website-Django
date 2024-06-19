@@ -2,11 +2,12 @@ import os
 import sys
 import django
 import pandas as pd
-from scraper.websites.utils import normalize_url
+from scraper.websites.utils import normalize_url, truncate
 from scraper.websites.amazon import HOME_PAGE_URL_AMAZON
 from scraper.websites.jumia import HOME_PAGE_URL_JUMIA
 from scraper.websites.ehabgroup import HOME_PAGE_URL_EHABGROUP
 from scraper.websites.twob import HOME_PAGE_URL_TWOB
+from django.db import DataError
 # add the project directory to the Python path
 project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'pcwd/'))
 if project_path not in sys.path:
@@ -39,9 +40,9 @@ def import_products_from_csv(file_path_en, file_path_ar):
     # set the normalized URLs as the index for easy lookup
     df_en.set_index('normalized_url', inplace=True)
     df_ar.set_index('normalized_url', inplace=True)
-    # 1:2, 9605:9606, 11620:11621, 11843:11844
+
     # iterate over the English DataFrame and match with the Arabic DataFrame
-    for new_index, row_en in df_en.iterrows():
+    for new_index, row_en in df_en[9602:].iterrows():
         try:
             # get the corresponding Arabic row using the normalized URL
             row_ar = df_ar.loc[new_index]
@@ -59,40 +60,42 @@ def import_products_from_csv(file_path_en, file_path_ar):
             # create ScrapedProduct instance
             scraped_product = ScrapedProduct.objects.create(
                 website=website,
-                image_url=row_en['image_url'],
+                image_url=truncate(row_en['image_url'], 1000),
                 price=float(row_en['price']) if row_en['price'] else None,
             )
 
             # English translation
             scraped_product.translations.create(
                 language_code='en',
-                description=row_en['description'],
-                brand=row_en['brand'],
-                color=row_en['color'],
-                currency=row_en['currency'],
+                description=row_en['description'],  # adjust length as needed
+                brand=truncate(row_en['brand'], 50),
+                color=truncate(row_en['color'], 50),
+                currency=truncate(row_en['currency'], 10),
             )
 
             scraped_product.translation.create(
                 language_code='en',
-                product_url=row_en['product_url'],
+                product_url=truncate(row_en['product_url'], 1000),
             )
 
             # Arabic translation
             scraped_product.translations.create(
                 language_code='ar',
-                description=row_ar['description'],
-                brand=row_ar['brand'],
-                color=row_ar['color'],
-                currency=row_ar['currency'],
+                description=row_ar['description'],  # adjust length as needed
+                brand=truncate(row_ar['brand'], 50),
+                color=truncate(row_ar['color'], 50),
+                currency=truncate(row_ar['currency'], 10),
             )
 
             scraped_product.translation.create(
                 language_code='ar',
-                product_url=row_ar['product_url'],
+                product_url=truncate(row_ar['product_url'], 1000),
             )
 
         except KeyError as e:
             print(f"KeyError: {e} - corresponding row not found in Arabic csv")
+        except DataError as e:
+            print(f"DataError: {e} at index : {new_index} - data too long for field constraints")
 
 
 # call the function with the paths to the English and Arabic CSV files

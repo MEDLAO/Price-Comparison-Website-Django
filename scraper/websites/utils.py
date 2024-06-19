@@ -146,3 +146,7 @@ def normalize_url(url):
         return url.replace('ar/', 'en/')
     else:
         return url.replace('ar/', '')
+
+
+def truncate(value, max_length):
+    return value[:max_length] if value and len(value) > max_length else value

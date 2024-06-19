@@ -7,7 +7,7 @@ import asyncio
 import csv
 
 
-HOME_PAGE_URL_TWOB = "https://2b.com.eg/en/"
+HOME_PAGE_URL_TWOB = "https://2b.com.eg/"
 TWOB_PRODUCT_URL_AR = "https://2b.com.eg/ar/mobile-and-tablet/wearables.html"
 TWOB_PRODUCT_URL_EN = "https://2b.com.eg/en/mobile-and-tablet/wearables.html"
 NB_PAGES_2B_EG = 5
