@@ -150,3 +150,11 @@ def normalize_url(url):
 
 def truncate(value, max_length):
     return value[:max_length] if value and len(value) > max_length else value
+
+
+def add_latin_letters(field_list):
+    return [f'a_{field}_a' for field in field_list]
+
+
+def remove_latin_letters(field):
+    return field.replace('a_', '').replace('_a', '')

@@ -2,7 +2,7 @@ import os
 import sys
 import django
 import pandas as pd
-from scraper.websites.utils import normalize_url, truncate
+from scraper.websites.utils import normalize_url, truncate, remove_latin_letters
 from scraper.websites.amazon import HOME_PAGE_URL_AMAZON
 from scraper.websites.jumia import HOME_PAGE_URL_JUMIA
 from scraper.websites.ehabgroup import HOME_PAGE_URL_EHABGROUP
@@ -42,7 +42,7 @@ def import_products_from_csv(file_path_en, file_path_ar):
     df_ar.set_index('normalized_url', inplace=True)
 
     # iterate over the English DataFrame and match with the Arabic DataFrame
-    for new_index, row_en in df_en[9602:].iterrows():
+    for new_index, row_en in df_en.iterrows():
         try:
             # get the corresponding Arabic row using the normalized URL
             row_ar = df_ar.loc[new_index]
@@ -60,36 +60,36 @@ def import_products_from_csv(file_path_en, file_path_ar):
             # create ScrapedProduct instance
             scraped_product = ScrapedProduct.objects.create(
                 website=website,
-                image_url=truncate(row_en['image_url'], 1000),
-                price=float(row_en['price']) if row_en['price'] else None,
+                image_url=remove_latin_letters(row_en['image_url']),
+                price=float(remove_latin_letters(row_en['price'])) if row_en['price'] else None,
             )
 
             # English translation
             scraped_product.translations.create(
                 language_code='en',
-                description=row_en['description'],  # adjust length as needed
-                brand=truncate(row_en['brand'], 50),
-                color=truncate(row_en['color'], 50),
-                currency=truncate(row_en['currency'], 10),
+                description=remove_latin_letters(row_en['description']),  # adjust length as needed
+                brand=remove_latin_letters(row_en['brand']),
+                color=remove_latin_letters(row_en['color']),
+                currency=remove_latin_letters(row_en['currency']),
             )
 
             scraped_product.translation.create(
                 language_code='en',
-                product_url=truncate(row_en['product_url'], 1000),
+                product_url=remove_latin_letters(row_en['product_url']),
             )
 
             # Arabic translation
             scraped_product.translations.create(
                 language_code='ar',
-                description=row_ar['description'],  # adjust length as needed
-                brand=truncate(row_ar['brand'], 50),
-                color=truncate(row_ar['color'], 50),
-                currency=truncate(row_ar['currency'], 10),
+                description=remove_latin_letters(row_ar['description']),  # adjust length as needed
+                brand=remove_latin_letters(row_ar['brand']),
+                color=remove_latin_letters(row_ar['color']),
+                currency=remove_latin_letters(row_ar['currency']),
             )
 
             scraped_product.translation.create(
                 language_code='ar',
-                product_url=truncate(row_ar['product_url'], 1000),
+                product_url=remove_latin_letters(row_ar['product_url']),
             )
 
         except KeyError as e:

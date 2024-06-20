@@ -45,7 +45,7 @@ async def fetch_jumia(s, url, nb_page, headers, file_path, brand_list, color_lis
                     # description
                     description = product.find("h3", class_="name").get_text()
                     if '،' in description:
-                        description.replace(',', '،')
+                        description = description.replace(',', '،')
                     print(description)
 
                     # brand, color
@@ -67,15 +67,8 @@ async def fetch_jumia(s, url, nb_page, headers, file_path, brand_list, color_lis
                         print(final_link)
 
                         # create product dictionary
-                        product_data = [
-                            f'"{description}"',
-                            f'"{brand}"',
-                            f'"{color}"',
-                            f'"{price}"',
-                            f'"{currency}"',
-                            f'"{final_link}"',
-                            f'"{image}"'
-                        ]
+                        product_data = [description, brand, color, price, currency, final_link, image]
+                        product_data = add_latin_letters(product_data)
 
                         # write product data to the CSV file asynchronously
                         async with aiofiles.open(file_path, mode='a', newline='', encoding='utf-8') as f:
