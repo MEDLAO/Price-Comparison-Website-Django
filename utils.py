@@ -26,8 +26,8 @@ website_twob, _ = Website.objects.get_or_create(name='2B', country='EG', url=HOM
 
 def import_products_from_csv(file_path_en, file_path_ar):
     # read English and Arabic CSV files into DataFrames
-    df_en = pd.read_csv(file_path_en)
-    df_ar = pd.read_csv(file_path_ar)
+    df_en = pd.read_csv(file_path_en).drop_duplicates()
+    df_ar = pd.read_csv(file_path_ar).drop_duplicates()
 
     # print column names to verify they are as expected
     print("English CSV Columns:", df_en.columns)
@@ -94,6 +94,7 @@ def import_products_from_csv(file_path_en, file_path_ar):
 
         except KeyError as e:
             print(f"KeyError: {e} - corresponding row not found in Arabic csv")
+            continue   # skip saving the row if not found in Arabic csv
         except DataError as e:
             print(f"DataError: {e} at index : {new_index} - data too long for field constraints")
 

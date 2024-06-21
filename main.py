@@ -9,31 +9,31 @@ import os
 
 
 async def main():
-    file_paths = ['scraper/products-en.csv']
+    file_paths = ['scraper/products-en.csv', 'scraper/products-ar.csv']
 
     data = {
         'en': {
-            'urls': [JUMIA_PRODUCT_URL_EN],
+            'urls': [TWOB_PRODUCT_URL_EN],
             'brands': BRANDS_EN,
             'colors': COLORS_EN,
             'currency': 'EGP'
         },
         'ar': {
-            'urls': [JUMIA_PRODUCT_URL_AR],
+            'urls': [TWOB_PRODUCT_URL_AR],
             'brands': BRANDS_AR,
             'colors': COLORS_AR,
             'currency': 'ج.م'
         },
     }
 
-    function_list = [fetch_jumia]
+    function_list = [fetch_twob]
 
-    last_pages = [NB_PAGES_JUMIA_EG]
+    last_pages = [NB_PAGES_2B_EG]
 
     # define the header
     field_names = ['description', 'brand', 'color', 'price', 'currency', 'product_url', 'image_url']
 
-    for lang, file_path in zip(['en'], file_paths):
+    for lang, file_path in zip(['en', 'ar'], file_paths):
         urls = data[lang]['urls']
         brands = data[lang]['brands']
         colors = data[lang]['colors']

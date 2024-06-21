@@ -68,6 +68,7 @@ async def fetch_twob(s, url, nb_page, headers, file_path, brand_list, color_list
 
                     # create product dictionary
                     product_data = [description, brand, color, price, currency, link, image]
+                    product_data = add_latin_letters(product_data)
 
                     # write product data to the CSV file asynchronously
                     async with aiofiles.open(file_path, mode='a', newline='', encoding='utf-8') as f:
