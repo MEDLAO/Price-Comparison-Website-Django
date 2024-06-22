@@ -9,31 +9,31 @@ import os
 
 
 async def main():
-    file_paths = ['scraper/products-en.csv', 'scraper/products-ar.csv']
+    file_paths = ['scraper/products-ar.csv']
 
     data = {
         'en': {
-            'urls': [TWOB_PRODUCT_URL_EN],
+            'urls': [AMAZON_PRODUCT_URL_EN, JUMIA_PRODUCT_URL_EN, EHABGROUP_URL_EN, TWOB_PRODUCT_URL_EN],
             'brands': BRANDS_EN,
             'colors': COLORS_EN,
             'currency': 'EGP'
         },
         'ar': {
-            'urls': [TWOB_PRODUCT_URL_AR],
+            'urls': [AMAZON_PRODUCT_URL_AR, JUMIA_PRODUCT_URL_AR, EHABGROUP_URL_AR, TWOB_PRODUCT_URL_AR],
             'brands': BRANDS_AR,
             'colors': COLORS_AR,
             'currency': 'ج.م'
         },
     }
 
-    function_list = [fetch_twob]
+    function_list = [fetch_amazon, fetch_jumia, fetch_ehabgroup, fetch_twob]
 
-    last_pages = [NB_PAGES_2B_EG]
+    last_pages = [NB_PAGES_AMAZON_EG, NB_PAGES_JUMIA_EG, NB_PAGES_EHABGROUP_EG, NB_PAGES_2B_EG]
 
     # define the header
     field_names = ['description', 'brand', 'color', 'price', 'currency', 'product_url', 'image_url']
 
-    for lang, file_path in zip(['en', 'ar'], file_paths):
+    for lang, file_path in zip(['ar'], file_paths):
         urls = data[lang]['urls']
         brands = data[lang]['brands']
         colors = data[lang]['colors']

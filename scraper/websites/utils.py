@@ -158,3 +158,10 @@ def add_latin_letters(field_list):
 
 def remove_latin_letters(field):
     return field.replace('a_', '').replace('_a', '')
+
+
+def safe_float_conversion(value):
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return None

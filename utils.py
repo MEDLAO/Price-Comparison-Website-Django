@@ -2,7 +2,7 @@ import os
 import sys
 import django
 import pandas as pd
-from scraper.websites.utils import normalize_url, truncate, remove_latin_letters
+from scraper.websites.utils import normalize_url, truncate, remove_latin_letters, safe_float_conversion
 from scraper.websites.amazon import HOME_PAGE_URL_AMAZON
 from scraper.websites.jumia import HOME_PAGE_URL_JUMIA
 from scraper.websites.ehabgroup import HOME_PAGE_URL_EHABGROUP
@@ -61,7 +61,7 @@ def import_products_from_csv(file_path_en, file_path_ar):
             scraped_product = ScrapedProduct.objects.create(
                 website=website,
                 image_url=remove_latin_letters(row_en['image_url']),
-                price=float(remove_latin_letters(row_en['price'])) if row_en['price'] else None,
+                price=safe_float_conversion(remove_latin_letters(row_en['price'])),
             )
 
             # English translation

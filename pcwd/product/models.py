@@ -34,12 +34,12 @@ class BaseProduct(TranslatableModel):
     updated_at = models.DateTimeField(auto_now=True)
     translations = TranslatedFields(
         description=models.TextField(),
-        brand=models.CharField(max_length=50, blank=True),
-        color=models.CharField(max_length=50, blank=True),
+        brand=models.CharField(max_length=50, null=True, blank=True),
+        color=models.CharField(max_length=50, null=True, blank=True),
         currency=models.CharField(max_length=10),
     )
     product_type = models.CharField(max_length=50, choices=PRODUCT_TYPE, default='SW')
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
 
 class ScrapedProduct(BaseProduct):
