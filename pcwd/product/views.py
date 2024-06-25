@@ -11,6 +11,7 @@ def home(request):
 class ProductListView(ListView):
     model = ScrapedProduct
     context_object_name = 'products'
+    paginate_by = 50
 
     def get_template_names(self):
         if 'en' in self.request.path:
@@ -43,7 +44,7 @@ class ProductListView(ListView):
 
         # retrieve the distinct products based on the min_id
         unique_product_ids = [item['min_id'] for item in distinct_products]
-        unique_products = ScrapedProduct.objects.filter(id__in=unique_product_ids).order_by(
+        unique_products = ScrapedProduct.objects.language(language).filter(id__in=unique_product_ids).order_by(
             'price')
 
         return unique_products

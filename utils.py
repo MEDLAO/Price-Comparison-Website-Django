@@ -42,7 +42,7 @@ def import_products_from_csv(file_path_en, file_path_ar):
     df_ar.set_index('normalized_url', inplace=True)
 
     # iterate over the English DataFrame and match with the Arabic DataFrame
-    for new_index, row_en in df_en.iterrows():
+    for new_index, row_en in df_en[6490:].iterrows():
         try:
             # get the corresponding Arabic row using the normalized URL
             row_ar = df_ar.loc[new_index]
