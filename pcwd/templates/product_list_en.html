@@ -10,46 +10,45 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
 </head>
-    <body>
-        <header class="site-header">
-            <nav class="menu">
-                <a href="#" class="menu-item" data-modal="modal1">Home</a>
-                <a href="#" class="menu-item" data-modal="modal2">Products</a>
-                <a href="#" class="menu-item" data-modal="modal3">About</a>
-                <a href="#" class="menu-item" data-modal="modal4">Contact</a>
-            </nav>
-        </header>
-        <div class="container">
-            <div class="product-grid">
-                {% for product in products %}
-                    <div class="product-card" data-url="{{ product.image_url }}">
-                        <div class="product-image">
-                            <img src="{{ product.image.url }}" alt="{{ product.description }}">
-                            <div class="product-info">
-                                <p class="description">{{ product.description }}</p>
-                                {% if product.price %}
-                                    <p class="price">{{ product.currency }} {{ product.price }}</p>
-                                {% else %}
-                                    <p class="price">{{ product.currency }}</p>
-                                {% endif %}
-                                <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
-                            </div>
+<body>
+    <header class="site-header">
+        <nav class="menu">
+            <a href="#" class="menu-item" data-modal="modal1">Home</a>
+            <a href="#" class="menu-item" data-modal="modal2">Products</a>
+            <a href="#" class="menu-item" data-modal="modal3">About</a>
+            <a href="#" class="menu-item" data-modal="modal4">Contact</a>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card" data-url="{{ product.image_url }}">
+                    <div class="product-image">
+                        <img src="{{ product.image.url }}" alt="{{ product.description }}">
+                        <div class="product-info">
+                            <p class="description">{{ product.description }}</p>
+                            {% if product.price %}
+                                <p class="price" dir="ltr">{{ product.price }} {{ product.currency }}</p>
+                            {% endif %}
+                            <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-             {% include 'pagination.html' %}
+                </div>
+            {% endfor %}
         </div>
+        {% include 'pagination_en.html' %}
+    </div>
 
-        <!-- Modal -->
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Modal Content Here</p>
-            </div>
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Modal Content Here</p>
         </div>
+    </div>
 
-        <script src="{% static 'js/main.js' %}"></script>
-    </body>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
 </html>

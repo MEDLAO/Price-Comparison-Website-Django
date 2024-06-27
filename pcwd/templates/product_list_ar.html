@@ -8,12 +8,13 @@
     <title>قائمة المنتجات</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa&family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
 </head>
-<body>
+<body class="noto-kufi-arabic">
     <header class="site-header">
-        <nav class="menu">
+        <nav class="menu menu-arabic">
             <a href="#" class="menu-item" data-modal="modal1">الصفحة الرئيسية</a>
             <a href="#" class="menu-item" data-modal="modal2">المنتجات</a>
             <a href="#" class="menu-item" data-modal="modal3">حول</a>
@@ -29,9 +30,7 @@
                         <div class="product-info">
                             <p class="description">{{ product.description }}</p>
                             {% if product.price %}
-                                <p class="price">{{ product.currency }} {{ product.price }}</p>
-                            {% else %}
-                                <p class="price">{{ product.currency }}</p>
+                                <p class="price" dir="rtl">{{ product.currency }} {{ product.price }}</p>
                             {% endif %}
                             <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">المتجر</a>
                         </div>
@@ -39,7 +38,7 @@
                 </div>
             {% endfor %}
         </div>
-         {% include 'pagination.html' %}
+         {% include 'pagination_ar.html' %}
     </div>
 
     <!-- Modal -->

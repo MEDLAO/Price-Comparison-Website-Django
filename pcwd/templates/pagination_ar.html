@@ -1,0 +1,34 @@
+{% load custom_filters %}
+<div class="pagination">
+    <ul class="pagination-list">
+        {% if page_obj.has_previous %}
+            <li class="pagination-item">
+                <a href="?page=1" class="pagination-link">&laquo; الأولى</a>
+            </li>
+            <li class="pagination-item">
+                <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link">السابق</a>
+            </li>
+        {% endif %}
+
+        {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li class="pagination-item active">
+                    <span class="pagination-link">{{ i }}</span>
+                </li>
+            {% elif i > page_obj.number|add:"-3" and i < page_obj.number|add:"3" %}
+                <li class="pagination-item">
+                    <a href="?page={{ i }}" class="pagination-link">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="pagination-item">
+                <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">التالي</a>
+            </li>
+            <li class="pagination-item">
+                <a href="?page={{ paginator.num_pages }}" class="pagination-link">الأخيرة &raquo;</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
