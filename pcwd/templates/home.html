@@ -5,14 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-     <div class="background-image" style="background-image: url('{% static 'images/pcwd-image-2.png' %}');">
+    <div class="background-image" style="background-image: url('{% static 'images/pcwd-image-2.png' %}');">
         <div class="overlay">
             <div class="button-container">
-                <a href="{% url 'product_list_en' %}" class="language-button left-button">Entry</a>
-                <a href="{% url 'product_list_ar' %}" class="language-button">دخول</a>
+                <a href="{% url 'product_list_ar' %}" class="language-button noto-kufi-arabic">دخول</a>
+                <a href="{% url 'product_list_en' %}" class="language-button nunito left-button">Entry</a>
             </div>
         </div>
     </div>
