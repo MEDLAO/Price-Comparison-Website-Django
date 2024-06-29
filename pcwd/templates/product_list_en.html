@@ -16,12 +16,38 @@
     <header class="site-header">
         <nav class="menu">
             <a href="#" class="menu-item" data-modal="modal1">Home</a>
-            <a href="#" class="menu-item" data-modal="modal2">Products</a>
+            <a href="#" class="menu-item" data-modal="modal2">Filter By</a>
             <a href="#" class="menu-item" data-modal="modal3">About</a>
             <a href="#" class="menu-item" data-modal="modal4">Contact</a>
         </nav>
     </header>
     <div class="container">
+        <!-- Filter Modal -->
+        <div id="modal2" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form method="get" action="{% url 'product-list-en' %}">
+                    <h3>Filter by Brand</h3>
+                    {% for brand in brands %}
+                        <div>
+                            <input type="checkbox" name="brand" value="{{ brand }}" id="brand-{{ brand }}">
+                            <label for="brand-{{ brand }}">{{ brand }}</label>
+                        </div>
+                    {% endfor %}
+
+                    <h3>Filter by Color</h3>
+                    {% for color in colors %}
+                        <div>
+                            <input type="checkbox" name="color" value="{{ color }}" id="color-{{ color }}">
+                            <label for="color-{{ color }}">{{ color }}</label>
+                        </div>
+                    {% endfor %}
+
+                    <button type="submit">Apply Filters</button>
+                </form>
+            </div>
+        </div>
+
         <div class="product-grid">
             {% for product in products %}
                 <div class="product-card" data-url="{{ product.image_url }}">
@@ -39,14 +65,6 @@
             {% endfor %}
         </div>
         {% include 'pagination_en.html' %}
-    </div>
-
-    <!-- Modal -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Modal Content Here</p>
-        </div>
     </div>
 
     <script src="{% static 'js/main.js' %}"></script>
