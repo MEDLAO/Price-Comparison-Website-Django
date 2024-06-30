@@ -16,36 +16,65 @@
     <header class="site-header">
         <nav class="menu menu-arabic">
             <a href="#" class="menu-item" data-modal="modal1">الصفحة الرئيسية</a>
-            <a href="#" class="menu-item" data-modal="modal2">المنتجات</a>
+            <a href="#" class="menu-item" data-modal="modal2">البحث</a>
             <a href="#" class="menu-item" data-modal="modal3">حول</a>
             <a href="#" class="menu-item" data-modal="modal4">اتصل</a>
         </nav>
     </header>
     <div class="container">
-        <div class="product-grid">
-            {% for product in products %}
-                <div class="product-card" data-url="{{ product.image_url }}">
-                    <div class="product-image">
-                        <img src="{{ product.image.url }}" alt="{{ product.description }}">
-                        <div class="product-info">
-                            <p class="description">{{ product.description }}</p>
-                            {% if product.price %}
-                                <p class="price" dir="rtl">{{ product.currency }} {{ product.price }}</p>
-                            {% endif %}
-                            <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">المتجر</a>
+        {% if not products %}
+            <p>عذرًا، لم يتم العثور على منتجات لطلب البحث الخاص بك.</p>
+        {% else %}
+            <div class="product-grid">
+                {% for product in products %}
+                    <div class="product-card" data-url="{{ product.image_url }}">
+                        <div class="product-image">
+                            <img src="{{ product.image.url }}" alt="{{ product.description }}">
+                            <div class="product-info">
+                                <p class="description">{{ product.description }}</p>
+                                {% if product.price %}
+                                    <p class="price" dir="rtl">{{ product.currency }} {{ product.price }}</p>
+                                {% endif %}
+                                <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">المتجر</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-         {% include 'pagination_ar.html' %}
+                {% endfor %}
+            </div>
+            {% include 'pagination_ar.html' %}
+        {% endif %}
     </div>
 
-    <!-- Modal -->
-    <div id="modal" class="modal">
+    <!-- Modals -->
+    <div id="modal1" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <p>محتوى النموذج هنا</p>
+            <p>محتوى النموذج للصفحة الرئيسية هنا</p>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form method="get" action="{% url 'product-list-ar' %}">
+                <h3>البحث عن منتجات معينة</h3>
+                <input type="text" name="q" value="{{ search_query }}" placeholder="البحث عن المنتجات، العلامات التجارية، الألوان..." dir="rtl">
+                <button type="submit">بحث</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>محتوى النموذج حول هنا</p>
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>محتوى النموذج للاتصال هنا</p>
         </div>
     </div>
 

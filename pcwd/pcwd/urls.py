@@ -23,8 +23,8 @@ from product.views import home, ProductListView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('products/en/', ProductListView.as_view(), name='product_list_en'),
-    path('products/ar/', ProductListView.as_view(), name='product_list_ar')
+    path('products/en/', ProductListView.as_view(), name='product-list-en'),
+    path('products/ar/', ProductListView.as_view(), name='product-list-ar')
 
 ]
 
