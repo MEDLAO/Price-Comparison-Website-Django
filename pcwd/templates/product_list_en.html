@@ -15,7 +15,7 @@
 <body>
     <header class="site-header">
         <nav class="menu">
-            <a href="#" class="menu-item" data-modal="modal1">Home</a>
+            <a href="{% url 'home' %}" class="menu-item">Home</a>
             <a href="#" class="menu-item" data-modal="modal2">Search</a>
             <a href="#" class="menu-item" data-modal="modal3">About</a>
             <a href="#" class="menu-item" data-modal="modal4">Contact</a>
@@ -46,19 +46,15 @@
     </div>
 
     <!-- Modals -->
-    <div id="modal1" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Modal Content for Home Here</p>
-        </div>
-    </div>
-
     <div id="modal2" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <form method="get" action="{% url 'product-list-en' %}">
-                <h3>Search for specific products</h3>
+                <h3>Specific products</h3>
                 <input type="text" name="q" value="{{ search_query }}" placeholder="Search for products, brands, colors...">
+                <label for="priceRange">Price range</label>
+                <input type="range" id="priceRange" name="max_price" min="0" max="{{ max_price_db }}" value="{{ max_price|default_if_none:max_price_db }}" oninput="updatePriceOutput(this.value)">
+                <output for="priceRange" id="priceOutput">{{ max_price|default_if_none:max_price_db }} </output>
                 <button type="submit">Search</button>
             </form>
         </div>
@@ -79,5 +75,10 @@
     </div>
 
     <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        function updatePriceOutput(value) {
+            document.getElementById('priceOutput').value = value;
+        }
+    </script>
 </body>
 </html>

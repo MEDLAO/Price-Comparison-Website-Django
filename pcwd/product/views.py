@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView
-from django.db.models import Q, Min
+from django.db.models import Q, Min, Max
 from .models import ScrapedProduct
 
 
@@ -36,7 +36,7 @@ class ProductListView(ListView):
             Q(translations__description__icontains='charging base')
         )
 
-        search_query = self.request.GET.get('q')
+        search_query = self.request.GET.get('q', '')
         if search_query:
             search_terms = search_query.split()
             query = Q()
@@ -44,12 +44,14 @@ class ProductListView(ListView):
                 query |= Q(translations__description__icontains=term)
             queryset = queryset.filter(query)
 
-        # group by price and description, and get the minimum id for each group
+        max_price = self.request.GET.get('max_price')
+        if max_price:
+            queryset = queryset.filter(price__lte=max_price)
+
         distinct_products = queryset.values('price', 'translations__description').annotate(
             min_id=Min('id')
         )
 
-        # retrieve the distinct products based on the min_id
         unique_product_ids = [item['min_id'] for item in distinct_products]
         unique_products = ScrapedProduct.objects.language(language).filter(
             id__in=unique_product_ids).order_by('price')
@@ -59,4 +61,6 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['search_query'] = self.request.GET.get('q', '')
+        context['max_price'] = self.request.GET.get('max_price')
+        context['max_price_db'] = ScrapedProduct.objects.all().aggregate(Max('price'))['price__max']
         return context
