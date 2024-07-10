@@ -23,7 +23,7 @@
     </header>
     <div class="container">
         {% if not products %}
-            <p>عذرًا، لم يتم العثور على منتجات لطلب البحث الخاص بك.</p>
+            <p dir="rtl">عذرًا، لم يتم العثور على منتجات لطلب البحث الخاص بك.</p>
         {% else %}
             <div class="product-grid">
                 {% for product in products %}
@@ -63,7 +63,14 @@
     <div id="modal3" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <p>محتوى النموذج حول هنا</p>
+            <p dir="rtl">
+            مرحبًا بكم في موقع مقارنة أسعار الساعات!
+            </p>
+            <p dir="rtl">
+                في هذه النسخة الأولى، نقدم لكم مجموعة واسعة من الساعات الذكية من عدة مواقع. <br>
+                قريبًا، سنضيف الساعات التقليدية وميزات جديدة...
+            </p>
+
         </div>
     </div>
 
