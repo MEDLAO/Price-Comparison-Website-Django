@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
-    <link rel="icon" type="image/x-icon" href="{% static 'images/temp.ico' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
@@ -16,6 +16,7 @@
 <body>
     <header class="site-header">
         <nav class="menu">
+            <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             <a href="{% url 'home' %}" class="menu-item">Home</a>
             <a href="#" class="menu-item" data-modal="modal2">Search</a>
             <a href="#" class="menu-item" data-modal="modal3">About</a>
