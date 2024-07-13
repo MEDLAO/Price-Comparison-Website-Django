@@ -49,18 +49,17 @@ class ProductListView(ListView):
             queryset = queryset.filter(price__lte=max_price)
 
         amazon_products = queryset.filter(website__name='AM')
+        print(f"Amazon Products Count: {amazon_products.count()}")
 
-        most_expensive_amazon = amazon_products.order_by('-price')[:1000]
-
-        cheapest_amazon = amazon_products.order_by('price')[:1000]
-
+        most_expensive_amazon = amazon_products.order_by('-price')[:50]
+        cheapest_amazon = amazon_products.order_by('price')[:50]
         amazon_products_combined = most_expensive_amazon | cheapest_amazon
 
         queryset = queryset.exclude(website__name='AM')
 
-        queryset = queryset | amazon_products_combined
+        combined_queryset = queryset | amazon_products_combined
 
-        distinct_products = queryset.values('price', 'translations__description').annotate(
+        distinct_products = combined_queryset.values('price', 'translations__description').annotate(
             min_id=Min('id')
         )
 
