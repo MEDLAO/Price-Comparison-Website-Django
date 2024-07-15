@@ -49,7 +49,6 @@ class ProductListView(ListView):
             queryset = queryset.filter(price__lte=max_price)
 
         amazon_products = queryset.filter(website__name='AM')
-        print(f"Amazon Products Count: {amazon_products.count()}")
 
         most_expensive_amazon = amazon_products.order_by('-price')[:50]
         cheapest_amazon = amazon_products.order_by('price')[:50]
@@ -75,3 +74,12 @@ class ProductListView(ListView):
         context['max_price'] = self.request.GET.get('max_price')
         context['max_price_db'] = ScrapedProduct.objects.all().aggregate(Max('price'))['price__max']
         return context
+
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
+
+
+def custom_500(request):
+    return render(request, '500.html', status=500)
+
