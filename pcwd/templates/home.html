@@ -4,13 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>الرئيسية - مقارنة الساعات الذكية</title>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
+
+    <!-- Preconnect for Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="اعثر على أفضل أسعار الساعات الذكية، وقارن الميزات، و احصل على أفضل العلامات التجارية.">
+    <meta name="keywords" content="مقارنة الساعات الذكية, أفضل أسعار الساعات الذكية, شراء الساعات الذكية,الساعات الذكية في مصر">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="الرئيسية - مقارنة الساعات الذكية">
+    <meta property="og:description" content="اعثر على أفضل أسعار الساعات الذكية، وقارن الميزات، و احصل على أفضل العلامات التجارية.">
+    <meta property="og:image" content="{% static 'images/og-image-homepage.jpg' %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="مقارنة الساعات الذكية">
+    <meta property="og:locale" content="ar_AR">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="الرئيسية - مقارنة الساعات الذكية">
+    <meta name="twitter:description" content="اعثر على أفضل أسعار الساعات الذكية، وقارن الميزات، و احصل على أفضل العلامات التجارية.">
+    <meta name="twitter:image" content="{% static 'images/twitter-image-homepage.jpg' %}">
+
 </head>
 <body>
     <div class="background-image" style="background-image: url('{% static 'images/pcwd-image-2.png' %}');">
