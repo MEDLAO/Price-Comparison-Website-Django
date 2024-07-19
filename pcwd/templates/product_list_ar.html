@@ -5,13 +5,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قائمة المنتجات</title>
+    <title>قائمة المنتجات - مقارنة الساعات الذكية</title>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
+
+    <!-- Preconnect for Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa&family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
+
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="استعرض قائمة المنتجات وقارن بين أفضل الساعات الذكية المتوفرة. اعثر على الساعة الذكية المثالية لك.">
+    <meta name="keywords" content="قائمة المنتجات, الساعات الذكية, مقارنة الساعات الذكية, أفضل الأسعار, شراء الساعات الذكية">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="قائمة المنتجات - مقارنة الساعات الذكية">
+    <meta property="og:description" content="استعرض قائمة المنتجات وقارن بين أفضل الساعات الذكية المتوفرة. اعثر على الساعة الذكية المثالية لك.">
+    <meta property="og:image" content="{% static 'images/og-image-products.jpg' %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="مقارنة الساعات الذكية">
+    <meta property="og:locale" content="ar_AR">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="قائمة المنتجات - مقارنة الساعات الذكية">
+    <meta name="twitter:description" content="استعرض قائمة المنتجات وقارن بين أفضل الساعات الذكية المتوفرة. اعثر على الساعة الذكية المثالية لك.">
+    <meta name="twitter:image" content="{% static 'images/twitter-image-products.jpg' %}">
+
 </head>
 <body class="noto-kufi-arabic">
     <header class="site-header">
@@ -52,10 +81,10 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <form method="get" action="{% url 'product-list-ar' %}">
-                <h3 class="modal-heading"> منتجات معينة</h3>
+                <h3 class="modal-heading">منتجات معينة</h3>
                 <input type="text" name="q" value="{{ search_query }}" placeholder="البحث عن المنتجات، العلامات التجارية، الألوان..." dir="rtl">
                 <label for="priceRange">نطاق السعر</label>
-                <input type="range" id="priceRange" name="max_price" min="0" max="{{ max_price_db }}" value="{{ max_price|default_if_none:max_price_db }}" oninput="updatePriceOutput(this.value)" >
+                <input type="range" id="priceRange" name="max_price" min="0" max="{{ max_price_db }}" value="{{ max_price|default_if_none:max_price_db }}" oninput="updatePriceOutput(this.value)">
                 <output for="priceRange" id="priceOutput">{{ max_price|default_if_none:max_price_db }}</output>
                 <button type="submit">بحث</button>
             </form>

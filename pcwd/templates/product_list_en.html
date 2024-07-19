@@ -5,13 +5,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
+    <title>Product List - Compare Smart Watches</title>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
+
+    <!-- Preconnect for Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
+
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Browse the product list and compare the best smartwatches available. Find the perfect smartwatch for you.">
+    <meta name="keywords" content="product list, smartwatches, compare smartwatches, best prices, buy smartwatches">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="Product List - Compare Smart Watches">
+    <meta property="og:description" content="Browse the product list and compare the best smartwatches available. Find the perfect smartwatch for you.">
+    <meta property="og:image" content="{% static 'images/og-image-products.jpg' %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Compare Smart Watches">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Product List - Compare Smart Watches">
+    <meta name="twitter:description" content="Browse the product list and compare the best smartwatches available. Find the perfect smartwatch for you.">
+    <meta name="twitter:image" content="{% static 'images/twitter-image-products.jpg' %}">
+
 </head>
 <body>
     <header class="site-header">
@@ -35,7 +64,7 @@
                             <div class="product-info">
                                 <p class="description">{{ product.description }}</p>
                                 {% if product.price %}
-                                    <p class="price" dir="ltr">{{ product.price }} {{ product.currency }}</p>
+                                    <p class="price">{{ product.price }} {{ product.currency }}</p>
                                 {% endif %}
                                 <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
                             </div>
@@ -66,7 +95,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <p style="margin-top: 50px;">
-                Welcome to !
+                Welcome!
             </p>
             <p>
                 In this first version, we offer a wide selection of smartwatches from several websites. <br>
@@ -86,7 +115,7 @@
                 Drop us a line at <strong>address@contact.com</strong>
             </p>
             <p>
-                Thank you !
+                Thank you!
             </p>
         </div>
     </div>
