@@ -28,7 +28,7 @@ def test_save_method_download_image(mocker, scraped_product):
     assert scraped_product.image.name == 'amazon/615LVMteaYL._AC_SL1500_.jpg'
 
     # verify that the content of the saved image matches the mock response content
-    assert scraped_product.image.read() == b'test_image_content'
+    assert scraped_product.image.read() == b'image_content'
 
 
 @pytest.mark.django_db
