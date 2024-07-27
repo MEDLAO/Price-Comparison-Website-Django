@@ -1,5 +1,11 @@
 import pytest
+from django.test import Client
 from .models import ScrapedProduct, Website
+
+
+@pytest.fixture
+def client():
+    return Client()
 
 
 @pytest.fixture
