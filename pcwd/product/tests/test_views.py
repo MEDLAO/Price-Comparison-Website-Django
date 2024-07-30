@@ -2,6 +2,7 @@ import pytest
 from django.urls import reverse
 from django.test import Client
 from django.db.models import Max, Q
+from pytest_django.asserts import assertTemplateUsed
 from .models import ScrapedProduct
 
 
@@ -20,4 +21,4 @@ def test_product_list_view_search_functionality(client, scraped_product):
     # perform assertions
     assert expected_content in content
     assert response.status_code == 200
-    assert 'product_list_en.html' in [template.name for template in response.templates]
+    assertTemplateUsed(response, 'product_list_en.html')
