@@ -7,7 +7,7 @@ from .models import ScrapedProduct
 
 
 @pytest.mark.django_db
-def test_product_list_view(client, scraped_product):
+def test_product_list_view_en(client, scraped_product):
     # define the path and send a GET request
     path = reverse('product-list-en')
     response = client.get(path)
@@ -19,3 +19,18 @@ def test_product_list_view(client, scraped_product):
     assert expected_content in content
     assert response.status_code == 200
     assertTemplateUsed(response, 'product_list_en.html')
+
+
+@pytest.mark.django_db
+def test_product_list_view_ar(client, scraped_product):
+    # define the path and send a GET request
+    path = reverse('product-list-ar')
+    response = client.get(path)
+
+    # decode the response content
+    content = response.content.decode()
+    expected_content = "وصف عربي"
+
+    assert expected_content in content
+    assert response.status_code == 200
+    assertTemplateUsed(response, 'product_list_ar.html')
