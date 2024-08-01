@@ -34,3 +34,16 @@ def test_product_list_view_ar(client, scraped_product):
     assert expected_content in content
     assert response.status_code == 200
     assertTemplateUsed(response, 'product_list_ar.html')
+
+
+@pytest.mark.django_db
+def test_home_view(client):
+    path = reverse('home')
+    response = client.get(path)
+
+    content = response.content.decode()
+    expected_content = "Entry"
+
+    assert expected_content in content
+    assert response.status_code == 200
+    assertTemplateUsed(response, 'home.html')
