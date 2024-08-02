@@ -19,18 +19,17 @@ from .models import ScrapedProduct
     ],
 )
 def test_product_list_view_with_varying_prices(client, scraped_product, price, url_name, template, expected_content):
-    # Update the price of the scraped_product
+    # update the price of the scraped_product
     scraped_product.price = price
     scraped_product.save()
 
-    # Define the path and send a GET request
+    # define the path and send a GET request
     path = reverse(url_name)
     response = client.get(path)
 
-    # Decode the response content
+    # decode the response content
     content = response.content.decode()
 
-    # Perform assertions
     assert expected_content in content
     assert response.status_code == 200
     assertTemplateUsed(response, template)
