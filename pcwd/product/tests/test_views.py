@@ -7,33 +7,33 @@ from .models import ScrapedProduct
 
 
 @pytest.mark.django_db
-def test_product_list_view_en(client, scraped_product):
-    # define the path and send a GET request
-    path = reverse('product-list-en')
+@pytest.mark.parametrize(
+    "price, url_name, template, expected_content",
+    [
+        (2099.00, "product-list-en", "product_list_en.html", "English description"),
+        (1000.00, "product-list-en", "product_list_en.html", "English description"),
+        (450.00, "product-list-en", "product_list_en.html", "English description"),
+        (2099.00, "product-list-ar", "product_list_ar.html", "وصف عربي"),
+        (1000.00, "product-list-ar", "product_list_ar.html", "وصف عربي"),
+        (450.00, "product-list-ar", "product_list_ar.html", "وصف عربي"),
+    ],
+)
+def test_product_list_view_with_varying_prices(client, scraped_product, price, url_name, template, expected_content):
+    # Update the price of the scraped_product
+    scraped_product.price = price
+    scraped_product.save()
+
+    # Define the path and send a GET request
+    path = reverse(url_name)
     response = client.get(path)
 
-    # decode the response content
+    # Decode the response content
     content = response.content.decode()
-    expected_content = "English description"
 
+    # Perform assertions
     assert expected_content in content
     assert response.status_code == 200
-    assertTemplateUsed(response, 'product_list_en.html')
-
-
-@pytest.mark.django_db
-def test_product_list_view_ar(client, scraped_product):
-    # define the path and send a GET request
-    path = reverse('product-list-ar')
-    response = client.get(path)
-
-    # decode the response content
-    content = response.content.decode()
-    expected_content = "وصف عربي"
-
-    assert expected_content in content
-    assert response.status_code == 200
-    assertTemplateUsed(response, 'product_list_ar.html')
+    assertTemplateUsed(response, template)
 
 
 @pytest.mark.django_db
