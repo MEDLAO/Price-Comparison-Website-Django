@@ -1,6 +1,6 @@
 import pytest
 from django.test import Client
-from .models import ScrapedProduct, Website
+from product.models import ScrapedProduct, Website
 
 
 @pytest.fixture
@@ -10,7 +10,7 @@ def client():
 
 @pytest.fixture
 def website():
-    return Website.objects.create(name='AM')
+    return Website.objects.create(name='AM', country='EG')
 
 
 @pytest.fixture

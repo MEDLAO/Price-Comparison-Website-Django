@@ -49,7 +49,7 @@ class ScrapedProduct(BaseProduct):
     image = models.ImageField(upload_to='product_images/', blank=True)
 
     def __str__(self):
-        return f'{self.brand} {self.product_type} - Scraped from {self.website}'
+        return f'{self.brand} {self.product_type} - Scraped from {self.website.name}'
 
     @staticmethod
     def get_image_upload_path(instance, filename):

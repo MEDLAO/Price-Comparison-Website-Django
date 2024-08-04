@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.test import Client
 from django.db.models import Max, Q
 from pytest_django.asserts import assertTemplateUsed
-from .models import ScrapedProduct
+from product.models import ScrapedProduct
 
 
 @pytest.mark.django_db
@@ -90,6 +90,5 @@ def test_product_list_view_search_functionality(client, scraped_product, languag
 
     products = response.context['products']
 
-    assert any(search_query in product.description for product in products) == \
-           expected_to_be_included
+    assert any(search_query in product.description for product in products) == expected_to_be_included
     assert response.status_code == 200

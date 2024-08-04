@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse, resolve
-from .views import home, ProductListView
+from product.views import home, ProductListView
 
 
 # verify that the url name 'home' correctly maps to '/'

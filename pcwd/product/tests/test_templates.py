@@ -6,7 +6,7 @@ from django.urls import reverse
 def test_home_template_used(client):
     response = client.get(reverse('home'))
     assert response.status_code == 200
-    assert 'home.html' in [template.name for template in response.tempaltes]
+    assert 'home.html' in [template.name for template in response.templates]
 
 
 @pytest.mark.django_db
