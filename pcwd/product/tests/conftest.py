@@ -24,7 +24,7 @@ def scraped_product(website):
                     "T1Uof4Mghv4XG2P5Dmdw8SPsYRRAdaLvo4R3Tdb0Aaw.27WRZzP9eK7D0aNiT5PLaVKlu5pKYK2_"
                     "IxEnGeuct_k&dib_tag=se&keywords=smart%2Bwatches&qid=1721756059&sprefix=smart"
                     "%2Bwa%2Caps%2C599&sr=8-4&th=1",
-        image_url="https://m.media-amazon.com/images/I/615LVMteaYL._AC_SL1500_.jpg",
+        # image_url="https://m.media-amazon.com/images/I/615LVMteaYL._AC_SL1500_.jpg",
     )
 
     # set English translations

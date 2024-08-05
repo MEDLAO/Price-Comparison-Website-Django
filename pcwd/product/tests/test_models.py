@@ -5,7 +5,7 @@ from product.models import ScrapedProduct, Website
 @pytest.mark.django_db
 def test_str_method(scraped_product):
     assert str(scraped_product) == f'{scraped_product.brand} {scraped_product.product_type} ' \
-                                   f'- Scraped from {scraped_product.website}'
+                                   f'- Scraped from {scraped_product.website.name}'
 
 
 @pytest.mark.django_db
@@ -16,19 +16,21 @@ def test_get_image_upload_path_amazon(scraped_product):
 
 @pytest.mark.django_db
 def test_save_method_download_image(mocker, scraped_product):
-    # create a mock response object
+    scraped_product.image_url = "https://m.media-amazon.com/images/I/615LVMteaYL._AC_SL1500_.jpg"
+
     mock_response = mocker.Mock()
     mock_response.status_code = 200
-    mock_response.content = b'image_content'
+    mock_response.content = b'Test image content'
+    mock_requests_get = mocker.patch('requests.get', return_value=mock_response)
 
-    # patch 'requests.get' in the models module to return the mock response when called
-    mocker.patch('product.models.requests.get', return_value=mock_response)
+    assert not scraped_product.image
 
-    # verify that the image was saved with the correct path
+    scraped_product.save()
+
+    mock_requests_get.assert_called_once_with(scraped_product.image_url)
+
     assert scraped_product.image.name.startswith('product_images/amazon/')
-
-    # verify that the content of the saved image matches the mock response content
-    assert scraped_product.image.read() == b'image_content'
+    assert scraped_product.image.read() == b'Test image content'
 
 
 @pytest.mark.django_db

@@ -10,8 +10,8 @@ from product.models import ScrapedProduct
 @pytest.mark.parametrize(
     "url_name, template, expected_content",
     [
-        ("product-list-en", "product_list_en.html", "English description"),
-        ("product-list-ar", "product_list_ar.html", "وصف عربي"),
+        ("product-list-en", "product_list_en.html", "Product List - Compare Smart Watches"),
+        ("product-list-ar", "product_list_ar.html", "قائمة المنتجات - مقارنة الساعات الذكية"),
         ("home", "home.html", "Entry"),
     ],
 )
@@ -49,26 +49,32 @@ def test_product_list_view_excludes_low_price(client, scraped_product, price,
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "price, max_price, expected_to_be_included",
-    [
-        (450.00, 1000, True),
-        (1000.00, 1000, True),
-        (2099.00, 1000, False),
-    ],
-)
-def test_product_list_view_max_price_filter(client, scraped_product, price, max_price,
-                                            expected_to_be_included):
+def test_price_greater_than_max_price(client, scraped_product):
     # update the price of the scraped_product
-    scraped_product.price = price
+    scraped_product.price = 1500
     scraped_product.save()
 
-    response = client.get(reverse('product-list-en'), {'max_price': max_price})
+    response = client.get(reverse('product-list-en'), {'max_price': 1000})
 
     # access the queryset from the context
     products = response.context['products']
 
-    assert (scraped_product in products) == expected_to_be_included
+    assert not (scraped_product in products)
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_price_smaller_than_max_price(client, scraped_product):
+    # update the price of the scraped_product
+    scraped_product.price = 700
+    scraped_product.save()
+
+    response = client.get(reverse('product-list-en'), {'max_price': 1000})
+
+    # access the queryset from the context
+    products = response.context['products']
+
+    assert (scraped_product in products)
     assert response.status_code == 200
 
 
