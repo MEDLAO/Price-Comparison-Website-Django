@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import import AbstractUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 from .validators import validate_username, validate_email
 
@@ -22,5 +22,16 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, username, password, **extra_fields)
 
 
+class CustomUser(AbstractUser, PermissionsMixin):
+    email = models.EmailField(_('email address'), unique=True, validators=[validate_email])
+    username = models.CharField(max_length=150, unique=True, validators=[validate_username])
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
+    objects = CustomUserManager
 
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
+    def __str__(self):
+        return self.email
