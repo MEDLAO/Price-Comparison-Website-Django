@@ -123,6 +123,23 @@ ACCOUNT_FORMS = {
     'signup': 'user.forms.CustomSignupForm',
 }
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'APP': {
+            'client_id': env("GOOGLE_API_CLIENT_ID"),
+            'secret': env("GOOGLE_API_SECRET"),
+            'key': ''
+        }
+    }
+}
+
 WSGI_APPLICATION = 'pcwd.wsgi.application'
 
 
