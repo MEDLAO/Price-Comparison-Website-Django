@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Login - Compare Smart Watches" %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
+
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="{% trans 'Login to access your account and compare the best smartwatches available.' %}">
+    <meta name="keywords" content="{% trans 'login, smartwatches, user account, sign in' %}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="{% trans 'Login - Compare Smart Watches' %}">
+    <meta property="og:description" content="{% trans 'Login to access your account and compare the best smartwatches available.' %}">
+    <meta property="og:image" content="{% static 'images/pcwd-image-2.png' %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{% trans 'Compare Smart Watches' %}">
+    <meta property="og:locale" content="{{ LANGUAGE_CODE }}">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% trans 'Login - Compare Smart Watches' %}">
+    <meta name="twitter:description" content="{% trans 'Login to access your account and compare the best smartwatches available.' %}">
+    <meta name="twitter:image" content="{% static 'images/pcwd-image-2.png' %}">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="menu">
+            <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+            <a href="{% url 'home' %}" class="menu-item">{% trans "Home" %}</a>
+            <a href="#" class="menu-item" data-modal="modal2">{% trans "Search" %}</a>
+            <a href="#" class="menu-item" data-modal="modal3">{% trans "About" %}</a>
+            <a href="#" class="menu-item" data-modal="modal4">{% trans "Contact" %}</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>{% trans "Login" %}</h2>
+        <form method="post" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn">{% trans "Login" %}</button>
+        </form>
+        <p>
+            <a href="{% url 'account_reset_password' %}">{% trans "Forgot your password?" %}</a>
+        </p>
+        <p>
+            {% trans "Don't have an account?" %} <a href="{% url 'account_signup' %}">{% trans "Sign up here" %}</a>.
+        </p>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <!-- Your modal content here -->
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <!-- Your modal content here -->
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <!-- Your modal content here -->
+        </div>
+    </div>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
