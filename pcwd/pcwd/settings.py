@@ -141,6 +141,11 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
+
+
 WSGI_APPLICATION = 'pcwd.wsgi.application'
 
 
