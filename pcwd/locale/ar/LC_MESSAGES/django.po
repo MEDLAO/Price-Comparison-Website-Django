@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-12 18:29+0100\n"
+"POT-Creation-Date: 2024-08-13 17:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,19 +18,671 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+#: templates/account/account_inactive.html:5
+#: templates/account/account_inactive.html:9
+msgid "Account Inactive"
+msgstr "الحساب غير نشط"
+
+#: templates/account/account_inactive.html:12
+msgid "This account is inactive."
+msgstr "هذا الحساب غير نشط."
+
+#: templates/account/base_reauthenticate.html:5
+#: templates/account/base_reauthenticate.html:9
+msgid "Confirm Access"
+msgstr "تأكيد الوصول"
+
+#: templates/account/base_reauthenticate.html:12
+msgid "Please reauthenticate to safeguard your account."
+msgstr "يرجى إعادة التحقق لحماية حسابك."
+
+#: templates/account/base_reauthenticate.html:19
+msgid "Alternative options"
+msgstr "خيارات بديلة"
+
+#: templates/account/confirm_login_code.html:5
+#: templates/account/confirm_login_code.html:27 templates/account/login.html:5
+#: templates/account/login.html:9 templates/account/login.html:31
+#: templates/account/request_login_code.html:5
+#: templates/socialaccount/login.html:5
+#: templates/socialaccount/login_redirect.html:5
+msgid "Sign In"
+msgstr "تسجيل الدخول"
+
+#: templates/account/confirm_login_code.html:9
+msgid "Enter Sign-In Code"
+msgstr "أدخل رمز تسجيل الدخول"
+
+#: templates/account/confirm_login_code.html:15
+#, python-format
+msgid ""
+"We’ve sent a code to %(email_link)s. The code expires shortly, so please "
+"enter it soon."
+msgstr "لقد أرسلنا رمزًا إلى %(email_link)s. سينتهي الرمز قريبًا، لذا يرجى إدخاله قريبًا."
+
+#: templates/account/confirm_login_code.html:34
+#: templates/account/request_login_code.html:31
+msgid "Other sign-in options"
+msgstr "خيارات تسجيل الدخول الأخرى"
+
+#: templates/account/email.html:4 templates/account/email.html:8
+msgid "Email Addresses"
+msgstr "عناوين البريد الإلكتروني"
+
+#: templates/account/email.html:12
+msgid "The following email addresses are associated with your account:"
+msgstr "عناوين البريد الإلكتروني التالية مرتبطة بحسابك:"
+
+#: templates/account/email.html:25
+msgid "Verified"
+msgstr "تم التحقق"
+
+#: templates/account/email.html:29
+msgid "Unverified"
+msgstr "لم يتم التحقق"
+
+#: templates/account/email.html:34
+msgid "Primary"
+msgstr "أساسي"
+
+#: templates/account/email.html:44
+msgid "Make Primary"
+msgstr "اجعلها أساسية"
+
+#: templates/account/email.html:47 templates/account/email_change.html:37
+msgid "Re-send Verification"
+msgstr "إعادة إرسال التحقق"
+
+#: templates/account/email.html:50 templates/socialaccount/connections.html:40
+msgid "Remove"
+msgstr "إزالة"
+
+#: templates/account/email.html:59
+msgid "Add Email Address"
+msgstr "إضافة عنوان بريد إلكتروني"
+
+#: templates/account/email.html:70
+msgid "Add Email"
+msgstr "إضافة بريد إلكتروني"
+
+#: templates/account/email.html:79
+msgid "Do you really want to remove the selected email address?"
+msgstr "هل تريد حقًا إزالة عنوان البريد الإلكتروني المحدد؟"
+
+#: templates/account/email/account_already_exists_message.txt:4
+#, python-format
+msgid ""
+"You are receiving this email because you or someone else tried to signup for "
+"an\n"
+"account using email address:\n"
+"\n"
+"%(email)s\n"
+"\n"
+"However, an account using that email address already exists.  In case you "
+"have\n"
+"forgotten about this, please use the password forgotten procedure to "
+"recover\n"
+"your account:\n"
+"\n"
+"%(password_reset_url)s"
+msgstr "لقد تلقيت هذا البريد الإلكتروني لأنك أو شخص آخر حاول التسجيل لحساب باستخدام عنوان البريد الإلكتروني:\n\n%(email)s\n\nومع ذلك، يوجد بالفعل حساب يستخدم عنوان البريد الإلكتروني هذا. في حالة نسيان ذلك، يرجى استخدام إجراء نسيت كلمة المرور لاستعادة حسابك:\n\n%(password_reset_url)s"
+
+#: templates/account/email/account_already_exists_subject.txt:3
+msgid "Account Already Exists"
+msgstr "الحساب موجود بالفعل"
+
+#: templates/account/email/base_message.txt:1
+#, python-format
+msgid "Hello from %(site_name)s!"
+msgstr "مرحبًا من %(site_name)s!"
+
+#: templates/account/email/base_message.txt:5
+#, python-format
+msgid ""
+"Thank you for using %(site_name)s!\n"
+"%(site_domain)s"
+msgstr "شكرًا لاستخدام %(site_name)s!\n%(site_domain)s"
+
+#: templates/account/email/base_notification.txt:5
+msgid ""
+"You are receiving this mail because the following change was made to your "
+"account:"
+msgstr "لقد تلقيت هذا البريد لأن التغيير التالي تم إجراؤه على حسابك:"
+
+#: templates/account/email/base_notification.txt:10
+#, python-format
+msgid ""
+"If you do not recognize this change then please take proper security "
+"precautions immediately. The change to your account originates from:\n"
+"\n"
+"- IP address: %(ip)s\n"
+"- Browser: %(user_agent)s\n"
+"- Date: %(timestamp)s"
+msgstr "إذا كنت لا تتعرف على هذا التغيير، يرجى اتخاذ الاحتياطات الأمنية المناسبة على الفور. التغيير في حسابك يأتي من:\n\n- عنوان IP: %(ip)s\n- المتصفح: %(user_agent)s\n- التاريخ: %(timestamp)s"
+
+#: templates/account/email/email_changed_message.txt:4
+#, python-format
+msgid "Your email has been changed from %(from_email)s to %(to_email)s."
+msgstr "تم تغيير بريدك الإلكتروني من %(from_email)s إلى %(to_email)s."
+
+#: templates/account/email/email_changed_subject.txt:3
+msgid "Email Changed"
+msgstr "تم تغيير البريد الإلكتروني"
+
+#: templates/account/email/email_confirm_message.txt:4
+msgid "Your email has been confirmed."
+msgstr "تم تأكيد بريدك الإلكتروني."
+
+#: templates/account/email/email_confirm_subject.txt:3
+msgid "Email Confirmation"
+msgstr "تأكيد البريد الإلكتروني"
+
+#: templates/account/email/email_confirmation_message.txt:5
+#, python-format
+msgid ""
+"You're receiving this email because user %(user_display)s has given your "
+"email address to register an account on %(site_domain)s.\n"
+"\n"
+"To confirm this is correct, go to %(activate_url)s"
+msgstr "لقد تلقيت هذا البريد الإلكتروني لأن المستخدم %(user_display)s قد أعطى عنوان بريدك الإلكتروني لتسجيل حساب على %(site_domain)s.\n\nلتأكيد أن هذا صحيح، انتقل إلى %(activate_url)s"
+
+#: templates/account/email/email_confirmation_subject.txt:3
+msgid "Please Confirm Your Email Address"
+msgstr "يرجى تأكيد عنوان بريدك الإلكتروني"
+
+#: templates/account/email/email_deleted_message.txt:4
+#, python-format
+msgid "Email address %(deleted_email)s has been removed from your account."
+msgstr "تمت إزالة عنوان البريد الإلكتروني %(deleted_email)s من حسابك."
+
+#: templates/account/email/email_deleted_subject.txt:3
+msgid "Email Removed"
+msgstr "تمت إزالة البريد الإلكتروني"
+
+#: templates/account/email/login_code_message.txt:5
+msgid ""
+"Your sign-in code is listed below. Please enter it in your open browser "
+"window."
+msgstr "رمز تسجيل الدخول الخاص بك مذكور أدناه. يرجى إدخاله في نافذة المتصفح المفتوحة."
+
+#: templates/account/email/login_code_message.txt:9
+#: templates/account/email/unknown_account_message.txt:6
+msgid "This mail can be safely ignored if you did not initiate this action."
+msgstr "يمكنك تجاهل هذا البريد بأمان إذا لم تقم بهذه العملية."
+
+#: templates/account/email/login_code_subject.txt:3
+msgid "Sign-In Code"
+msgstr "رمز تسجيل الدخول"
+
+#: templates/account/email/password_changed_message.txt:4
+msgid "Your password has been changed."
+msgstr "تم تغيير كلمة المرور الخاصة بك."
+
+#: templates/account/email/password_changed_subject.txt:3
+msgid "Password Changed"
+msgstr "تم تغيير كلمة المرور"
+
+#: templates/account/email/password_reset_key_message.txt:4
+msgid ""
+"You're receiving this email because you or someone else has requested a "
+"password reset for your user account.\n"
+"It can be safely ignored if you did not request a password reset. Click the "
+"link below to reset your password."
+msgstr "لقد تلقيت هذا البريد الإلكتروني لأنك أو شخص آخر قد طلب إعادة تعيين كلمة المرور لحساب المستخدم الخاص بك.\nيمكنك تجاهله بأمان إذا لم تطلب إعادة تعيين كلمة المرور. انقر على الرابط أدناه لإعادة تعيين كلمة المرور الخاصة بك."
+
+#: templates/account/email/password_reset_key_message.txt:9
+#, python-format
+msgid "In case you forgot, your username is %(username)s."
+msgstr "في حال نسيت، اسم المستخدم الخاص بك هو %(username)s."
+
+#: templates/account/email/password_reset_key_subject.txt:3
+msgid "Password Reset Email"
+msgstr "بريد إلكتروني لإعادة تعيين كلمة المرور"
+
+#: templates/account/email/password_reset_message.txt:4
+msgid "Your password has been reset."
+msgstr "تم إعادة تعيين كلمة المرور الخاصة بك."
+
+#: templates/account/email/password_reset_subject.txt:3
+#: templates/account/password_reset.html:4
+#: templates/account/password_reset.html:8
+#: templates/account/password_reset_done.html:6
+#: templates/account/password_reset_done.html:10
+msgid "Password Reset"
+msgstr "إعادة تعيين كلمة المرور"
+
+#: templates/account/email/password_set_message.txt:4
+msgid "Your password has been set."
+msgstr "تم تعيين كلمة المرور الخاصة بك."
+
+#: templates/account/email/password_set_subject.txt:3
+msgid "Password Set"
+msgstr "تعيين كلمة المرور"
+
+#: templates/account/email/unknown_account_message.txt:4
+#, python-format
+msgid ""
+"You are receiving this email because you, or someone else, tried to access "
+"an account with email %(email)s. However, we do not have any record of such "
+"an account in our database."
+msgstr "لقد تلقيت هذا البريد الإلكتروني لأنك أو شخص آخر حاول الوصول إلى حساب باستخدام البريد الإلكتروني %(email)s. ومع ذلك، ليس لدينا أي سجل لحساب من هذا القبيل في قاعدة بياناتنا."
+
+#: templates/account/email/unknown_account_message.txt:8
+msgid "If it was you, you can sign up for an account using the link below."
+msgstr "إذا كنت أنت، يمكنك التسجيل للحصول على حساب باستخدام الرابط أدناه."
+
+#: templates/account/email/unknown_account_subject.txt:3
+msgid "Unknown Account"
+msgstr "حساب غير معروف"
+
+#: templates/account/email_change.html:5 templates/account/email_change.html:9
+msgid "Email Address"
+msgstr "عنوان البريد الإلكتروني"
+
+#: templates/account/email_change.html:21
+#: templates/account/email_change.html:29
+msgid "Current email"
+msgstr "البريد الإلكتروني الحالي"
+
+#: templates/account/email_change.html:31
+msgid "Changing to"
+msgstr "تغيير إلى"
+
+#: templates/account/email_change.html:35
+msgid "Your email address is still pending verification."
+msgstr "عنوان بريدك الإلكتروني لا يزال بانتظار التحقق."
+
+#: templates/account/email_change.html:41
+msgid "Cancel Change"
+msgstr "إلغاء التغيير"
+
+#: templates/account/email_change.html:49
+msgid "Change to"
+msgstr "تغيير إلى"
+
+#: templates/account/email_change.html:55
+msgid "Change Email"
+msgstr "تغيير البريد الإلكتروني"
+
+#: templates/account/email_confirm.html:6
+#: templates/account/email_confirm.html:10
+msgid "Confirm Email Address"
+msgstr "تأكيد عنوان البريد الإلكتروني"
+
+#: templates/account/email_confirm.html:16
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
+"address for user %(user_display)s."
+msgstr "يرجى تأكيد أن <a href=\"mailto:%(email)s\">%(email)s</a> هو عنوان بريد إلكتروني للمستخدم %(user_display)s."
+
+#: templates/account/email_confirm.html:24
+#: templates/account/reauthenticate.html:18
+msgid "Confirm"
+msgstr "تأكيد"
+
+#: templates/account/email_confirm.html:30
+#: templates/account/messages/email_confirmation_failed.txt:2
+#, python-format
+msgid ""
+"Unable to confirm %(email)s because it is already confirmed by a different "
+"account."
+msgstr "تعذر تأكيد %(email)s لأنه تم تأكيده بالفعل من قبل حساب مختلف."
+
+#: templates/account/email_confirm.html:36
+#, python-format
+msgid ""
+"This email confirmation link expired or is invalid. Please <a "
+"href=\"%(email_url)s\">issue a new email confirmation request</a>."
+msgstr "انتهت صلاحية رابط تأكيد البريد الإلكتروني هذا أو أنه غير صالح. يرجى <a href=\"%(email_url)s\">إصدار طلب تأكيد بريد إلكتروني جديد</a>."
+
+#: templates/account/login.html:19
+#, python-format
+msgid ""
+"If you have not created an account yet, then please %(link)ssign "
+"up%(end_link)s first."
+msgstr "إذا لم تقم بإنشاء حساب بعد، يرجى %(link)ssign up%(end_link)s أولاً."
+
+#: templates/account/login.html:42
+msgid "Sign in with a passkey"
+msgstr "تسجيل الدخول باستخدام مفتاح مرور"
+
+#: templates/account/login.html:47 templates/account/request_login_code.html:9
+msgid "Mail me a sign-in code"
+msgstr "أرسل لي رمز تسجيل الدخول"
+
+#: templates/account/logout.html:4 templates/account/logout.html:8
+#: templates/account/logout.html:21
+msgid "Sign Out"
+msgstr "تسجيل الخروج"
+
+#: templates/account/logout.html:11
+msgid "Are you sure you want to sign out?"
+msgstr "هل أنت متأكد أنك تريد تسجيل الخروج؟"
+
+#: templates/account/messages/cannot_delete_primary_email.txt:2
+#, python-format
+msgid "You cannot remove your primary email address (%(email)s)."
+msgstr "لا يمكنك إزالة عنوان بريدك الإلكتروني الأساسي (%(email)s)."
+
+#: templates/account/messages/email_confirmation_sent.txt:2
+#, python-format
+msgid "Confirmation email sent to %(email)s."
+msgstr "تم إرسال بريد تأكيد إلى %(email)s."
+
+#: templates/account/messages/email_confirmed.txt:2
+#, python-format
+msgid "You have confirmed %(email)s."
+msgstr "لقد قمت بتأكيد %(email)s."
+
+#: templates/account/messages/email_deleted.txt:2
+#, python-format
+msgid "Removed email address %(email)s."
+msgstr "تمت إزالة عنوان البريد الإلكتروني %(email)s."
+
+#: templates/account/messages/logged_in.txt:4
+#, python-format
+msgid "Successfully signed in as %(name)s."
+msgstr "تم تسجيل الدخول بنجاح كـ %(name)s."
+
+#: templates/account/messages/logged_out.txt:2
+msgid "You have signed out."
+msgstr "لقد قمت بتسجيل الخروج."
+
+#: templates/account/messages/login_code_sent.txt:2
+#, python-format
+msgid "A sign-in code has been mailed to %(email)s."
+msgstr "تم إرسال رمز تسجيل الدخول إلى %(email)s."
+
+#: templates/account/messages/password_changed.txt:2
+msgid "Password successfully changed."
+msgstr "تم تغيير كلمة المرور بنجاح."
+
+#: templates/account/messages/password_set.txt:2
+msgid "Password successfully set."
+msgstr "تم تعيين كلمة المرور بنجاح."
+
+#: templates/account/messages/primary_email_set.txt:2
+msgid "Primary email address set."
+msgstr "تم تعيين عنوان البريد الإلكتروني الأساسي."
+
+#: templates/account/messages/unverified_primary_email.txt:2
+msgid "Your primary email address must be verified."
+msgstr "يجب التحقق من عنوان بريدك الإلكتروني الأساسي."
+
+#: templates/account/password_change.html:4
+#: templates/account/password_change.html:8
+#: templates/account/password_change.html:20
+#: templates/account/password_reset_from_key.html:5
+#: templates/account/password_reset_from_key.html:12
+#: templates/account/password_reset_from_key.html:30
+#: templates/account/password_reset_from_key_done.html:5
+#: templates/account/password_reset_from_key_done.html:9
+msgid "Change Password"
+msgstr "تغيير كلمة المرور"
+
+#: templates/account/password_change.html:22
+msgid "Forgot Password?"
+msgstr "نسيت كلمة المرور؟"
+
+#: templates/account/password_reset.html:14
+msgid ""
+"Forgotten your password? Enter your email address below, and we'll send you "
+"an email allowing you to reset it."
+msgstr "هل نسيت كلمة المرور؟ أدخل عنوان بريدك الإلكتروني أدناه، وسنرسل لك بريدًا إلكترونيًا يسمح لك بإعادة تعيينها."
+
+#: templates/account/password_reset.html:25
+msgid "Reset My Password"
+msgstr "إعادة تعيين كلمة المرور الخاصة بي"
+
+#: templates/account/password_reset.html:30
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr "يرجى الاتصال بنا إذا واجهت أي مشكلة في إعادة تعيين كلمة المرور الخاصة بك."
+
+#: templates/account/password_reset_done.html:16
+msgid ""
+"We have sent you an email. If you have not received it please check your "
+"spam folder. Otherwise contact us if you do not receive it in a few minutes."
+msgstr "لقد أرسلنا لك بريدًا إلكترونيًا. إذا لم تستلمه، يرجى التحقق من مجلد البريد العشوائي. وإلا، يرجى الاتصال بنا إذا لم تستلمه خلال بضع دقائق."
+
+#: templates/account/password_reset_from_key.html:10
+msgid "Bad Token"
+msgstr "رمز غير صالح"
+
+#: templates/account/password_reset_from_key.html:18
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr "كان رابط إعادة تعيين كلمة المرور غير صالح، ربما لأنه تم استخدامه بالفعل. يرجى طلب <a href=\"%(passwd_reset_url)s\">إعادة تعيين كلمة مرور جديدة</a>."
+
+#: templates/account/password_reset_from_key_done.html:12
+msgid "Your password is now changed."
+msgstr "تم تغيير كلمة المرور الخاصة بك الآن."
+
+#: templates/account/password_set.html:5 templates/account/password_set.html:9
+#: templates/account/password_set.html:21
+msgid "Set Password"
+msgstr "تعيين كلمة المرور"
+
+#: templates/account/reauthenticate.html:6
+msgid "Enter your password:"
+msgstr "أدخل كلمة المرور الخاصة بك:"
+
+#: templates/account/request_login_code.html:12
+msgid ""
+"You will receive an email containing a special code for a password-free sign-"
+"in."
+msgstr "ستتلقى بريدًا إلكترونيًا يحتوي على رمز خاص لتسجيل الدخول بدون كلمة مرور."
+
+#: templates/account/request_login_code.html:24
+msgid "Request Code"
+msgstr "طلب الرمز"
+
+#: templates/account/signup.html:4 templates/socialaccount/signup.html:5
+msgid "Signup"
+msgstr "التسجيل"
+
+#: templates/account/signup.html:8 templates/account/signup.html:30
+#: templates/socialaccount/signup.html:9 templates/socialaccount/signup.html:25
+msgid "Sign Up"
+msgstr "اشترك"
+
+#: templates/account/signup.html:17
+#, python-format
+msgid "Already have an account? Then please %(link)ssign in%(end_link)s."
+msgstr "هل لديك حساب بالفعل؟ إذن يرجى %(link)ssign in%(end_link)s."
+
+#: templates/account/signup_closed.html:5
+#: templates/account/signup_closed.html:9
+msgid "Sign Up Closed"
+msgstr "تم إغلاق التسجيل"
+
+#: templates/account/signup_closed.html:12
+msgid "We are sorry, but the sign up is currently closed."
+msgstr "نعتذر، لكن التسجيل مغلق حاليًا."
+
+#: templates/account/snippets/already_logged_in.html:7
+msgid "Note"
+msgstr "ملاحظة"
+
+#: templates/account/snippets/already_logged_in.html:7
+#, python-format
+msgid "You are already logged in as %(user_display)s."
+msgstr "أنت مسجل دخول بالفعل كـ %(user_display)s."
+
+#: templates/account/snippets/warn_no_email.html:3
+msgid "Warning:"
+msgstr "تحذير:"
+
+#: templates/account/snippets/warn_no_email.html:3
+msgid ""
+"You currently do not have any email address set up. You should really add an "
+"email address so you can receive notifications, reset your password, etc."
+msgstr "لا يوجد لديك أي عنوان بريد إلكتروني مضبوط حاليًا. يجب عليك إضافة عنوان بريد إلكتروني لتتمكن من تلقي الإشعارات، إعادة تعيين كلمة المرور، وما إلى ذلك."
+
+#: templates/account/verification_sent.html:5
+#: templates/account/verification_sent.html:9
+#: templates/account/verified_email_required.html:5
+#: templates/account/verified_email_required.html:9
+msgid "Verify Your Email Address"
+msgstr "تحقق من عنوان بريدك الإلكتروني"
+
+#: templates/account/verification_sent.html:12
+msgid ""
+"We have sent an email to you for verification. Follow the link provided to "
+"finalize the signup process. If you do not see the verification email in "
+"your main inbox, check your spam folder. Please contact us if you do not "
+"receive the verification email within a few minutes."
+msgstr "لقد أرسلنا لك بريدًا إلكترونيًا للتحقق. اتبع الرابط المرفق لإنهاء عملية التسجيل. إذا لم تشاهد البريد الإلكتروني للتحقق في صندوق الوارد الرئيسي، تحقق من مجلد البريد العشوائي. يرجى الاتصال بنا إذا لم تستلم البريد الإلكتروني للتحقق في غضون بضع دقائق."
+
+#: templates/account/verified_email_required.html:13
+msgid ""
+"This part of the site requires us to verify that\n"
+"you are who you claim to be. For this purpose, we require that you\n"
+"verify ownership of your email address. "
+msgstr "يتطلب هذا الجزء من الموقع التحقق من أنك الشخص الذي تدعي أنك هو. لهذا الغرض، نطلب منك التحقق من ملكية عنوان بريدك الإلكتروني."
+
+#: templates/account/verified_email_required.html:18
+msgid ""
+"We have sent an email to you for\n"
+"verification. Please click on the link inside that email. If you do not see "
+"the verification email in your main inbox, check your spam folder. "
+"Otherwise\n"
+"contact us if you do not receive it within a few minutes."
+msgstr "لقد أرسلنا لك بريدًا إلكترونيًا للتحقق. يرجى النقر على الرابط داخل هذا البريد الإلكتروني. إذا لم تشاهد البريد الإلكتروني للتحقق في صندوق الوارد الرئيسي، تحقق من مجلد البريد العشوائي. إذا لم تستلمه في غضون بضع دقائق، يرجى الاتصال بنا."
+
+#: templates/account/verified_email_required.html:23
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
+"email address</a>."
+msgstr "<strong>ملاحظة:</strong> لا يزال بإمكانك <a href=\"%(email_url)s\">تغيير عنوان بريدك الإلكتروني</a>."
+
+#: templates/socialaccount/authentication_error.html:5
+#: templates/socialaccount/authentication_error.html:9
+msgid "Third-Party Login Failure"
+msgstr "فشل تسجيل الدخول باستخدام طرف ثالث"
+
+#: templates/socialaccount/authentication_error.html:12
+msgid ""
+"An error occurred while attempting to login via your third-party account."
+msgstr "حدث خطأ أثناء محاولة تسجيل الدخول عبر حساب الطرف الثالث الخاص بك."
+
+#: templates/socialaccount/connections.html:5
+#: templates/socialaccount/connections.html:9
+msgid "Account Connections"
+msgstr "اتصالات الحساب"
+
+#: templates/socialaccount/connections.html:13
+msgid ""
+"You can sign in to your account using any of the following third-party "
+"accounts:"
+msgstr "يمكنك تسجيل الدخول إلى حسابك باستخدام أي من حسابات الطرف الثالث التالية:"
+
+#: templates/socialaccount/connections.html:46
+msgid "You currently have no third-party accounts connected to this account."
+msgstr "لا يوجد حاليًا حسابات طرف ثالث متصلة بهذا الحساب."
+
+#: templates/socialaccount/connections.html:50
+msgid "Add a Third-Party Account"
+msgstr "إضافة حساب طرف ثالث"
+
+#: templates/socialaccount/email/account_connected_message.txt:4
+#, python-format
+msgid ""
+"A third-party account from %(provider)s has been connected to your account."
+msgstr "تم توصيل حساب طرف ثالث من %(provider)s بحسابك."
+
+#: templates/socialaccount/email/account_connected_subject.txt:3
+msgid "Third-Party Account Connected"
+msgstr "تم توصيل حساب طرف ثالث"
+
+#: templates/socialaccount/email/account_disconnected_message.txt:4
+#, python-format
+msgid ""
+"A third-party account from %(provider)s has been disconnected from your "
+"account."
+msgstr "تم فصل حساب طرف ثالث من %(provider)s عن حسابك."
+
+#: templates/socialaccount/email/account_disconnected_subject.txt:3
+msgid "Third-Party Account Disconnected"
+msgstr "تم فصل حساب طرف ثالث"
+
+#: templates/socialaccount/login.html:10
+#, python-format
+msgid "Connect %(provider)s"
+msgstr "توصيل %(provider)s"
+
+#: templates/socialaccount/login.html:13
+#, python-format
+msgid "You are about to connect a new third-party account from %(provider)s."
+msgstr "أنت على وشك توصيل حساب طرف ثالث جديد من %(provider)s."
+
+#: templates/socialaccount/login.html:17
+#, python-format
+msgid "Sign In Via %(provider)s"
+msgstr "تسجيل الدخول عبر %(provider)s"
+
+#: templates/socialaccount/login.html:20
+#, python-format
+msgid "You are about to sign in using a third-party account from %(provider)s."
+msgstr "أنت على وشك تسجيل الدخول باستخدام حساب طرف ثالث من %(provider)s."
+
+#: templates/socialaccount/login.html:27
+#: templates/socialaccount/login_redirect.html:10
+msgid "Continue"
+msgstr "استمرار"
+
+#: templates/socialaccount/login_cancelled.html:5
+#: templates/socialaccount/login_cancelled.html:9
+msgid "Login Cancelled"
+msgstr "تم إلغاء تسجيل الدخول"
+
+#: templates/socialaccount/login_cancelled.html:13
+#, python-format
+msgid ""
+"You decided to cancel logging in to our site using one of your existing "
+"accounts. If this was a mistake, please proceed to <a "
+"href=\"%(login_url)s\">sign in</a>."
+msgstr "قررت إلغاء تسجيل الدخول إلى موقعنا باستخدام أحد حساباتك الحالية. إذا كان هذا خطأً، يرجى المتابعة إلى <a href=\"%(login_url)s\">تسجيل الدخول</a>."
+
+#: templates/socialaccount/messages/account_connected.txt:2
+msgid "The third-party account has been connected."
+msgstr "تم توصيل حساب الطرف الثالث."
+
+#: templates/socialaccount/messages/account_connected_other.txt:2
+msgid "The third-party account is already connected to a different account."
+msgstr "تم توصيل حساب الطرف الثالث بحساب مختلف بالفعل."
+
+#: templates/socialaccount/messages/account_disconnected.txt:2
+msgid "The third-party account has been disconnected."
+msgstr "تم فصل حساب الطرف الثالث."
+
+#: templates/socialaccount/signup.html:12
+#, python-format
+msgid ""
+"You are about to use your %(provider_name)s account to login to\n"
+"%(site_name)s. As a final step, please complete the following form:"
+msgstr "أنت على وشك استخدام حساب %(provider_name)s الخاص بك لتسجيل الدخول إلى %(site_name)s. كخطوة أخيرة، يرجى إكمال النموذج التالي:"
+
+#: templates/socialaccount/snippets/login.html:10
+msgid "Or use a third-party"
+msgstr "أو استخدم طرف ثالث"
 
 #: user/models.py:26
 msgid "email address"
-msgstr ""
+msgstr "عنوان البريد الإلكتروني"
 
 #: user/models.py:27
 msgid "username"
-msgstr ""
+msgstr "اسم المستخدم"
 
 #: user/models.py:28
 msgid "is active"
-msgstr ""
+msgstr "نشط"
 
 #: user/models.py:29
 msgid "is staff"
-msgstr ""
+msgstr "موظف"
