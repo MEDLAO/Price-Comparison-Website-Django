@@ -676,7 +676,7 @@ msgid "email address"
 msgstr "عنوان البريد الإلكتروني"
 
 #: user/models.py:27
-msgid "username"
+msgid "Username"
 msgstr "اسم المستخدم"
 
 #: user/models.py:28
