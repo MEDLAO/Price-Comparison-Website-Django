@@ -24,8 +24,8 @@ from product.views import home, ProductListView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('products/en/', ProductListView.as_view(), name='product-list-en'),
-    path('products/ar/', ProductListView.as_view(), name='product-list-ar'),
+    path('en/products/', ProductListView.as_view(), name='product-list-en'),
+    path('ar/products/', ProductListView.as_view(), name='product-list-ar'),
     path('i18n/', include('django.conf.urls.i18n')),  # needed for locale change
 ]
 
