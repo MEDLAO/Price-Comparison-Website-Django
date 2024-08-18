@@ -339,9 +339,9 @@ msgstr "انتهت صلاحية رابط تأكيد البريد الإلكتر�
 #: templates/account/login.html:19
 #, python-format
 msgid ""
-"If you have not created an account yet, then please %(link)ssign "
+"If you have not created an account yet, then please %(link)sign "
 "up%(end_link)s first."
-msgstr "إذا لم تقم بإنشاء حساب بعد، يرجى %(link)ssign up%(end_link)s أولاً."
+msgstr "إذا لم تقم بإنشاء حساب بعد، يرجى %(link)s التسجيل %(end_link)s أولاً."
 
 #: templates/account/login.html:42
 msgid "Sign in with a passkey"
