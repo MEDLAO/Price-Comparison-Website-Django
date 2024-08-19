@@ -338,10 +338,8 @@ msgstr "انتهت صلاحية رابط تأكيد البريد الإلكتر�
 
 #: templates/account/login.html:19
 #, python-format
-msgid ""
-"If you have not created an account yet, then please %(link)sign "
-"up%(end_link)s first."
-msgstr "إذا لم تقم بإنشاء حساب بعد، يرجى %(link)s التسجيل %(end_link)s أولاً."
+msgid "If you have not created an account yet, then please %(link)ssign up%(end_link)s first."
+msgstr "إذا لم تقم بإنشاء حساب بعد، يرجى %(link)sالتسجيل%(end_link)s أولاً."
 
 #: templates/account/login.html:42
 msgid "Sign in with a passkey"
@@ -686,3 +684,14 @@ msgstr "نشط"
 #: user/models.py:29
 msgid "is staff"
 msgstr "موظف"
+
+#: ../env/lib/python3.10/site-packages/allauth/account/forms.py:136
+msgid "Forgot your password?"
+msgstr "نسيت كلمة المرور؟"
+
+msgid "Google"
+msgstr "جوجل"
+
+msgid "Facebook"
+msgstr "فيسبوك"
+
