@@ -602,7 +602,7 @@ msgstr "تم توصيل حساب طرف ثالث"
 msgid ""
 "A third-party account from %(provider)s has been disconnected from your "
 "account."
-msgstr "تم فصل حساب طرف ثالث من %(provider)s عن حسابك."
+msgstr " .عن حسابك %(provider)s تم فصل حساب طرف ثالث من"
 
 #: templates/socialaccount/email/account_disconnected_subject.txt:3
 msgid "Third-Party Account Disconnected"
@@ -611,22 +611,22 @@ msgstr "تم فصل حساب طرف ثالث"
 #: templates/socialaccount/login.html:10
 #, python-format
 msgid "Connect %(provider)s"
-msgstr "توصيل %(provider)s"
+msgstr " %(provider)s توصيل "
 
 #: templates/socialaccount/login.html:13
 #, python-format
 msgid "You are about to connect a new third-party account from %(provider)s."
-msgstr "أنت على وشك توصيل حساب طرف ثالث جديد من %(provider)s."
+msgstr " %(provider)s أنت على وشك توصيل حساب طرف ثالث جديد من "
 
 #: templates/socialaccount/login.html:17
 #, python-format
-msgid "Sign In Via %(provider)s"
-msgstr "تسجيل الدخول عبر %(provider)s"
+msgid "Sign In Via %(provider)s "
+msgstr "%(provider)s تسجيل الدخول عبر "
 
 #: templates/socialaccount/login.html:20
 #, python-format
 msgid "You are about to sign in using a third-party account from %(provider)s."
-msgstr "أنت على وشك تسجيل الدخول باستخدام حساب طرف ثالث من %(provider)s."
+msgstr ".%(provider)s أنت على وشك تسجيل الدخول باستخدام حساب طرف ثالث من "
 
 #: templates/socialaccount/login.html:27
 #: templates/socialaccount/login_redirect.html:10
