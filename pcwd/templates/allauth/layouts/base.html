@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% load i18n %}
 {% load static %}
-
+<html lang="{{ language }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,6 +20,7 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/center_allauth.css' %}"> <!-- Include the new CSS file -->
 
     {% block extra_head %}
     <!-- Additional styles or scripts can be added here -->
@@ -27,7 +28,7 @@
 </head>
 <body>
     <header class="site-header">
-        <nav class="menu">
+        <nav id="auth-menu" class="menu">
             <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             <a href="{% url 'home' %}" class="menu-item">{% trans "Home" %}</a>
             <a href="{% url 'account_login' %}" class="menu-item">{% trans "My Account" %}</a>
@@ -46,10 +47,12 @@
             </div>
         {% endif %}
 
-        <div class="container">
-            {% block content %}
-            <!-- Page-specific content will go here -->
-            {% endblock content %}
+        <div class="centered-form-container">
+            <div class="centered-form">
+                {% block content %}
+                <!-- Page-specific content will go here -->
+                {% endblock content %}
+            </div>
         </div>
     {% endblock body %}
 

@@ -339,7 +339,7 @@ msgstr "انتهت صلاحية رابط تأكيد البريد الإلكتر�
 #: templates/account/login.html:19
 #, python-format
 msgid "If you have not created an account yet, then please %(link)ssign up%(end_link)s first."
-msgstr "إذا لم تقم بإنشاء حساب بعد، يرجى %(link)sالتسجيل%(end_link)s أولاً."
+msgstr "إذا لم تقم بإنشاء حساب بعد، يرجى %(link)sالتسجيل%(end_link)s أولاً"
 
 #: templates/account/login.html:42
 msgid "Sign in with a passkey"
@@ -620,13 +620,13 @@ msgstr " %(provider)s أنت على وشك توصيل حساب طرف ثالث �
 
 #: templates/socialaccount/login.html:17
 #, python-format
-msgid "Sign In Via %(provider)s "
-msgstr "%(provider)s تسجيل الدخول عبر "
+msgid "Sign In Via %(provider)s"
+msgstr "تسجيل الدخول عبر %(provider)s"
 
 #: templates/socialaccount/login.html:20
 #, python-format
 msgid "You are about to sign in using a third-party account from %(provider)s."
-msgstr ".%(provider)s أنت على وشك تسجيل الدخول باستخدام حساب طرف ثالث من "
+msgstr "أنت على وشك تسجيل الدخول باستخدام حساب من طرف ثالث من %(provider)s."
 
 #: templates/socialaccount/login.html:27
 #: templates/socialaccount/login_redirect.html:10
@@ -695,3 +695,14 @@ msgstr "جوجل"
 msgid "Facebook"
 msgstr "فيسبوك"
 
+#: templates/allauth/layouts/base.html:32
+msgid "Home"
+msgstr "الصفحة الرئيسية"
+
+#: templates/allauth/layouts/base.html:33
+msgid "My Account"
+msgstr "حسابي"
+
+#: templates/socialaccount/snippets/login.html:9
+msgid "Or Sign In with"
+msgstr "أو تسجيل الدخول باستخدام"
