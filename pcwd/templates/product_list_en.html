@@ -44,15 +44,20 @@
 </head>
 <body>
     <header class="site-header">
-        <nav class="menu">
-            <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
-            <a href="{% url 'home' %}" class="menu-item">Home</a>
-            <a href="#" class="menu-item" data-modal="modal2">Search</a>
-            <a href="#" class="menu-item" data-modal="modal3">About</a>
-            <a href="#" class="menu-item" data-modal="modal4">Contact</a>
+    <nav class="menu">
+        <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+        <a href="{% url 'home' %}" class="menu-item">Home</a>
+        <a href="#" class="menu-item" data-modal="modal2">Search</a>
+        <a href="#" class="menu-item" data-modal="modal3">About</a>
+        <a href="#" class="menu-item" data-modal="modal4">Contact</a>
+        {% if user.is_authenticated %}
+            <a href="#" class="menu-item" data-modal="modal-account">My Account</a>
+        {% else %}
             <a href="{% url 'account_login' %}" class="menu-item">My Account</a>
-        </nav>
-    </header>
+        {% endif %}
+    </nav>
+</header>
+
     <div class="container">
         {% if not products %}
             <p>Sorry, no products found for your search query.</p>
@@ -120,6 +125,19 @@
             </p>
         </div>
     </div>
+
+    <div id="modal-account" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+            <p>Welcome, {{ user.username }}!</p>
+            <ul class="provider-list"> <!-- Apply provider-list class -->
+                <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">Sign out</a></li>
+                <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">Change Password</a></li>
+                <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">Manage Emails</a></li>
+            </ul>
+        </div>
+    </div>
+
 
     <script src="{% static 'js/main.js' %}"></script>
     <script>
