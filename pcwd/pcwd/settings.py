@@ -115,7 +115,7 @@ ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # custom User Model
 AUTH_USER_MODEL = 'user.CustomUser'
 
