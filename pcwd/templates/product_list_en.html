@@ -129,6 +129,7 @@
     <div id="modal-account" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
+            <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="profile-image">
             <p id="username">{{ user.username }}</p>
             <p>{{ user.email }}</p>
             <ul class="provider-list"> <!-- Apply provider-list class -->
