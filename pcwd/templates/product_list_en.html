@@ -131,7 +131,7 @@
         <span class="close">&times;</span>
             <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="profile-image">
             <p id="username">{{ user.username }}</p>
-            <p>{{ user.email }}</p>
+            <p class="email-address">{{ user.email }}</p>
             <ul class="provider-list"> <!-- Apply provider-list class -->
                 <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">Sign out</a></li>
                 <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">Change Password</a></li>

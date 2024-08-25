@@ -1,7 +1,6 @@
 from allauth.account.forms import SignupForm
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from .models import Profile
 
 
 class CustomSignupForm(SignupForm):
@@ -14,7 +13,12 @@ class CustomSignupForm(SignupForm):
         user.save()
 
         profile_image = self.cleaned_data.get('profile_image')
+        print(f"Profile Image: {profile_image}")  # Debugging print
+
         if profile_image:
-            Profile.objects.update_or_create(user=user, defaults={'profile_image': profile_image})
+            user.profile.image = profile_image
+            user.profile.save()
+            print(f"Profile Image Saved: {user.profile.image.url}")  # Debugging print
+
         return user
 

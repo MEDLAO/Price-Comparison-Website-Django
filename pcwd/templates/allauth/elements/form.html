@@ -1,5 +1,5 @@
 {% load allauth %}
-<form method="{{ attrs.method }}" action="{{ attrs.action }}">
+<form method="{{ attrs.method }}" action="{{ attrs.action }}" enctype="multipart/form-data">
     {% slot body %}
     {% endslot %}
     {% slot actions %}

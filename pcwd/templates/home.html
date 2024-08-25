@@ -44,9 +44,20 @@
 <body>
     <div class="background-image" style="background-image: url('{% static 'images/pcwd-image-2.png' %}');">
         <div class="overlay">
-            <div class="button-container">
-                <a href="{% url 'product-list-ar' %}" class="language-button noto-kufi-arabic">دخول</a>
-                <a href="{% url 'product-list-en' %}" class="language-button nunito left-button">Entry</a>
+            <!-- Central container for user info and buttons -->
+            <div class="center-container">
+                <!-- Check if the user is authenticated -->
+                {% if user.is_authenticated %}
+                    <div class="user-info">
+                        <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="profile-image">
+                        <p class="username">{{ user.username }}</p>
+                    </div>
+                {% endif %}
+                <!-- Buttons for language selection -->
+                <div class="button-container">
+                    <a href="{% url 'product-list-ar' %}" class="language-button noto-kufi-arabic">دخول</a>
+                    <a href="{% url 'product-list-en' %}" class="language-button nunito left-button">Entry</a>
+                </div>
             </div>
         </div>
     </div>
