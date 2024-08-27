@@ -50,7 +50,13 @@
             <a href="#" class="menu-item" data-modal="modal2">البحث</a>
             <a href="#" class="menu-item" data-modal="modal3">حول</a>
             <a href="#" class="menu-item" data-modal="modal4">اتصل</a>
-            <a href="{% url 'account_login' %}" class="menu-item">حسابي</a>
+            {% if user.is_authenticated %}
+                <a href="#" class="menu-item" data-modal="modal-account">
+                    <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="menu-profile-image">
+                </a>
+            {% else %}
+                <a href="{% url 'account_login' %}" class="menu-item">حسابي</a>
+            {% endif %}
         </nav>
     </header>
     <div class="container">
@@ -81,12 +87,12 @@
     <div id="modal2" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <form method="get" action="{% url 'product-list-ar' %}">
+            <form method="get" action="{% url 'product-list-ar' %}" dir="rtl">
                 <h3 class="modal-heading">منتجات معينة</h3>
                 <input type="text" name="q" value="{{ search_query }}" placeholder="البحث عن المنتجات، العلامات التجارية، الألوان..." dir="rtl">
-                <label for="priceRange">نطاق السعر</label>
-                <input type="range" id="priceRange" name="max_price" min="0" max="{{ max_price_db }}" value="{{ max_price|default_if_none:max_price_db }}" oninput="updatePriceOutput(this.value)">
-                <output for="priceRange" id="priceOutput">{{ max_price|default_if_none:max_price_db }}</output>
+                <label for="priceRange" style="display: block; text-align: right;">نطاق السعر</label>
+                <input type="range" id="priceRange" name="max_price" min="0" max="{{ max_price_db }}" value="{{ max_price|default_if_none:max_price_db }}" oninput="updatePriceOutput(this.value)" dir="rtl">
+                <output id="priceOutput" for="priceRange" dir="rtl">{{ max_price|default_if_none:max_price_db }} ج.م</output>
                 <button type="submit">بحث</button>
             </form>
         </div>
@@ -96,13 +102,12 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <p style="margin-top: 50px;" dir="rtl">
-            مرحبًا بكم!
+                مرحبًا بكم!
             </p>
             <p dir="rtl">
                 في هذه النسخة الأولى، نقدم لكم مجموعة واسعة من الساعات الذكية من عدة مواقع. <br>
                 قريبًا، سنضيف الساعات التقليدية وميزات جديدة...
             </p>
-
         </div>
     </div>
 
@@ -110,16 +115,29 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <p style="margin-top: 50px;" dir="rtl">
-              نرحب بآرائكم واقتراحاتكم !
+                نرحب بآرائكم واقتراحاتكم!
             </p>
             <p dir="rtl">
-                هل لديكم أفكار أو اقتراحات لميزات جديدة أو ترغبون في مشاركة آرائكم ؟ <br>
-                 راسلونا على <strong>address@contact.com</strong>
+                هل لديكم أفكار أو اقتراحات لميزات جديدة أو ترغبون في مشاركة آرائكم؟ <br>
+                راسلونا على <strong>address@contact.com</strong>
             </p>
             <p dir="rtl">
-                شكرًا لكم !
+                شكرًا لكم!
             </p>
+        </div>
+    </div>
 
+    <div id="modal-account" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="profile-image">
+            <p id="username">{{ user.username }}</p>
+            <p class="email-address">{{ user.email }}</p>
+            <ul class="provider-list">
+                <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">تسجيل الخروج</a></li>
+                <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">تغيير كلمة المرور</a></li>
+                <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">إدارة البريد الإلكتروني</a></li>
+            </ul>
         </div>
     </div>
 
