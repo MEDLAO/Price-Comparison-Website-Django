@@ -1,7 +1,10 @@
 from django.shortcuts import render
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 from django.views.generic import ListView
 from django.db.models import Q, Min, Max
 from .models import ScrapedProduct
+from .recommendations import get_recommendations
 
 
 def home(request):
@@ -74,6 +77,17 @@ class ProductListView(ListView):
         context['max_price'] = self.request.GET.get('max_price')
         context['max_price_db'] = ScrapedProduct.objects.all().aggregate(Max('price'))['price__max']
         return context
+
+    def product_recommendations(self, request, product_id):
+        """
+        Handles AJAX requests for product recommendations based on product descriptions.
+        """
+        unique_products = self.get_queryset()
+        recommendations = get_recommendations(product_id, unique_products)
+
+        # render the recommendations using a separate template
+        html = render_to_string('recommendations.html', {'products': recommendations})
+        return JsonResponse({'html': html})
 
 
 def custom_404(request, exception):

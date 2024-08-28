@@ -22,6 +22,3 @@ def get_recommendations(product_id, unique_products):
     recommended_products = [all_products[i] for i in similar_indices]
 
     return recommended_products
-
-
-
