@@ -74,6 +74,7 @@
                                 {% if product.price %}
                                     <p class="price">{{ product.price }} {{ product.currency }}</p>
                                 {% endif %}
+                                <a class="visit-store-button also-button" data-product-id="{{ product.id }}" href=#>Also</a>
                                 <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
                             </div>
                         </div>
@@ -138,6 +139,16 @@
                 <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">Change Password</a></li>
                 <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">Manage Emails</a></li>
             </ul>
+        </div>
+    </div>
+
+    <!-- Modal Template for Recommendations -->
+    <div id="recommendation-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('recommendation-modal').style.display='none'">&times;</span>
+            <div id="recommendations-container">
+                <!-- Recommended products will be dynamically loaded here -->
+            </div>
         </div>
     </div>
 

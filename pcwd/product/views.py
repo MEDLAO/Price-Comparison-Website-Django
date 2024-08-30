@@ -78,17 +78,6 @@ class ProductListView(ListView):
         context['max_price_db'] = ScrapedProduct.objects.all().aggregate(Max('price'))['price__max']
         return context
 
-    def product_recommendations(self, request, product_id):
-        """
-        Handles AJAX requests for product recommendations based on product descriptions.
-        """
-        unique_products = self.get_queryset()
-        recommendations = get_recommendations(product_id, unique_products)
-
-        # render the recommendations using a separate template
-        html = render_to_string('recommendations.html', {'products': recommendations})
-        return JsonResponse({'html': html})
-
 
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
