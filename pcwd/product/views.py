@@ -73,6 +73,21 @@ class ProductListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        unique_products = self.get_queryset()  # get all unique products based on your queryset logic
+
+        # dictionary to store recommendations for each product
+        recommendations_dict = {}
+
+        # iterate over all unique products to get recommendations for each
+        for product in unique_products:
+            product_id = product.id
+            recommendations = get_recommendations(product_id, unique_products)
+            recommendations_dict[product_id] = recommendations
+
+        # add recommendations to the context
+        context['recommendations_dict'] = recommendations_dict
+
         context['search_query'] = self.request.GET.get('q', '')
         context['max_price'] = self.request.GET.get('max_price')
         context['max_price_db'] = ScrapedProduct.objects.all().aggregate(Max('price'))['price__max']
