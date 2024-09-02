@@ -74,7 +74,7 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        unique_products = self.get_queryset()  # get all unique products based on your queryset logic
+        unique_products = self.get_queryset().language('en')
 
         # dictionary to store recommendations for each product
         recommendations_dict = {}
