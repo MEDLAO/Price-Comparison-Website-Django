@@ -2,7 +2,6 @@ from django.core.cache import cache
 from django.shortcuts import get_object_or_404
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from django.utils.translation import activate
 
 
 def get_recommendations(product_id, unique_products):
@@ -18,11 +17,11 @@ def get_recommendations(product_id, unique_products):
     product = get_object_or_404(unique_products, id=product_id)
 
     # exclude the product itself from the recommendations
-    all_products = unique_products.exclude(id=product_id).values_list('id', 'description')
+    all_products = unique_products.exclude(id=product_id).values_list('id', 'translations__description')
 
     # prepare descriptions for similarity computation
     descriptions = [desc for _, desc in all_products]
-    descriptions.insert(0, product.description)
+    descriptions.insert(0, product.get_translation('en').description)
 
     # using TF-IDF Vectorizer to calculate similarity based on description
     vectorizer = TfidfVectorizer()
@@ -34,7 +33,7 @@ def get_recommendations(product_id, unique_products):
 
     # remove the first index (the product itself)
     similar_indices = sorted_indices[1:6]
-    recommended_products_ids = [all_products[i][0] for i in similar_indices]
+    recommended_products_ids = [all_products[int(i)][0] for i in similar_indices]
 
     # cache the recommendations indefinitely
     cache.set(cache_key, recommended_products_ids, timeout=None)
