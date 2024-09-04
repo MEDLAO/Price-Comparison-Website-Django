@@ -33,9 +33,24 @@ def get_recommendations(product_id, unique_products):
 
     # remove the first index (the product itself)
     similar_indices = sorted_indices[1:6]
-    recommended_products_ids = [all_products[int(i)][0] for i in similar_indices]
+    recommended_products_ids = [all_products[int(i)-1][0] for i in similar_indices]
 
     # cache the recommendations indefinitely
     cache.set(cache_key, recommended_products_ids, timeout=None)
 
     return recommended_products_ids
+
+
+def print_first_cache_entries(limit=10):
+    # get all keys from the cache
+    all_keys = cache.keys('*')
+
+    # check if there are any keys in the cache
+    if all_keys:
+        print(f"Printing the first {min(limit, len(all_keys))} cache entries:")
+
+        for key in all_keys[:limit]:
+            value = cache.get(key)
+            print(f"Key: {key}, Value: {value}")
+    else:
+        print("No cache entries found.")
