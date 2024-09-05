@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.views.generic import ListView
@@ -101,3 +101,21 @@ def custom_404(request, exception):
 def custom_500(request):
     return render(request, '500.html', status=500)
 
+
+def fetch_recommended_products(request):
+    # get the product id from the form submission
+    product_id = request.GET.get('product_id')
+
+    language = 'en' if '/en/' in request.path else 'ar'
+
+    # recommendations_dict is passed in the context or fetched from cache/session
+    recommendations_dict = request.session.get('recommendations_dict', {})
+    recommended_ids = recommendations_dict.get(int(product_id), [])
+
+    # fetch the recommended products from the database
+    recommended_products = ScrapedProduct.objects.language(language).filter(id__in=recommended_ids)
+
+    return render(request, 'product_list_en.html', {
+        'recommended_products': recommended_products,
+        'product_id': product_id,
+    })

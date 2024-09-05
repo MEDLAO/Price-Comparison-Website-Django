@@ -74,41 +74,14 @@
                                 {% if product.price %}
                                     <p class="price">{{ product.price }} {{ product.currency }}</p>
                                 {% endif %}
-                                <!-- "Also" button opens the corresponding recommendation modal -->
-                                <a class="visit-store-button also-button" href="#recommendation-modal-{{ product.id }}" data-bs-toggle="modal">Also</a>
-                                <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Recommendation Modal for each product -->
-                    <div class="modal fade" id="recommendation-modal-{{ product.id }}" tabindex="-1" aria-labelledby="recommendationModalLabel-{{ product.id }}" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="recommendationModalLabel-{{ product.id }}">Recommended Products</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="product-grid">
-                                        {% for recommended_product_id in recommendations_dict|dict_get:product.id %}
-                                            {% with recommended_product=products|get_by_id:recommended_product_id %}
-                                                <div class="product-card" data-url="{{ recommended_product.image_url }}">
-                                                    <div class="product-image">
-                                                        <img src="{{ recommended_product.image.url }}" alt="{{ recommended_product.description }}">
-                                                        <div class="product-info">
-                                                            <p class="description">{{ recommended_product.description }}</p>
-                                                            {% if recommended_product.price %}
-                                                                <p class="price">{{ recommended_product.price }} {{ recommended_product.currency }}</p>
-                                                            {% endif %}
-                                                            <a class="visit-store-button" href="{{ recommended_product.product_url }}" target="_blank">Store</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            {% endwith %}
-                                        {% endfor %}
-                                    </div>
-                                </div>
+                                <!-- Form for "Also" button to fetch recommendations -->
+                                <form method="get" action="{% url 'fetch_recommended_products' %}">
+                                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                                    <button type="submit" class="visit-store-button also-button">Also</button>
+                                </form>
+
+                                <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
                             </div>
                         </div>
                     </div>
@@ -117,6 +90,38 @@
             {% include 'pagination_en.html' %}
         {% endif %}
     </div>
+
+    <!-- Recommendation Modal -->
+    {% if recommended_products %}
+    <div class="modal show" id="recommendation-modal" tabindex="-1" aria-labelledby="recommendationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="recommendationModalLabel">Recommended Products</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="product-grid">
+                        {% for product in recommended_products %}
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <img src="{{ product.image.url }}" alt="{{ product.description }}">
+                                    <div class="product-info">
+                                        <p class="description">{{ product.description }}</p>
+                                        {% if product.price %}
+                                            <p class="price">{{ product.price }} {{ product.currency }}</p>
+                                        {% endif %}
+                                        <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- Additional Modals -->
     <div id="modal2" class="modal">
@@ -177,10 +182,3 @@
     </div>
 
     <script src="{% static 'js/main.js' %}"></script>
-    <script>
-        function updatePriceOutput(value) {
-            document.getElementById('priceOutput').value = value;
-        }
-    </script>
-</body>
-</html>
