@@ -26,6 +26,8 @@ urlpatterns = [
     path('', home, name='home'),
     path('en/products/', ProductListView.as_view(), name='product-list-en'),
     path('ar/products/', ProductListView.as_view(), name='product-list-ar'),
+    path('en/recommendations/', fetch_recommended_products, name='fetch-recommended-products'),
+    path('ar/recommendations/', fetch_recommended_products, name='fetch-recommended-products-ar'),
     path('i18n/', include('django.conf.urls.i18n')),  # needed for locale change
 ]
 
