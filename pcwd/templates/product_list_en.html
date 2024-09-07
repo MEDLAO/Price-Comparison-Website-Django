@@ -76,7 +76,7 @@
                                 {% endif %}
 
                                 <!-- Form for "Also" button to fetch recommendations -->
-                                <form method="get" action="{% url 'fetch_recommended_products' %}">
+                                <form method="get" action="{% url 'fetch-recommended-products' %}">
                                     <input type="hidden" name="product_id" value="{{ product.id }}">
                                     <button type="submit" class="visit-store-button also-button">Also</button>
                                 </form>
@@ -90,38 +90,6 @@
             {% include 'pagination_en.html' %}
         {% endif %}
     </div>
-
-    <!-- Recommendation Modal -->
-    {% if recommended_products %}
-    <div class="modal show" id="recommendation-modal" tabindex="-1" aria-labelledby="recommendationModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="recommendationModalLabel">Recommended Products</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="product-grid">
-                        {% for product in recommended_products %}
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="{{ product.image.url }}" alt="{{ product.description }}">
-                                    <div class="product-info">
-                                        <p class="description">{{ product.description }}</p>
-                                        {% if product.price %}
-                                            <p class="price">{{ product.price }} {{ product.currency }}</p>
-                                        {% endif %}
-                                        <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
 
     <!-- Additional Modals -->
     <div id="modal2" class="modal">

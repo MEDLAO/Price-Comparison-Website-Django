@@ -115,7 +115,10 @@ def fetch_recommended_products(request):
     # fetch the recommended products from the database
     recommended_products = ScrapedProduct.objects.language(language).filter(id__in=recommended_ids)
 
-    return render(request, 'product_list_en.html', {
+    # determine the correct template based on language
+    template_name = 'recommendations_en.html' if language == 'en' else 'recommendations_ar.html'
+
+    return render(request, template_name, {
         'recommended_products': recommended_products,
         'product_id': product_id,
     })
