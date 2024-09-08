@@ -3,6 +3,7 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.views.generic import ListView
 from django.db.models import Q, Min, Max
+from django.core.cache import cache
 from .models import ScrapedProduct
 from .recommendations import get_recommendations
 
@@ -73,21 +74,6 @@ class ProductListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        unique_products = self.get_queryset().language('en')
-
-        # dictionary to store recommendations for each product
-        recommendations_dict = {}
-
-        # iterate over all unique products to get recommendations for each
-        for product in unique_products:
-            product_id = product.id
-            recommendations = get_recommendations(product_id, unique_products)
-            recommendations_dict[product_id] = recommendations
-
-        # add recommendations to the context
-        context['recommendations_dict'] = recommendations_dict
-
         context['search_query'] = self.request.GET.get('q', '')
         context['max_price'] = self.request.GET.get('max_price')
         context['max_price_db'] = ScrapedProduct.objects.all().aggregate(Max('price'))['price__max']
@@ -108,9 +94,9 @@ def fetch_recommended_products(request):
 
     language = 'en' if '/en/' in request.path else 'ar'
 
-    # recommendations_dict is passed in the context or fetched from cache/session
-    recommendations_dict = request.session.get('recommendations_dict', {})
-    recommended_ids = recommendations_dict.get(int(product_id), [])
+    # fetch the cached recommendations for the product
+    cache_key = f'product_recommendations_{product_id}'
+    recommended_ids = cache.get(cache_key, [])
 
     # fetch the recommended products from the database
     recommended_products = ScrapedProduct.objects.language(language).filter(id__in=recommended_ids)
