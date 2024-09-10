@@ -40,6 +40,7 @@ def test_product_list_ar_url_resolve():
     resolver = resolve('/products/ar/')
     assert resolver.func.view_class == ProductListView
 
+
 @pytest.mark.django_db
 def test_recommendations_en_url_reverse():
     url = reverse('fetch-recommended-products')

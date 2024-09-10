@@ -29,3 +29,10 @@ def test_profile_creation(create_test_user):
     user = create_test_user
     assert Profile.objects.filter(user=user).exists()
 
+
+@pytest.mark.django_db
+def test_default_profile_image(create_test_user):
+    """Test that the default profile image is set."""
+    user = create_test_user
+    profile = Profile.objects.get(user=user)
+    assert profile.image == 'default.png'
