@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse, resolve
-from product.views import home, ProductListView
+from product.views import home, ProductListView, fetch_recommended_products
 
 
 # verify that the url name 'home' correctly maps to '/'
@@ -39,3 +39,32 @@ def test_product_list_ar_url_reverse():
 def test_product_list_ar_url_resolve():
     resolver = resolve('/products/ar/')
     assert resolver.func.view_class == ProductListView
+
+@pytest.mark.django_db
+def test_recommendations_en_url_reverse():
+    url = reverse('fetch-recommended-products')
+    assert url == '/en/recommendations/'
+
+
+@pytest.mark.django_db
+def test_recommendations_en_url_resolve():
+    resolver = resolve('/en/recommendations/')
+    assert resolver.func == fetch_recommended_products
+
+
+@pytest.mark.django_db
+def test_recommendations_ar_url_reverse():
+    url = reverse('fetch-recommended-products-ar')
+    assert url == '/ar/recommendations/'
+
+
+@pytest.mark.django_db
+def test_recommendations_ar_url_reverse():
+    url = reverse('fetch-recommended-products-ar')
+    assert url == '/ar/recommendations/'
+
+
+@pytest.mark.django_db
+def test_recommendations_ar_url_resolve():
+    resolver = resolve('/ar/recommendations/')
+    assert resolver.func == fetch_recommended_products
