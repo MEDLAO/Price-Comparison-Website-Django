@@ -1,32 +1,40 @@
 import pytest
-from django.test import Client
-from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
+from user.forms import CustomSignupForm
 
 
-User = get_user_model()
+@pytest.mark.django_db
+def test_form_valid_data():
+    """Test that the form is valid with correct data."""
+    form = CustomSignupForm(data={
+        'email': 'testuser@abc.com',
+        'username': 'username_test',
+        'password1': 'pwabcde8',
+        'password2': 'pwabcde8',
+    })
+    assert form.is_valid()  # Ensure the form is valid
 
 
-@pytest.fixture
-def client():
-    return Client()
+@pytest.mark.django_db
+def test_form_missing_username():
+    """Test that the form is invalid without a username."""
+    form = CustomSignupForm(data={
+        'email': 'testuser@abc.com',
+        'password1': 'pwabcde8',
+        'password2': 'pwabcde8',
+    })
+    assert not form.is_valid()
+    assert 'username' in form.errors
 
 
-@pytest.fixture
-def create_test_user():
-    """Fixture to create a regular test user."""
-    return User.objects.create_user(
-        email="testuser@abc.com",
-        username="username_test",
-        password="pwabcde8"
-    )
-
-
-@pytest.fixture
-def create_test_superuser():
-    """Fixture to create a superuser."""
-    return User.objects.create_superuser(
-        email="superuser@abc.com",
-        username="superuser_username__test",
-        password="pwadmin8"
-    )
-
+@pytest.mark.django_db
+def test_form_mismatched_passwords():
+    """Test that the form is invalid if passwords do not match."""
+    form = CustomSignupForm(data={
+        'email': 'testuser@abc.com',
+        'username': 'username_test',
+        'password1': 'pwabcde8',
+        'password2': 'wrongpassword123',
+    })
+    assert not form.is_valid()
+    assert 'password2' in form.errors

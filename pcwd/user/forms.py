@@ -21,4 +21,3 @@ class CustomSignupForm(SignupForm):
             print(f"Profile Image Saved: {user.profile.image.url}")  # Debugging print
 
         return user
-
