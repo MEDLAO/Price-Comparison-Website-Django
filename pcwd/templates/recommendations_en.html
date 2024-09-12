@@ -5,9 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recommended Products</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
+
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
 </head>
 <body>
+
+    <header class="site-header">
+        <nav class="menu">
+            <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+            <a href="{% url 'home' %}" class="menu-item">Home</a>
+            <a href="#" class="menu-item" data-modal="modal2">Search</a>
+            <a href="#" class="menu-item" data-modal="modal3">About</a>
+            <a href="#" class="menu-item" data-modal="modal4">Contact</a>
+            {% if user.is_authenticated %}
+                <a href="#" class="menu-item" data-modal="modal-account">
+                    <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="menu-profile-image">
+                </a>
+            {% else %}
+                <a href="{% url 'account_login' %}" class="menu-item">My Account</a>
+            {% endif %}
+        </nav>
+    </header>
+
     <div class="container">
         <h1>Recommended Products</h1>
         <div class="product-grid">
