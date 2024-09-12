@@ -26,7 +26,6 @@
         <nav class="menu">
             <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             <a href="{% url 'home' %}" class="menu-item">Home</a>
-            <a href="#" class="menu-item" data-modal="modal2">Search</a>
             <a href="#" class="menu-item" data-modal="modal3">About</a>
             <a href="#" class="menu-item" data-modal="modal4">Contact</a>
             {% if user.is_authenticated %}
@@ -58,6 +57,50 @@
             {% endfor %}
         </div>
     </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top: 50px;">
+                Welcome!
+            </p>
+            <p>
+                In this first version, we offer a wide selection of smartwatches from several websites. <br>
+                Soon, we will be adding traditional watches and introducing new features...
+            </p>
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top: 50px;">
+                We'd Love Your Feedback!
+            </p>
+            <p>
+                Got ideas, feature requests, or just want to share your thoughts? <br>
+                Drop us a line at <strong>address@contact.com</strong>
+            </p>
+            <p>
+                Thank you!
+            </p>
+        </div>
+    </div>
+
+    <div id="modal-account" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="profile-image">
+            <p id="username">{{ user.username }}</p>
+            <p class="email-address">{{ user.email }}</p>
+            <ul class="provider-list">
+                <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">Sign out</a></li>
+                <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">Change Password</a></li>
+                <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">Manage Emails</a></li>
+            </ul>
+        </div>
+    </div>
+
     <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
