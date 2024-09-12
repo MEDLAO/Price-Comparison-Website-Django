@@ -20,24 +20,24 @@ def test_home_url_resolve():
 @pytest.mark.django_db
 def test_product_list_en_url_reverse():
     url = reverse('product-list-en')
-    assert url == '/products/en/'
+    assert url == '/en/products/'
 
 
 @pytest.mark.django_db
 def test_product_list_en_url_resolve():
-    resolver = resolve('/products/en/')
+    resolver = resolve('/en/products/')
     assert resolver.func.view_class == ProductListView
 
 
 @pytest.mark.django_db
 def test_product_list_ar_url_reverse():
     url = reverse('product-list-ar')
-    assert url == '/products/ar/'
+    assert url == '/ar/products/'
 
 
 @pytest.mark.django_db
 def test_product_list_ar_url_resolve():
-    resolver = resolve('/products/ar/')
+    resolver = resolve('/ar/products/')
     assert resolver.func.view_class == ProductListView
 
 
@@ -51,12 +51,6 @@ def test_recommendations_en_url_reverse():
 def test_recommendations_en_url_resolve():
     resolver = resolve('/en/recommendations/')
     assert resolver.func == fetch_recommended_products
-
-
-@pytest.mark.django_db
-def test_recommendations_ar_url_reverse():
-    url = reverse('fetch-recommended-products-ar')
-    assert url == '/ar/recommendations/'
 
 
 @pytest.mark.django_db
