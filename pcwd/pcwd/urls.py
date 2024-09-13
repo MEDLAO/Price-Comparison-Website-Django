@@ -22,7 +22,7 @@ from product.views import home, ProductListView, fetch_recommended_products
 
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('en/products/', ProductListView.as_view(), name='product-list-en'),
     path('ar/products/', ProductListView.as_view(), name='product-list-ar'),
