@@ -5,12 +5,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المنتجات الموصى بها</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
+
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
 </head>
 <body>
+    <header class="site-header">
+        <nav class="menu">
+            <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+            <a href="{% url 'home' %}" class="menu-item">الرئيسية</a>
+            <a href="#" class="menu-item" data-modal="modal3">حول</a>
+            <a href="#" class="menu-item" data-modal="modal4">اتصل بنا</a>
+            {% if user.is_authenticated %}
+                <a href="#" class="menu-item" data-modal="modal-account">
+                    <img src="{{ user.profile.image.url }}" alt="صورة الملف الشخصي" class="menu-profile-image">
+                </a>
+            {% else %}
+                <a href="{% url 'account_login' %}" class="menu-item">حسابي</a>
+            {% endif %}
+        </nav>
+    </header>
+
     <div class="container">
-        <h1>المنتجات الموصى بها</h1>
-        <div class="product-grid">
+        <h1 style="font-size: 20px;">المنتجات الموصى بها</h1>
+        <div class="product-grid" style="margin-bottom: 30px; margin-top: 20px;">
             {% for product in recommended_products %}
                 <div class="product-card">
                     <div class="product-image">
@@ -27,6 +56,50 @@
             {% endfor %}
         </div>
     </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top: 50px;">
+                مرحباً!
+            </p>
+            <p>
+                في هذا الإصدار الأول، نقدم مجموعة واسعة من الساعات الذكية من عدة مواقع. <br>
+                قريبًا، سنقوم بإضافة الساعات التقليدية وتقديم ميزات جديدة...
+            </p>
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top: 50px;">
+                نحب أن نسمع منك!
+            </p>
+            <p>
+                هل لديك أفكار، طلبات ميزات، أو ترغب فقط في مشاركة أفكارك؟ <br>
+                أرسل لنا رسالة على <strong>address@contact.com</strong>
+            </p>
+            <p>
+                شكرًا لك!
+            </p>
+        </div>
+    </div>
+
+    <div id="modal-account" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img src="{{ user.profile.image.url }}" alt="صورة الملف الشخصي" class="profile-image">
+            <p id="username">{{ user.username }}</p>
+            <p class="email-address">{{ user.email }}</p>
+            <ul class="provider-list">
+                <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">تسجيل الخروج</a></li>
+                <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">تغيير كلمة المرور</a></li>
+                <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">إدارة البريد الإلكتروني</a></li>
+            </ul>
+        </div>
+    </div>
+
     <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
