@@ -16,6 +16,9 @@ from product.models import ScrapedProduct
     ],
 )
 def test_views_template_used(client, url_name, template, expected_content):
+    """
+    Tests that the correct template is used and expected content is rendered for different views.
+    """
     path = reverse(url_name)
     response = client.get(path)
     content = response.content.decode()
@@ -35,6 +38,9 @@ def test_views_template_used(client, url_name, template, expected_content):
 )
 def test_product_list_view_excludes_low_price(client, scraped_product, price,
                                               expected_to_be_included):
+    """
+    Tests that products with a price lower than a threshold are excluded from the product list.
+    """
     # update the price of the scraped_product
     scraped_product.price = price
     scraped_product.save()
@@ -50,6 +56,9 @@ def test_product_list_view_excludes_low_price(client, scraped_product, price,
 
 @pytest.mark.django_db
 def test_price_greater_than_max_price(client, scraped_product):
+    """
+    Tests that products with a price higher than the specified max_price are excluded from the product list.
+    """
     # update the price of the scraped_product
     scraped_product.price = 1500
     scraped_product.save()
@@ -65,6 +74,9 @@ def test_price_greater_than_max_price(client, scraped_product):
 
 @pytest.mark.django_db
 def test_price_smaller_than_max_price(client, scraped_product):
+    """
+    Tests that products with a price lower than the specified max_price are included in the product list.
+    """
     # update the price of the scraped_product
     scraped_product.price = 700
     scraped_product.save()
@@ -90,6 +102,9 @@ def test_price_smaller_than_max_price(client, scraped_product):
 )
 def test_product_list_view_search_functionality(client, scraped_product, language, search_query,
                                                 expected_to_be_included):
+    """
+    Tests the search functionality to ensure products are correctly included or excluded based on the search query.
+    """
     url_name = f'product-list-{language}'
 
     response = client.get(reverse(url_name), {'q': search_query})

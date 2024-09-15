@@ -4,6 +4,10 @@ from django.utils.translation import gettext_lazy as _
 
 
 class CustomSignupForm(SignupForm):
+    """
+    Extends the signup form to include a username and optional profile image.
+    """
+
     username = forms.CharField(max_length=150, label=_("Username"))
     profile_image = forms.ImageField(required=False, label=_("Profile Image"))
 

@@ -6,6 +6,9 @@ UserModel = get_user_model()
 
 
 class EmailOrUsernameModelBackend(ModelBackend):
+    """
+    Custom authentication backend to allow login with either email or username.
+    """
     def authenticate(self, request, username=None, password=None, **kwargs):
         # ensure both username and password are provided
         if username is None or password is None:

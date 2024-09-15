@@ -4,18 +4,27 @@ from product.models import ScrapedProduct, Website
 
 @pytest.mark.django_db
 def test_str_method(scraped_product):
+    """
+    Tests the __str__ method of the ScrapedProduct model.
+    """
     assert str(scraped_product) == f'{scraped_product.brand} {scraped_product.product_type} ' \
                                    f'- Scraped from {scraped_product.website.name}'
 
 
 @pytest.mark.django_db
 def test_get_image_upload_path_amazon(scraped_product):
+    """
+    Tests the image upload path for a ScrapedProduct from Amazon.
+    """
     path = ScrapedProduct.get_image_upload_path(scraped_product, '615LVMteaYL._AC_SL1500_.jpg')
     assert path == 'amazon/615LVMteaYL._AC_SL1500_.jpg'
 
 
 @pytest.mark.django_db
 def test_save_method_download_image(mocker, scraped_product):
+    """
+    Tests the save method to ensure the image is downloaded and saved correctly.
+    """
     scraped_product.image_url = "https://m.media-amazon.com/images/I/615LVMteaYL._AC_SL1500_.jpg"
 
     mock_response = mocker.Mock()
@@ -35,6 +44,9 @@ def test_save_method_download_image(mocker, scraped_product):
 
 @pytest.mark.django_db
 def test_translations_in_database(scraped_product):
+    """
+    Tests that English and Arabic translations are correctly stored in the database.
+    """
     # verify English translations
     scraped_product.set_current_language('en')
     assert scraped_product.description == 'English description'

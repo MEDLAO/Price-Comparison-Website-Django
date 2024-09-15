@@ -27,13 +27,13 @@ def test_authenticate_with_wrong_credentials(create_test_user):
 
 @pytest.mark.django_db
 def test_authenticate_with_missing_password(create_test_user):
-    """Test that authentication fails when the password is missing."""
+    """Tests that authentication fails when the password is missing."""
     user = authenticate(username='testuser@abc.com', password=None)
     assert user is None
 
 
 @pytest.mark.django_db
 def test_authenticate_with_missing_username(create_test_user):
-    """Test that authentication fails when the username is missing."""
+    """Tests that authentication fails when the username is missing."""
     user = authenticate(username=None, password='pwabcde8')
     assert user is None

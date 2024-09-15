@@ -28,7 +28,7 @@ def test_form_missing_username():
 
 @pytest.mark.django_db
 def test_form_mismatched_passwords():
-    """Test that the form is invalid if passwords do not match."""
+    """Tests that the form is invalid if passwords do not match."""
     form = CustomSignupForm(data={
         'email': 'testuser@abc.com',
         'username': 'username_test',

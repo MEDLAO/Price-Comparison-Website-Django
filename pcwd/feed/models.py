@@ -1,3 +1,7 @@
+"""
+Post model for the feed app.
+"""
+
 from django.db import models
 from django.conf import settings
 

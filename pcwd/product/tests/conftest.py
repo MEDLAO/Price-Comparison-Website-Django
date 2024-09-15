@@ -1,3 +1,7 @@
+"""
+Provides fixtures for testing the product app.
+"""
+
 import pytest
 from django.test import Client
 from product.models import ScrapedProduct, Website

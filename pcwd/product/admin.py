@@ -1,3 +1,7 @@
+"""
+Registers the Website, BaseProduct and ScrapedProduct models with the Django admin interface.
+"""
+
 from django.contrib import admin
 from .models import Website, BaseProduct, ScrapedProduct
 from parler.admin import TranslatableAdmin
