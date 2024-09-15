@@ -4,8 +4,7 @@ from .models import Post
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('user', 'content')
-    list_filter = ('name', 'country')
-    search_fields = ('name', 'url')
-
-
+    list_display = ('user', 'content', 'created_at')
+    search_fields = ('user__username', 'content')
+    list_filter = ('created_at',)
+    ordering = ('-created_at',)
