@@ -16,6 +16,9 @@ NB_PAGES_AMAZON_EG = 400
 
 
 async def fetch_amazon(s, url, nb_page, headers, file_path, brand_list, color_list, currency):
+    """
+    Asynchronously fetches product data from Amazon and writes it to a CSV file.
+    """
     data = None
     while data is None:
         try:

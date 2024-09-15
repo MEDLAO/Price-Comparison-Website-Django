@@ -1,3 +1,8 @@
+"""
+Utility functions for web scraping, including proxies, brand and color extraction,
+price conversion, and asynchronous fetching tasks.
+"""
+
 import requests
 from bs4 import BeautifulSoup
 import asyncio
@@ -113,6 +118,9 @@ def extract_brand_and_color(text, brands, colors):
 
 
 async def fetch_alls(s, url, last_page, fetch_function, file_path, brand_list, color_list, currency):
+    """
+    Asynchronously fetches data from all pages and saves it using the given fetch function.
+    """
     tasks = []
     for nb_page in range(1, last_page + 1):
         # create a user_agent object

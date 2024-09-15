@@ -14,6 +14,9 @@ NB_PAGES_2B_EG = 5
 
 
 async def fetch_twob(s, url, nb_page, headers, file_path, brand_list, color_list, currency):
+    """
+    Asynchronously fetches product data from 2B and writes it to a CSV file.
+    """
     data = None
     while data is None:
         try:

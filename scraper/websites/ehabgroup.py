@@ -15,6 +15,9 @@ NB_PAGES_EHABGROUP_EG = 2
 
 
 async def fetch_ehabgroup(s, url, nb_page, headers, file_path, brand_list, color_list, currency):
+    """
+    Asynchronously fetches product data from Ehabgroup and writes it to a CSV file.
+    """
     data = None
     while data is None:
         try:

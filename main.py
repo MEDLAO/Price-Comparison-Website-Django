@@ -9,6 +9,9 @@ import os
 
 
 async def main():
+    """
+    Asynchronously executes scraping functions for multiple websites in both English and Arabic.
+    """
     file_paths = ['scraper/products-ar.csv']
 
     data = {
@@ -39,7 +42,7 @@ async def main():
         colors = data[lang]['colors']
         currency = data[lang]['currency']
         for function, url, last_page in zip(function_list, urls, last_pages):
-            # Check if the file exists and write headers if it doesn't
+            # check if the file exists and write headers if it doesn't
             if not os.path.isfile(file_path):
                 with open(file_path, mode='w', newline='', encoding='utf-8') as f:
                     writer = csv.writer(f)

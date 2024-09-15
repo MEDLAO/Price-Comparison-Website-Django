@@ -14,6 +14,9 @@ NB_PAGES_JUMIA_EG = 50
 
 
 async def fetch_jumia(s, url, nb_page, headers, file_path, brand_list, color_list, currency):
+    """
+    Asynchronously fetches product data from Jumia and writes it to a CSV file.
+    """
     data = None
     while data is None:
         try:

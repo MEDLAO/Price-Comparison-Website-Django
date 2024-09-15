@@ -25,6 +25,9 @@ website_twob, _ = Website.objects.get_or_create(name='2B', country='EG', url=HOM
 
 
 def import_products_from_csv(file_path_en, file_path_ar):
+    """
+    Imports product data from English and Arabic CSV files, creating and saving models with translations in the database.
+    """
     # read English and Arabic CSV files into DataFrames
     df_en = pd.read_csv(file_path_en).drop_duplicates()
     df_ar = pd.read_csv(file_path_ar).drop_duplicates()
