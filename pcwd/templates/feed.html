@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Feedback Feed</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>User Feedback Feed</h1>
+        <a href="{% url 'feed:post-create' %}" class="button">Write a Post</a>
+    </header>
+
+    <section class="feed-list">
+        {% if posts %}
+            <ul>
+                {% for post in posts %}
+                    <li>
+                        <strong>{{ post.user.username }}</strong>: {{ post.content }} <br>
+                        <small>{{ post.created_at }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Include the pagination snippet -->
+            {% include 'pagination_en.html' %}
+        {% else %}
+            <p>No feedback yet. Be the first to post something!</p>
+        {% endif %}
+    </section>
+</body>
+</html>
