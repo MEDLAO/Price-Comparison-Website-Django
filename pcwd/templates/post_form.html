@@ -1,23 +1,110 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Post</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
+
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts for English (Nunito) and Arabic (Noto Kufi Arabic) -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/center_allauth.css' %}">
 </head>
 <body>
-    <header>
-        <h1>Write a New Post</h1>
-        <a href="{% url 'feed:post-list' %}" class="button">Back to Feed</a>
+
+    <!-- Header and Menu -->
+    <header class="site-header">
+        <nav class="menu">
+            <a href="{% url 'feed:post-list' %}">
+                <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+            </a>
+            <a href="{% url 'home' %}" class="menu-item">Home</a>
+            <a href="#" class="menu-item" data-modal="modal3">About</a>
+            <a href="#" class="menu-item" data-modal="modal4">Contact</a>
+            {% if user.is_authenticated %}
+                <a href="#" class="menu-item" data-modal="modal-account">
+                    <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="menu-profile-image">
+                </a>
+            {% else %}
+                <a href="{% url 'account_login' %}" class="menu-item">My Account</a>
+            {% endif %}
+        </nav>
     </header>
 
-    <section class="post-form">
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Submit</button>
-        </form>
-    </section>
+    <!-- Centered Form Container -->
+    <div class="centered-form-container">
+        <div class="centered-form">
+            <h1 class="centered-text">Write a New Post</h1>
+            <a href="{% url 'feed:post-list' %}" class="button">Back to Feed</a>
+
+            <section class="post-form">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Submit</button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top: 50px;">
+                Welcome!
+            </p>
+            <p>
+                In this first version, we offer a wide selection of smartwatches from several websites. <br>
+                Soon, we will be adding traditional watches and introducing new features...
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal 4 -->
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top: 50px;">
+                We'd Love Your Feedback!
+            </p>
+            <p>
+                Got ideas, feature requests, or just want to share your thoughts? <br>
+                Drop us a line at <strong>address@contact.com</strong>
+            </p>
+            <p>
+                Thank you!
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal Account -->
+    <div id="modal-account" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="profile-image">
+            <p id="username">{{ user.username }}</p>
+            <p class="email-address">{{ user.email }}</p>
+            <ul class="provider-list">
+                <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">Sign out</a></li>
+                <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">Change Password</a></li>
+                <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">Manage Emails</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Script Tag -->
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

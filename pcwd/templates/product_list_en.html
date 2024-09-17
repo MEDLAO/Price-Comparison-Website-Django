@@ -45,7 +45,9 @@
 <body>
     <header class="site-header">
         <nav class="menu">
-            <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+            <a href="{% url 'feed:post-list' %}">
+                <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+            </a>
             <a href="{% url 'home' %}" class="menu-item">Home</a>
             <a href="#" class="menu-item" data-modal="modal2">Search</a>
             <a href="#" class="menu-item" data-modal="modal3">About</a>

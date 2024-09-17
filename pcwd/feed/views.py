@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # listView to display all the posts
 class PostListView(ListView):
     model = Post
-    template_name = 'feed/feed.html'
+    template_name = 'feed.html'
     context_object_name = 'posts'
     ordering = ['-created_at']
     paginate_by = 10
@@ -17,7 +17,7 @@ class PostListView(ListView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['content']
-    template_name = 'feed/post_form.html'
+    template_name = 'post_form.html'
     success_url = reverse_lazy('feed:post-list')
 
     def form_valid(self, form):

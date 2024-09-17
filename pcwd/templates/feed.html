@@ -1,33 +1,113 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Feedback Feed</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
+
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts for English (Nunito) and Arabic (Noto Kufi Arabic) -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <header>
-        <h1>User Feedback Feed</h1>
-        <a href="{% url 'feed:post-create' %}" class="button">Write a Post</a>
+
+    <!-- Header and Menu -->
+    <header class="site-header">
+        <nav class="menu">
+            <a href="{% url 'feed:post-list' %}">
+                <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+            </a>
+            <a href="{% url 'home' %}" class="menu-item">Home</a>
+            <a href="#" class="menu-item" data-modal="modal3">About</a>
+            <a href="#" class="menu-item" data-modal="modal4">Contact</a>
+            {% if user.is_authenticated %}
+                <a href="#" class="menu-item" data-modal="modal-account">
+                    <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="menu-profile-image">
+                </a>
+            {% else %}
+                <a href="{% url 'account_login' %}" class="menu-item">My Account</a>
+            {% endif %}
+        </nav>
     </header>
 
-    <section class="feed-list">
-        {% if posts %}
-            <ul>
-                {% for post in posts %}
-                    <li>
-                        <strong>{{ post.user.username }}</strong>: {{ post.content }} <br>
-                        <small>{{ post.created_at }}</small>
-                    </li>
-                {% endfor %}
-            </ul>
+    <div class="container">
+        <h1>User Feedback Feed</h1>
+        <a href="{% url 'feed:post-create' %}" class="button">Write a Post</a>
 
-            <!-- Include the pagination snippet -->
-            {% include 'pagination_en.html' %}
-        {% else %}
-            <p>No feedback yet. Be the first to post something!</p>
-        {% endif %}
-    </section>
+        <section class="feed-list">
+            {% if posts %}
+                <ul>
+                    {% for post in posts %}
+                        <li>
+                            <strong>{{ post.user.username }}</strong>: {{ post.content }} <br>
+                            <small>{{ post.created_at }}</small>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Include the pagination snippet -->
+                {% include 'pagination_en.html' %}
+            {% else %}
+                <p>No feedback yet. Be the first to post something!</p>
+            {% endif %}
+        </section>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top: 50px;">
+                Welcome!
+            </p>
+            <p>
+                In this first version, we offer a wide selection of smartwatches from several websites. <br>
+                Soon, we will be adding traditional watches and introducing new features...
+            </p>
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top: 50px;">
+                We'd Love Your Feedback!
+            </p>
+            <p>
+                Got ideas, feature requests, or just want to share your thoughts? <br>
+                Drop us a line at <strong>address@contact.com</strong>
+            </p>
+            <p>
+                Thank you!
+            </p>
+        </div>
+    </div>
+
+    <div id="modal-account" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="profile-image">
+            <p id="username">{{ user.username }}</p>
+            <p class="email-address">{{ user.email }}</p>
+            <ul class="provider-list"> <!-- Apply provider-list class -->
+                <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">Sign out</a></li>
+                <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">Change Password</a></li>
+                <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">Manage Emails</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Script Tag -->
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
