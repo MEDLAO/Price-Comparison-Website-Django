@@ -19,7 +19,7 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/center_allauth.css' %}">
+    <link rel="stylesheet" href="{% static 'css/post_form.css' %}">
 </head>
 <body>
 
@@ -43,7 +43,7 @@
     </header>
 
     <!-- Centered Form Container -->
-    <div class="centered-form-container">
+    <div class="post-form-container">
         <div class="centered-form">
             <h1 class="centered-text">Write a New Post</h1>
             <a href="{% url 'feed:post-list' %}" class="button">Back to Feed</a>
@@ -51,7 +51,13 @@
             <section class="post-form">
                 <form method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form.non_field_errors }}
+
+                    <div>
+                        {{ form.content.errors }}
+                        {{ form.content }} <!-- No label is displayed for content -->
+                    </div>
+
                     <button type="submit">Submit</button>
                 </form>
             </section>
