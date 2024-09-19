@@ -19,6 +19,8 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/feed.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
 </head>
 <body>
 
@@ -42,26 +44,27 @@
     </header>
 
     <div class="container">
-        <h1>User Feedback Feed</h1>
-        <a href="{% url 'feed:post-create' %}" class="button">Write a Post</a>
+        <h1 class="center-title">User Feedback Feed</h1>
+        <a href="{% url 'feed:post-create' %}" class="button center-button">Write a Post</a>
 
-        <section class="feed-list">
+        <div class="post-grid">
             {% if posts %}
-                <ul>
-                    {% for post in posts %}
-                        <li>
-                            <strong>{{ post.user.username }}</strong>: {{ post.content }} <br>
+                {% for post in posts %}
+                    <div class="post-card">
+                        <div class="post-content">
+                            <p><strong>{{ post.user.username }}</strong></p>
+                            <p>{{ post.content }}</p>
                             <small>{{ post.created_at }}</small>
-                        </li>
-                    {% endfor %}
-                </ul>
-
-                <!-- Include the pagination snippet -->
-                {% include 'pagination_en.html' %}
+                        </div>
+                    </div>
+                {% endfor %}
             {% else %}
                 <p>No feedback yet. Be the first to post something!</p>
             {% endif %}
-        </section>
+        </div>
+
+        <!-- Include the pagination snippet -->
+        {% include 'pagination_en.html' %}
     </div>
 
     <div id="modal3" class="modal">
@@ -99,7 +102,7 @@
             <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="profile-image">
             <p id="username">{{ user.username }}</p>
             <p class="email-address">{{ user.email }}</p>
-            <ul class="provider-list"> <!-- Apply provider-list class -->
+            <ul class="provider-list">
                 <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">Sign out</a></li>
                 <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">Change Password</a></li>
                 <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">Manage Emails</a></li>
