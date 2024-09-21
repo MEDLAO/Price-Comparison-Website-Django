@@ -7,6 +7,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 from .validators import validate_username, validate_email
+from product.models import ScrapedProduct
 
 
 class CustomUserManager(BaseUserManager):
@@ -45,6 +46,8 @@ class CustomUser(AbstractUser, PermissionsMixin):
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(_('Profile Image'), default='default.png', upload_to='profile_images')
+    favorite_products = models.ManyToManyField(ScrapedProduct, blank=True,
+                                               related_name='favorited_by')
 
     def __str__(self):
         return self.user.username
