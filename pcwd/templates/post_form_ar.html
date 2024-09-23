@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء منشور</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
+
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts for English (Nunito) and Arabic (Noto Kufi Arabic) -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/post_form.css' %}">
+</head>
+<body>
+
+    <!-- Header and Menu -->
+    <header class="site-header">
+        <nav class="menu">
+            <a href="{% url 'feed:post-list' %}">
+                <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+            </a>
+            <a href="{% url 'home' %}" class="menu-item">الرئيسية</a>
+            <a href="#" class="menu-item" data-modal="modal3">عن الموقع</a>
+            <a href="#" class="menu-item" data-modal="modal4">اتصل بنا</a>
+            {% if user.is_authenticated %}
+                <a href="#" class="menu-item" data-modal="modal-account">
+                    <img src="{{ user.profile.image.url }}" alt="{{ user.username }} صورة الملف الشخصي" class="menu-profile-image">
+                </a>
+            {% else %}
+                <a href="{% url 'account_login' %}" class="menu-item">حسابي</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <!-- Centered Form Container -->
+    <div class="post-form-container">
+        <div class="centered-form">
+            <h1 class="centered-text">اكتب منشوراً جديداً</h1>
+            <a href="{% url 'feed:post-list' %}" class="button">عودة إلى التغذية</a>
+
+            <section class="post-form">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+
+                    <div>
+                        {{ form.content.errors }}
+                        {{ form.content }} <!-- No label is displayed for content -->
+                    </div>
+
+                    <button type="submit">إرسال</button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top: 50px;">
+                أهلاً وسهلاً!
+            </p>
+            <p>
+                في هذه النسخة الأولى، نقدم مجموعة واسعة من الساعات الذكية من عدة مواقع. <br>
+                قريباً، سنضيف ساعات تقليدية وسنقوم بإدخال ميزات جديدة...
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal 4 -->
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top: 50px;">
+                نود الحصول على ملاحظاتك!
+            </p>
+            <p>
+                هل لديك أفكار أو طلبات للميزات، أو ترغب فقط في مشاركة أفكارك؟ <br>
+                أرسل لنا رسالة على <strong>address@contact.com</strong>
+            </p>
+            <p>
+                شكراً لك!
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal Account -->
+    <div id="modal-account" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img src="{{ user.profile.image.url }}" alt="{{ user.username }} صورة الملف الشخصي" class="profile-image">
+            <p id="username">{{ user.username }}</p>
+            <p class="email-address">{{ user.email }}</p>
+            <ul class="provider-list">
+                <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">تسجيل الخروج</a></li>
+                <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">تغيير كلمة المرور</a></li>
+                <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">إدارة البريد الإلكتروني</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Script Tag -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

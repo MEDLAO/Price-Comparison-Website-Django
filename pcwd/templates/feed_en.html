@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recommended Products</title>
+    <title>User Feedback Feed</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
@@ -13,18 +13,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts for English (Nunito) and Arabic (Noto Kufi Arabic) -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/feed.css' %}">
     <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
 </head>
 <body>
 
+    <!-- Header and Menu -->
     <header class="site-header">
         <nav class="menu">
-            <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+            <a href="{% url 'feed:post-list' %}">
+                <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+            </a>
             <a href="{% url 'home' %}" class="menu-item">Home</a>
             <a href="#" class="menu-item" data-modal="modal3">About</a>
             <a href="#" class="menu-item" data-modal="modal4">Contact</a>
@@ -39,23 +44,31 @@
     </header>
 
     <div class="container">
-        <h1 style="font-size: 1.5em; text-align: center;">Recommended Products</h1>
-        <div class="product-grid" style="margin-bottom: 30px;  margin-top: 20px;">
-            {% for product in recommended_products %}
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="{{ product.image.url }}" alt="{{ product.description }}">
-                        <div class="product-info">
-                            <p class="description">{{ product.description }}</p>
-                            {% if product.price %}
-                                <p class="price">{{ product.price }} {{ product.currency }}</p>
-                            {% endif %}
-                            <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
+        <h1 class="center-title">User Feedback Feed</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'feed:post-create' %}" class="button center-button">Write a Post</a>
+        {% else %}
+            <p class="login-prompt">Login to write a post</p>
+        {% endif %}
+
+        <div class="post-grid">
+            {% if posts %}
+                {% for post in posts %}
+                    <div class="post-card">
+                        <div class="post-content">
+                            <p>Written by <span style="color: #01796F; font-weight: bold;">{{ post.user.username }}</span></p>
+                            <p>{{ post.content }}</p>
+                            <small>{{ post.created_at }}</small>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <p>No feedback yet. Be the first to post something!</p>
+            {% endif %}
         </div>
+
+        <!-- Include the pagination snippet -->
+        {% include 'pagination_en.html' %}
     </div>
 
     <div id="modal3" class="modal">
@@ -94,6 +107,7 @@
             <p id="username">{{ user.username }}</p>
             <p class="email-address">{{ user.email }}</p>
             <ul class="provider-list">
+                <li class="provider-item"><a href="{% url 'user:favorites-list' %}" class="provider-link">My Favorites</a></li>
                 <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">Sign out</a></li>
                 <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">Change Password</a></li>
                 <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">Manage Emails</a></li>
@@ -101,6 +115,8 @@
         </div>
     </div>
 
+    <!-- Script Tag -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/feed.js' %}"></script>
 </body>
 </html>

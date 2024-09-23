@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 {% load custom_filters %}
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,24 +44,27 @@
 </head>
 <body class="noto-kufi-arabic">
     <header class="site-header">
-        <nav class="menu menu-arabic" style="direction: rtl;">
-            <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+        <nav class="menu menu-arabic">
+            <a href="{% url 'feed:post-list' %}">
+                <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
+            </a>
             <a href="{% url 'home' %}" class="menu-item">الصفحة الرئيسية</a>
             <a href="#" class="menu-item" data-modal="modal2">البحث</a>
             <a href="#" class="menu-item" data-modal="modal3">حول</a>
             <a href="#" class="menu-item" data-modal="modal4">اتصل</a>
             {% if user.is_authenticated %}
                 <a href="#" class="menu-item" data-modal="modal-account">
-                    <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="menu-profile-image">
+                    <img src="{{ user.profile.image.url }}" alt="{{ user.username }} صورة الملف الشخصي" class="menu-profile-image">
                 </a>
             {% else %}
                 <a href="{% url 'account_login' %}" class="menu-item">حسابي</a>
             {% endif %}
         </nav>
     </header>
+
     <div class="container">
         {% if not products %}
-            <p dir="rtl">عذرًا، لم يتم العثور على منتجات لطلب البحث الخاص بك.</p>
+            <p>عذرًا، لم يتم العثور على منتجات لطلب البحث الخاص بك.</p>
         {% else %}
             <div class="product-grid">
                 {% for product in products %}
@@ -71,9 +74,26 @@
                             <div class="product-info">
                                 <p class="description">{{ product.description }}</p>
                                 {% if product.price %}
-                                    <p class="price" dir="rtl">{{ product.currency }} {{ product.price }}</p>
+                                    <p class="price">{{ product.price }} {{ product.currency }}</p>
                                 {% endif %}
-                                <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">المتجر</a>
+                                <!-- Star button for favorites -->
+                                <form method="post" action="{% url 'user:add-to-favorite' product.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="favorites-button" title="إضافة إلى المفضلة">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path d="M12 .587l3.668 7.568 8.332 1.203-6.002 5.838 1.415 8.23L12 18.896l-7.413 3.891 1.415-8.23-6.002-5.838 8.332-1.203z" fill="gold"/>
+                                        </svg>
+                                    </button>
+                                </form>
+
+                                <div class="button-container">
+                                    <form method="get" action="{% url 'fetch-recommended-products' %}">
+                                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                                        <button type="submit" class="visit-store-button also-button" title="توصيات">أيضًا</button>
+                                    </form>
+                                    <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">المتجر</a>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -83,7 +103,7 @@
         {% endif %}
     </div>
 
-    <!-- Modals -->
+    <!-- Additional Modals -->
     <div id="modal2" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -130,10 +150,11 @@
     <div id="modal-account" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="profile-image">
+            <img src="{{ user.profile.image.url }}" alt="{{ user.username }} صورة الملف الشخصي" class="profile-image">
             <p id="username">{{ user.username }}</p>
             <p class="email-address">{{ user.email }}</p>
             <ul class="provider-list">
+                <li class="provider-item"><a href="{% url 'user:favorites-list' %}" class="provider-link">المفضلات الخاصة بي</a></li>
                 <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">تسجيل الخروج</a></li>
                 <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">تغيير كلمة المرور</a></li>
                 <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">إدارة البريد الإلكتروني</a></li>

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List - Compare Smart Watches</title>
+    <title>Your Favorites - Compare Smart Watches</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
@@ -22,13 +22,13 @@
     <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
 
     <!-- Meta Tags for SEO -->
-    <meta name="description" content="Browse the product list and compare the best smartwatches available. Find the perfect smartwatch for you.">
-    <meta name="keywords" content="product list, smartwatches, compare smartwatches, best prices, buy smartwatches">
+    <meta name="description" content="View your favorite smartwatches and easily compare them.">
+    <meta name="keywords" content="favorites, smartwatches, compare smartwatches">
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
     <!-- Open Graph Meta Tags for Social Media -->
-    <meta property="og:title" content="Product List - Compare Smart Watches">
-    <meta property="og:description" content="Browse the product list and compare the best smartwatches available. Find the perfect smartwatch for you.">
+    <meta property="og:title" content="Your Favorites - Compare Smart Watches">
+    <meta property="og:description" content="View your favorite smartwatches and easily compare them.">
     <meta property="og:image" content="{% static 'images/pcwd-image-2.png' %}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:type" content="website">
@@ -37,8 +37,8 @@
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Product List - Compare Smart Watches">
-    <meta name="twitter:description" content="Browse the product list and compare the best smartwatches available. Find the perfect smartwatch for you.">
+    <meta name="twitter:title" content="Your Favorites - Compare Smart Watches">
+    <meta name="twitter:description" content="View your favorite smartwatches and easily compare them.">
     <meta name="twitter:image" content="{% static 'images/pcwd-image-2.png' %}">
 
 </head>
@@ -49,7 +49,6 @@
                 <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             </a>
             <a href="{% url 'home' %}" class="menu-item">Home</a>
-            <a href="#" class="menu-item" data-modal="modal2">Search</a>
             <a href="#" class="menu-item" data-modal="modal3">About</a>
             <a href="#" class="menu-item" data-modal="modal4">Contact</a>
             {% if user.is_authenticated %}
@@ -63,11 +62,12 @@
     </header>
 
     <div class="container">
-        {% if not products %}
-            <p>Sorry, no products found for your search query.</p>
+        <h1 style="font-size: 1.5em; text-align: center;">Your Favorite Smartwatches</h1>
+        {% if not favorites %}
+            <p>You have no favorite products yet.</p>
         {% else %}
             <div class="product-grid">
-                {% for product in products %}
+                {% for product in favorites %}
                     <div class="product-card" data-url="{{ product.image_url }}">
                         <div class="product-image">
                             <img src="{{ product.image.url }}" alt="{{ product.description }}">
@@ -78,13 +78,13 @@
                                 {% endif %}
 
                                 <!-- Star button for favorites -->
-                                <form method="post" action="{% url 'user:add-to-favorite' product.id %}">
+                                <form method="post" action="{% url 'user:remove-from-favorite' product.id %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="favorites-button" title="Add to Favorites">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                            <path d="M12 .587l3.668 7.568 8.332 1.203-6.002 5.838 1.415 8.23L12 18.896l-7.413 3.891 1.415-8.23-6.002-5.838 8.332-1.203z" fill="gold"/>
+                                     <button type="submit" class="favorites-button" title="Remove from Favorites">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="red">
+                                            <path d="M19.41 4.59a1 1 0 0 0-1.42 0L12 10.58 6.01 4.59A1 1 0 0 0 4.59 6.01L10.58 12 4.59 17.99a1 1 0 1 0 1.42 1.42L12 13.42l5.99 5.99a1 1 0 0 0 1.42-1.42L13.42 12l5.99-5.99a1 1 0 0 0 0-1.42z" stroke="red" stroke-width="2"/>
                                         </svg>
-                                    </button>
+                                     </button>
                                 </form>
 
                                 <div class="button-container">
@@ -100,25 +100,10 @@
                     </div>
                 {% endfor %}
             </div>
-            {% include 'pagination_en.html' %}
         {% endif %}
     </div>
 
     <!-- Additional Modals -->
-    <div id="modal2" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form method="get" action="{% url 'product-list-en' %}">
-                <h3>Specific products</h3>
-                <input type="text" name="q" value="{{ search_query }}" placeholder="Search for products, brands, colors...">
-                <label for="priceRange">Price range</label>
-                <input type="range" id="priceRange" name="max_price" min="0" max="{{ max_price_db }}" value="{{ max_price|default_if_none:max_price_db }}" oninput="updatePriceOutput(this.value)">
-                <output for="priceRange" id="priceOutput">{{ max_price|default_if_none:max_price_db }}</output>
-                <button type="submit">Search</button>
-            </form>
-        </div>
-    </div>
-
     <div id="modal3" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -154,7 +139,7 @@
             <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Picture" class="profile-image">
             <p id="username">{{ user.username }}</p>
             <p class="email-address">{{ user.email }}</p>
-            <ul class="provider-list"> <!-- Apply provider-list class -->
+            <ul class="provider-list">
                 <li class="provider-item"><a href="{% url 'user:favorites-list' %}" class="provider-link">My Favorites</a></li>
                 <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">Sign out</a></li>
                 <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">Change Password</a></li>
