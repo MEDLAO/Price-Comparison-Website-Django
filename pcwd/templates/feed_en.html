@@ -27,7 +27,7 @@
     <!-- Header and Menu -->
     <header class="site-header">
         <nav class="menu">
-            <a href="{% url 'feed:post-list' %}">
+            <a href="{% url 'feed:post-list-en' %}">
                 <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             </a>
             <a href="{% url 'home' %}" class="menu-item">Home</a>
@@ -46,7 +46,7 @@
     <div class="container">
         <h1 class="center-title">User Feedback Feed</h1>
         {% if user.is_authenticated %}
-            <a href="{% url 'feed:post-create' %}" class="button center-button">Write a Post</a>
+            <a href="{% url 'feed:post-create-en' %}" class="button center-button">Write a Post</a>
         {% else %}
             <p class="login-prompt">Login to write a post</p>
         {% endif %}
@@ -107,7 +107,7 @@
             <p id="username">{{ user.username }}</p>
             <p class="email-address">{{ user.email }}</p>
             <ul class="provider-list">
-                <li class="provider-item"><a href="{% url 'user:favorites-list' %}" class="provider-link">My Favorites</a></li>
+                <li class="provider-item"><a href="{% url 'user:favorites-list-en' %}" class="provider-link">My Favorites</a></li>
                 <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">Sign out</a></li>
                 <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">Change Password</a></li>
                 <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">Manage Emails</a></li>

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قائمة المنتجات - مقارنة الساعات الذكية</title>
+    <title>المفضلات الخاصة بك - مقارنة الساعات الذكية</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
@@ -15,20 +15,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa&family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
 
     <!-- Meta Tags for SEO -->
-    <meta name="description" content="استعرض قائمة المنتجات وقارن بين أفضل الساعات الذكية المتوفرة. اعثر على الساعة الذكية المثالية لك.">
-    <meta name="keywords" content="قائمة المنتجات, الساعات الذكية, مقارنة الساعات الذكية, أفضل الأسعار, شراء الساعات الذكية">
+    <meta name="description" content="استعرض ساعاتك الذكية المفضلة وقارن بينها بسهولة.">
+    <meta name="keywords" content="المفضلات, الساعات الذكية, مقارنة الساعات الذكية">
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
     <!-- Open Graph Meta Tags for Social Media -->
-    <meta property="og:title" content="قائمة المنتجات - مقارنة الساعات الذكية">
-    <meta property="og:description" content="استعرض قائمة المنتجات وقارن بين أفضل الساعات الذكية المتوفرة. اعثر على الساعة الذكية المثالية لك.">
+    <meta property="og:title" content="المفضلات الخاصة بك - مقارنة الساعات الذكية">
+    <meta property="og:description" content="استعرض ساعاتك الذكية المفضلة وقارن بينها بسهولة.">
     <meta property="og:image" content="{% static 'images/pcwd-image-2.png' %}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:type" content="website">
@@ -37,19 +37,18 @@
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="قائمة المنتجات - مقارنة الساعات الذكية">
-    <meta name="twitter:description" content="استعرض قائمة المنتجات وقارن بين أفضل الساعات الذكية المتوفرة. اعثر على الساعة الذكية المثالية لك.">
+    <meta name="twitter:title" content="المفضلات الخاصة بك - مقارنة الساعات الذكية">
+    <meta name="twitter:description" content="استعرض ساعاتك الذكية المفضلة وقارن بينها بسهولة.">
     <meta name="twitter:image" content="{% static 'images/pcwd-image-2.png' %}">
 
 </head>
-<body class="noto-kufi-arabic">
+<body>
     <header class="site-header">
-        <nav class="menu menu-arabic">
+        <nav class="menu">
             <a href="{% url 'feed:post-list-ar' %}">
                 <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             </a>
             <a href="{% url 'home' %}" class="menu-item">الصفحة الرئيسية</a>
-            <a href="#" class="menu-item" data-modal="modal2">البحث</a>
             <a href="#" class="menu-item" data-modal="modal3">حول</a>
             <a href="#" class="menu-item" data-modal="modal4">اتصل</a>
             {% if user.is_authenticated %}
@@ -63,11 +62,12 @@
     </header>
 
     <div class="container">
-        {% if not products %}
-            <p>عذرًا، لم يتم العثور على منتجات لطلب البحث الخاص بك.</p>
+        <h1 style="font-size: 1.5em; text-align: center;">ساعاتك الذكية المفضلة</h1>
+        {% if not favorites %}
+            <p>ليس لديك أي منتجات مفضلة بعد.</p>
         {% else %}
             <div class="product-grid">
-                {% for product in products %}
+                {% for product in favorites %}
                     <div class="product-card" data-url="{{ product.image_url }}">
                         <div class="product-image">
                             <img src="{{ product.image.url }}" alt="{{ product.description }}">
@@ -76,14 +76,15 @@
                                 {% if product.price %}
                                     <p class="price">{{ product.price }} {{ product.currency }}</p>
                                 {% endif %}
+
                                 <!-- Star button for favorites -->
-                                <form method="post" action="{% url 'user:add-to-favorite-ar' product.id %}">
+                                <form method="post" action="{% url 'user:remove-from-favorite-ar' product.id %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="favorites-button" title="إضافة إلى المفضلة">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                            <path d="M12 .587l3.668 7.568 8.332 1.203-6.002 5.838 1.415 8.23L12 18.896l-7.413 3.891 1.415-8.23-6.002-5.838 8.332-1.203z" fill="gold"/>
+                                     <button type="submit" class="favorites-button" title="إزالة من المفضلة">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="red">
+                                            <path d="M19.41 4.59a1 1 0 0 0-1.42 0L12 10.58 6.01 4.59A1 1 0 0 0 4.59 6.01L10.58 12 4.59 17.99a1 1 0 1 0 1.42 1.42L12 13.42l5.99 5.99a1 1 0 0 0 1.42-1.42L13.42 12l5.99-5.99a1 1 0 0 0 0-1.42z" stroke="red" stroke-width="2"/>
                                         </svg>
-                                    </button>
+                                     </button>
                                 </form>
 
                                 <div class="button-container">
@@ -99,33 +100,18 @@
                     </div>
                 {% endfor %}
             </div>
-            {% include 'pagination_ar.html' %}
         {% endif %}
     </div>
 
     <!-- Additional Modals -->
-    <div id="modal2" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form method="get" action="{% url 'product-list-ar' %}" dir="rtl">
-                <h3 class="modal-heading">منتجات معينة</h3>
-                <input type="text" name="q" value="{{ search_query }}" placeholder="البحث عن المنتجات، العلامات التجارية، الألوان..." dir="rtl">
-                <label for="priceRange" style="display: block; text-align: right;">نطاق السعر</label>
-                <input type="range" id="priceRange" name="max_price" min="0" max="{{ max_price_db }}" value="{{ max_price|default_if_none:max_price_db }}" oninput="updatePriceOutput(this.value)" dir="rtl">
-                <output id="priceOutput" for="priceRange" dir="rtl">{{ max_price|default_if_none:max_price_db }} ج.م</output>
-                <button type="submit">بحث</button>
-            </form>
-        </div>
-    </div>
-
     <div id="modal3" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <p style="margin-top: 50px;" dir="rtl">
+            <p style="margin-top: 50px;">
                 مرحبًا بكم!
             </p>
-            <p dir="rtl">
-                في هذه النسخة الأولى، نقدم لكم مجموعة واسعة من الساعات الذكية من عدة مواقع. <br>
+            <p>
+                في هذه النسخة الأولى، نقدم مجموعة واسعة من الساعات الذكية من عدة مواقع. <br>
                 قريبًا، سنضيف الساعات التقليدية وميزات جديدة...
             </p>
         </div>
@@ -134,15 +120,15 @@
     <div id="modal4" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <p style="margin-top: 50px;" dir="rtl">
-                نرحب بآرائكم واقتراحاتكم!
+            <p style="margin-top: 50px;">
+                نود الحصول على ملاحظاتك!
             </p>
-            <p dir="rtl">
-                هل لديكم أفكار أو اقتراحات لميزات جديدة أو ترغبون في مشاركة آرائكم؟ <br>
-                راسلونا على <strong>address@contact.com</strong>
+            <p>
+                هل لديك أفكار أو طلبات للميزات، أو ترغب فقط في مشاركة أفكارك؟ <br>
+                أرسل لنا رسالة على <strong>address@contact.com</strong>
             </p>
-            <p dir="rtl">
-                شكرًا لكم!
+            <p>
+                شكرًا لك!
             </p>
         </div>
     </div>
@@ -163,10 +149,5 @@
     </div>
 
     <script src="{% static 'js/main.js' %}"></script>
-    <script>
-        function updatePriceOutput(value) {
-            document.getElementById('priceOutput').value = value;
-        }
-    </script>
 </body>
 </html>

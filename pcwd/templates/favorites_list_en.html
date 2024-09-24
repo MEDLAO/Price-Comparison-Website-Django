@@ -45,7 +45,7 @@
 <body>
     <header class="site-header">
         <nav class="menu">
-            <a href="{% url 'feed:post-list' %}">
+            <a href="{% url 'feed:post-list-en' %}">
                 <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             </a>
             <a href="{% url 'home' %}" class="menu-item">Home</a>
@@ -78,7 +78,7 @@
                                 {% endif %}
 
                                 <!-- Star button for favorites -->
-                                <form method="post" action="{% url 'user:remove-from-favorite' product.id %}">
+                                <form method="post" action="{% url 'user:remove-from-favorite-en' product.id %}">
                                     {% csrf_token %}
                                      <button type="submit" class="favorites-button" title="Remove from Favorites">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="red">
@@ -88,7 +88,7 @@
                                 </form>
 
                                 <div class="button-container">
-                                    <form method="get" action="{% url 'fetch-recommended-products' %}">
+                                    <form method="get" action="{% url 'fetch-recommended-products-en' %}">
                                         <input type="hidden" name="product_id" value="{{ product.id }}">
                                         <button type="submit" class="visit-store-button also-button" title="Recommendations">Also</button>
                                     </form>
@@ -140,7 +140,7 @@
             <p id="username">{{ user.username }}</p>
             <p class="email-address">{{ user.email }}</p>
             <ul class="provider-list">
-                <li class="provider-item"><a href="{% url 'user:favorites-list' %}" class="provider-link">My Favorites</a></li>
+                <li class="provider-item"><a href="{% url 'user:favorites-list-en' %}" class="provider-link">My Favorites</a></li>
                 <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">Sign out</a></li>
                 <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">Change Password</a></li>
                 <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">Manage Emails</a></li>

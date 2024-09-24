@@ -27,7 +27,7 @@
     <!-- Header and Menu -->
     <header class="site-header">
         <nav class="menu">
-            <a href="{% url 'feed:post-list' %}">
+            <a href="{% url 'feed:post-list-ar' %}">
                 <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             </a>
             <a href="{% url 'home' %}" class="menu-item">الرئيسية</a>
@@ -46,7 +46,7 @@
     <div class="container">
         <h1 class="center-title">تغذية ملاحظات المستخدمين</h1>
         {% if user.is_authenticated %}
-            <a href="{% url 'feed:post-create' %}" class="button center-button">اكتب منشوراً</a>
+            <a href="{% url 'feed:post-create-ar' %}" class="button center-button">اكتب منشوراً</a>
         {% else %}
             <p class="login-prompt">سجل الدخول لكتابة منشور</p>
         {% endif %}
@@ -56,9 +56,9 @@
                 {% for post in posts %}
                     <div class="post-card">
                         <div class="post-content">
-                            <p>كتب بواسطة <span style="color: #01796F; font-weight: bold;">{{ post.user.username }}</span></p>
-                            <p dir="rtl">{{ post.content }}</p>
-                            <small>{{ post.created_at }}</small>
+                            <p>كتبه <span style="color: #01796F; font-weight: bold;">{{ post.user.username }}</span></p>
+                            <p>{{ post.content }}</p>
+                            <small dir="ltr">{{ post.created_at }}</small>
                         </div>
                     </div>
                 {% endfor %}
@@ -107,7 +107,7 @@
             <p id="username">{{ user.username }}</p>
             <p class="email-address">{{ user.email }}</p>
             <ul class="provider-list">
-                <li class="provider-item"><a href="{% url 'user:favorites-list' %}" class="provider-link">المفضلات الخاصة بي</a></li>
+                <li class="provider-item"><a href="{% url 'user:favorites-list-ar' %}" class="provider-link">المفضلات الخاصة بي</a></li>
                 <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">تسجيل الخروج</a></li>
                 <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">تغيير كلمة المرور</a></li>
                 <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">إدارة البريد الإلكتروني</a></li>

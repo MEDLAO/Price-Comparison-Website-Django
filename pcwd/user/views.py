@@ -8,7 +8,12 @@ def add_to_favorite(request, product_id):
     product = get_object_or_404(ScrapedProduct, id=product_id)
     profile = request.user.profile
     profile.favorite_products.add(product)
-    return redirect('product-list-en')
+
+    language = 'en' if '/en/' in request.path else 'ar'
+    if language == 'en':
+        return redirect('product-list-en')
+    else:
+        return redirect('product-list-ar')
 
 
 @login_required
@@ -16,11 +21,18 @@ def remove_from_favorite(request, product_id):
     product = get_object_or_404(ScrapedProduct, id=product_id)
     profile = request.user.profile
     profile.favorite_products.remove(product)
-    return redirect('user:favorites-list')
+
+    language = 'en' if '/en/' in request.path else 'ar'
+    if language == 'en':
+        return redirect('user:favorites-list-en')
+    else:
+        return redirect('user:favorites-list-ar')
 
 
 @login_required
 def favorites_list(request):
     profile = request.user.profile
-    favorites = profile.favorite_products.all()
-    return render(request, 'favorites_list.html', {'favorites': favorites})
+    language = 'en' if '/en/' in request.path else 'ar'
+    favorites = profile.favorite_products.language(language).all()
+    template_name = 'favorites_list_en.html' if language == 'en' else 'favorites_list_ar.html'
+    return render(request, template_name, {'favorites': favorites})

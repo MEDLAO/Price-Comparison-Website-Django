@@ -26,7 +26,7 @@
     <!-- Header and Menu -->
     <header class="site-header">
         <nav class="menu">
-            <a href="{% url 'feed:post-list' %}">
+            <a href="{% url 'feed:post-list-en' %}">
                 <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             </a>
             <a href="{% url 'home' %}" class="menu-item">Home</a>
@@ -46,7 +46,7 @@
     <div class="post-form-container">
         <div class="centered-form">
             <h1 class="centered-text">Write a New Post</h1>
-            <a href="{% url 'feed:post-list' %}" class="button">Back to Feed</a>
+            <a href="{% url 'feed:post-list-en' %}" class="button">Back to Feed</a>
 
             <section class="post-form">
                 <form method="post">
