@@ -50,7 +50,16 @@
                             {% if product.price %}
                                 <p class="price">{{ product.price }} {{ product.currency }}</p>
                             {% endif %}
-                            <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
+                            <!-- Star button for favorites -->
+                            <form method="post" action="{% url 'user:add-to-favorite-en' product.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="favorites-button" title="Add to Favorites">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M12 .587l3.668 7.568 8.332 1.203-6.002 5.838 1.415 8.23L12 18.896l-7.413 3.891 1.415-8.23-6.002-5.838 8.332-1.203z" fill="gold"/>
+                                    </svg>
+                                </button>
+                            </form>
+                            <a class="visit-store-button store-en" href="{{ product.product_url }}" target="_blank">Store</a>
                         </div>
                     </div>
                 </div>
@@ -94,6 +103,7 @@
             <p id="username">{{ user.username }}</p>
             <p class="email-address">{{ user.email }}</p>
             <ul class="provider-list">
+                <li class="provider-item"><a href="{% url 'user:favorites-list-en' %}" class="provider-link">My Favorites</a></li>
                 <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">Sign out</a></li>
                 <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">Change Password</a></li>
                 <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">Manage Emails</a></li>

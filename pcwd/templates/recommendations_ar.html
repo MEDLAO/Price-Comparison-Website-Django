@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,9 +47,18 @@
                         <div class="product-info">
                             <p class="description">{{ product.description }}</p>
                             {% if product.price %}
-                                <p class="price">{{ product.price }} {{ product.currency }}</p>
+                                <p class="price" dir="rtl">{{ product.price }} {{ product.currency }}</p>
                             {% endif %}
-                            <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">المتجر</a>
+                            <!-- Star button for favorites -->
+                            <form method="post" action="{% url 'user:add-to-favorite-en' product.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="favorites-button" title="Add to Favorites">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M12 .587l3.668 7.568 8.332 1.203-6.002 5.838 1.415 8.23L12 18.896l-7.413 3.891 1.415-8.23-6.002-5.838 8.332-1.203z" fill="gold"/>
+                                    </svg>
+                                </button>
+                            </form>
+                            <a class="visit-store-button store-ar" href="{{ product.product_url }}" target="_blank">المتجر</a>
                         </div>
                     </div>
                 </div>
@@ -93,6 +102,7 @@
             <p id="username">{{ user.username }}</p>
             <p class="email-address">{{ user.email }}</p>
             <ul class="provider-list">
+                <li class="provider-item"><a href="{% url 'user:favorites-list-ar' %}" class="provider-link">المفضلات الخاصة بي</a></li>
                 <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">تسجيل الخروج</a></li>
                 <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">تغيير كلمة المرور</a></li>
                 <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">إدارة البريد الإلكتروني</a></li>

@@ -90,9 +90,9 @@
                                 <div class="button-container">
                                     <form method="get" action="{% url 'fetch-recommended-products-en' %}">
                                         <input type="hidden" name="product_id" value="{{ product.id }}">
-                                        <button type="submit" class="visit-store-button also-button" title="Recommendations">Also</button>
+                                        <button type="submit" class="visit-store-button also-button also-en" title="Recommendations">Also</button>
                                     </form>
-                                    <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">Store</a>
+                                    <a class="visit-store-button store-en" href="{{ product.product_url }}" target="_blank">Store</a>
                                 </div>
 
                             </div>

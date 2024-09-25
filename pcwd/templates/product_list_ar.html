@@ -89,9 +89,9 @@
                                 <div class="button-container">
                                     <form method="get" action="{% url 'fetch-recommended-products-ar' %}">
                                         <input type="hidden" name="product_id" value="{{ product.id }}">
-                                        <button type="submit" class="visit-store-button also-button" title="توصيات">أيضًا</button>
+                                        <button type="submit" class="visit-store-button also-button also-ar" title="توصيات">أيضًا</button>
                                     </form>
-                                    <a class="visit-store-button" href="{{ product.product_url }}" target="_blank">المتجر</a>
+                                    <a class="visit-store-button store-ar" href="{{ product.product_url }}" target="_blank">المتجر</a>
                                 </div>
 
                             </div>
