@@ -77,15 +77,16 @@
                                     <p class="price">{{ product.price }} {{ product.currency }}</p>
                                 {% endif %}
                                 <!-- Star button for favorites -->
-                                <form method="post" action="{% url 'user:add-to-favorite-ar' product.id %}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="favorites-button" title="إضافة إلى المفضلة">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                            <path d="M12 .587l3.668 7.568 8.332 1.203-6.002 5.838 1.415 8.23L12 18.896l-7.413 3.891 1.415-8.23-6.002-5.838 8.332-1.203z" fill="gold"/>
-                                        </svg>
-                                    </button>
-                                </form>
-
+                                {% if user.is_authenticated %}
+                                    <form method="post" action="{% url 'user:add-to-favorite-ar' product.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="favorites-button" title="إضافة إلى المفضلة">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path d="M12 .587l3.668 7.568 8.332 1.203-6.002 5.838 1.415 8.23L12 18.896l-7.413 3.891 1.415-8.23-6.002-5.838 8.332-1.203z" fill="gold"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                {% endif %}
                                 <div class="button-container">
                                     <form method="get" action="{% url 'fetch-recommended-products-ar' %}">
                                         <input type="hidden" name="product_id" value="{{ product.id }}">
