@@ -1,5 +1,4 @@
 import pytest
-from feed.models import Post
 
 
 @pytest.mark.django_db

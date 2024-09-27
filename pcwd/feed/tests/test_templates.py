@@ -20,8 +20,7 @@ def test_feed_en_template_content(client):
     response = client.get(reverse('feed:post-list-en'))
     assert response.status_code == 200
     content = response.content.decode()  # decode byte content to string
-    assert "User Feedback Feed" in content
-    assert "Write a Post" in content
+    assert "Share Your Feedback or Ideas" in content
     assert "Login to write a post" in content
 
 
@@ -43,6 +42,5 @@ def test_feed_ar_template_content(client):
     response = client.get(reverse('feed:post-list-ar'))
     assert response.status_code == 200
     content = response.content.decode()  # decode byte content to string
-    assert "تغذية ملاحظات المستخدمين" in content
-    assert "اكتب منشوراً" in content
+    assert "شاركوا ملاحظاتكم أو أفكاركم" in content
     assert "سجل الدخول لكتابة منشور" in content

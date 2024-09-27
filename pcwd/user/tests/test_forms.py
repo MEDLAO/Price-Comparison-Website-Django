@@ -4,7 +4,9 @@ from user.forms import CustomSignupForm
 
 @pytest.mark.django_db
 def test_form_valid_data():
-    """Test that the form is valid with correct data."""
+    """
+    Test that the form is valid with correct data.
+    """
     form = CustomSignupForm(data={
         'email': 'testuser@abc.com',
         'username': 'username_test',
@@ -16,7 +18,9 @@ def test_form_valid_data():
 
 @pytest.mark.django_db
 def test_form_missing_username():
-    """Test that the form is invalid without a username."""
+    """
+    Test that the form is invalid without a username.
+    """
     form = CustomSignupForm(data={
         'email': 'testuser@abc.com',
         'password1': 'pwabcde8',
@@ -28,7 +32,9 @@ def test_form_missing_username():
 
 @pytest.mark.django_db
 def test_form_mismatched_passwords():
-    """Tests that the form is invalid if passwords do not match."""
+    """
+    Tests that the form is invalid if passwords do not match.
+    """
     form = CustomSignupForm(data={
         'email': 'testuser@abc.com',
         'username': 'username_test',

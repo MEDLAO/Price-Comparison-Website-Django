@@ -71,5 +71,5 @@ def test_product_list_ar_template_content(client):
     assert "مقارنة الساعات الذكية" in content
     assert "الصفحة الرئيسية" in content
     assert "البحث" in content
-    assert "حول" in content
-    assert "اتصل" in content
+    assert "عن الموقع" in content
+    assert "اتصل بنا" in content

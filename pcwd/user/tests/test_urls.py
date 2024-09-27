@@ -10,7 +10,7 @@ def test_add_to_favorite_url_reverse():
     Tests the reverse URL lookup for adding to favorites in English.
     """
     url = reverse('user:add-to-favorite-en', args=[1])
-    assert url == '/en/add-to-favorite/1/'
+    assert url == '/favorites/en/add-to-favorite/1/'
 
 
 @pytest.mark.django_db

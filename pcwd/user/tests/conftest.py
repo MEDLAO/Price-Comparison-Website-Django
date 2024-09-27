@@ -5,6 +5,7 @@ Provides fixtures for testing the user app.
 import pytest
 from django.test import Client
 from django.contrib.auth import get_user_model
+from product.tests.conftest import scraped_product, website
 
 
 User = get_user_model()

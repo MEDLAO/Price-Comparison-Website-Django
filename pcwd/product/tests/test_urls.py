@@ -62,7 +62,7 @@ def test_recommendations_en_url_reverse():
     """
     Tests that the reverse URL lookup for 'fetch-recommended-products' returns the correct path (English).
     """
-    url = reverse('fetch-recommended-products')
+    url = reverse('fetch-recommended-products-en')
     assert url == '/en/recommendations/'
 
 

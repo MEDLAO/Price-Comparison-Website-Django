@@ -27,5 +27,5 @@ def create_test_user():
 
 
 @pytest.fixture
-def create_test_post():
+def create_test_post(create_test_user):
     return Post.objects.create(user=create_test_user, content="Post written for unit tests.")

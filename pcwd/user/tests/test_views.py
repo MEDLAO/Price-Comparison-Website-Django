@@ -10,7 +10,7 @@ User = get_user_model()
 @pytest.mark.django_db
 def test_add_to_favorite_authenticated(client, create_test_user, scraped_product):
     """
-    Test that an authenticated user can add a product to favorites.
+    Tests that an authenticated user can add a product to favorites.
     """
     user = create_test_user
     profile = Profile.objects.get(user=user)
@@ -24,18 +24,18 @@ def test_add_to_favorite_authenticated(client, create_test_user, scraped_product
 @pytest.mark.django_db
 def test_add_to_favorite_unauthenticated(client, scraped_product):
     """
-    Test that an unauthenticated user cannot add a product to favorites.
+    Tests that an unauthenticated user cannot add a product to favorites.
     """
     # attempt to call the add_to_favorite view without logging in
     response = client.post(reverse('user:add-to-favorite-en', args=[scraped_product.id]))
     assert response.status_code == 302
-    assert response.url == '/accounts/login/'
+    assert response.url == f'/accounts/login/?next=/favorites/en/add-to-favorite/{scraped_product.id}/'
 
 
 @pytest.mark.django_db
 def test_remove_from_favorite_authenticated(client, create_test_user, scraped_product):
     """
-    Test that an authenticated user can remove a product from favorites.
+    Tests that an authenticated user can remove a product from favorites.
     """
     user = create_test_user
     client.force_login(user)
@@ -52,7 +52,7 @@ def test_remove_from_favorite_authenticated(client, create_test_user, scraped_pr
 @pytest.mark.django_db
 def test_favorites_list_authenticated(client, create_test_user, scraped_product):
     """
-    Test that the favorites list is displayed for authenticated users.
+    Tests that the favorites list is displayed for authenticated users.
     """
     user = create_test_user
     client.force_login(user)
@@ -72,9 +72,9 @@ def test_favorites_list_authenticated(client, create_test_user, scraped_product)
 @pytest.mark.django_db
 def test_favorites_list_unauthenticated(client):
     """
-    Test that an unauthenticated user cannot access the favorites list.
+    Tests that an unauthenticated user cannot access the favorites list.
     """
     # call the favorites list view without logging in
     response = client.get(reverse('user:favorites-list-en'))
     assert response.status_code == 302
-    assert response.url == '/accounts/login/'
+    assert response.url == '/accounts/login/?next=/favorites/en/'

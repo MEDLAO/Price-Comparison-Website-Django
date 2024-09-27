@@ -18,7 +18,7 @@ def test_post_list_view_authenticated(client, create_test_user, create_test_post
     response = client.get(reverse('feed:post-list-en'))
 
     assert response.status_code == 200
-    assert "User Feedback Feed" in response.content.decode()
+    assert "Share Your Feedback or Ideas" in response.content.decode()
     assert test_post.content in response.content.decode()
     assert '<a href="/feed/en/post_form/" class="button center-button">Write a Post</a>' in\
            response.content.decode()
@@ -31,10 +31,10 @@ def test_post_list_view_unauthenticated(client):
     """
     response = client.get(reverse('feed:post-list-en'))
     assert response.status_code == 200
-    assert "User Feedback Feed" in response.content.decode()
+    assert "Share Your Feedback or Ideas" in response.content.decode()
     assert "Login to write a post" in response.content.decode()
     assert '<a href="/feed/en/post_form/" class="button center-button">Write a Post</a>' not in \
-           response.content.decode()  # ensure the button is not present
+           response.content.decode()
 
 
 @pytest.mark.django_db
@@ -61,4 +61,4 @@ def test_post_create_view_unauthenticated(client):
     """
     response = client.get(reverse('feed:post-create-en'))  # access the create view
     assert response.status_code == 302  # should redirect to the login page
-    assert response.url == 'en/accounts/login/'
+    assert response.url == '/accounts/login/?next=/feed/en/post_form/'
