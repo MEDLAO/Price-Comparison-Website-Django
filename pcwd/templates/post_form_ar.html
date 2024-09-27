@@ -21,15 +21,15 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/post_form.css' %}">
 </head>
-<body>
+<body class="noto-kufi-arabic">
 
     <!-- Header and Menu -->
     <header class="site-header">
         <nav class="menu">
-            <a href="{% url 'feed:post-list-ar' %}">
+            <a href="{% url 'feed:post-list-ar' %}" title="انقر لكتابة منشور">
                 <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             </a>
-            <a href="{% url 'home' %}" class="menu-item">الرئيسية</a>
+            <a href="{% url 'home' %}" class="menu-item">الصفحة الرئيسية</a>
             <a href="#" class="menu-item" data-modal="modal3">عن الموقع</a>
             <a href="#" class="menu-item" data-modal="modal4">اتصل بنا</a>
             {% if user.is_authenticated %}
@@ -72,25 +72,24 @@
                 أهلاً وسهلاً!
             </p>
             <p>
-                في هذه النسخة الأولى، نقدم مجموعة واسعة من الساعات الذكية من عدة مواقع. <br>
+                في هذا الإصدار الأول، نقدم مجموعة واسعة من الساعات الذكية من عدة مواقع. <br>
                 قريباً، سنضيف ساعات تقليدية وسنقوم بإدخال ميزات جديدة...
             </p>
         </div>
     </div>
 
-    <!-- Modal 4 -->
     <div id="modal4" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p style="margin-top: 50px;">
-                نود الحصول على ملاحظاتك!
+                نريد الحصول على ملاحظاتكم!
             </p>
             <p>
-                هل لديك أفكار أو طلبات للميزات، أو ترغب فقط في مشاركة أفكارك؟ <br>
-                أرسل لنا رسالة على <strong>address@contact.com</strong>
+                هل لديكم أفكار أو طلبات ميزات؟ <br> هل ترغبون في رؤية منتجات إضافية أو حتى ميزات الشراء والبيع؟<br> نقدر آرائكم ونود سماعها! <br>
+                 يرجى مراسلتنا على <strong>medlao.contact@gmail.com</strong><br> أو خذوا لحظة لكتابة منشور لمشاركة ملاحظاتكم.
             </p>
             <p>
-                شكراً لك!
+                شكرًا لمساعدتكم في تحسين تجربتنا!
             </p>
         </div>
     </div>
@@ -103,6 +102,7 @@
             <p id="username">{{ user.username }}</p>
             <p class="email-address">{{ user.email }}</p>
             <ul class="provider-list">
+                <li class="provider-item"><a href="{% url 'user:favorites-list-ar' %}" class="provider-link">المفضلات الخاصة بي</a></li>
                 <li class="provider-item"><a href="{% url 'account_logout' %}" class="provider-link">تسجيل الخروج</a></li>
                 <li class="provider-item"><a href="{% url 'account_change_password' %}" class="provider-link">تغيير كلمة المرور</a></li>
                 <li class="provider-item"><a href="{% url 'account_email' %}" class="provider-link">إدارة البريد الإلكتروني</a></li>

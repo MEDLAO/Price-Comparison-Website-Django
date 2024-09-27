@@ -16,6 +16,7 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa&family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -42,15 +43,15 @@
     <meta name="twitter:image" content="{% static 'images/pcwd-image-2.png' %}">
 
 </head>
-<body>
+<body class="noto-kufi-arabic">
     <header class="site-header">
         <nav class="menu">
-            <a href="{% url 'feed:post-list-ar' %}">
+            <a href="{% url 'feed:post-list-ar' %}" title="انقر لكتابة منشور">
                 <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             </a>
             <a href="{% url 'home' %}" class="menu-item">الصفحة الرئيسية</a>
-            <a href="#" class="menu-item" data-modal="modal3">حول</a>
-            <a href="#" class="menu-item" data-modal="modal4">اتصل</a>
+            <a href="#" class="menu-item" data-modal="modal3">عن الموقع</a>
+            <a href="#" class="menu-item" data-modal="modal4">اتصل بنا</a>
             {% if user.is_authenticated %}
                 <a href="#" class="menu-item" data-modal="modal-account">
                     <img src="{{ user.profile.image.url }}" alt="{{ user.username }} صورة الملف الشخصي" class="menu-profile-image">
@@ -111,7 +112,7 @@
                 مرحبًا بكم!
             </p>
             <p>
-                في هذه النسخة الأولى، نقدم مجموعة واسعة من الساعات الذكية من عدة مواقع. <br>
+                في هذا الإصدار الأول، نقدم مجموعة واسعة من الساعات الذكية من عدة مواقع. <br>
                 قريبًا، سنضيف الساعات التقليدية وميزات جديدة...
             </p>
         </div>
@@ -121,14 +122,14 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <p style="margin-top: 50px;">
-                نود الحصول على ملاحظاتك!
+                نريد الحصول على ملاحظاتكم!
             </p>
             <p>
-                هل لديك أفكار أو طلبات للميزات، أو ترغب فقط في مشاركة أفكارك؟ <br>
-                أرسل لنا رسالة على <strong>address@contact.com</strong>
+                هل لديكم أفكار أو طلبات ميزات؟ <br> هل ترغبون في رؤية منتجات إضافية أو حتى ميزات الشراء والبيع؟<br> نقدر آرائكم ونود سماعها! <br>
+                 يرجى مراسلتنا على <strong>medlao.contact@gmail.com</strong><br> أو خذوا لحظة لكتابة منشور لمشاركة ملاحظاتكم.
             </p>
             <p>
-                شكرًا لك!
+                شكرًا لمساعدتكم في تحسين تجربتنا!
             </p>
         </div>
     </div>

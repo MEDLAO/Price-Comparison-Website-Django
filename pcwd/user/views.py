@@ -11,9 +11,9 @@ def add_to_favorite(request, product_id):
 
     language = 'en' if '/en/' in request.path else 'ar'
     if language == 'en':
-        return redirect('product-list-en')
+        return redirect('user:favorites-list-en')
     else:
-        return redirect('product-list-ar')
+        return redirect('user:favorites-list-ar')
 
 
 @login_required

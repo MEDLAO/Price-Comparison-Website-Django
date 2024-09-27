@@ -45,7 +45,7 @@
 <body>
     <header class="site-header">
         <nav class="menu">
-            <a href="{% url 'feed:post-list-en' %}">
+            <a href="{% url 'feed:post-list-en' %}" title="Click to write a post">
                 <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             </a>
             <a href="{% url 'home' %}" class="menu-item">Home</a>
@@ -111,6 +111,7 @@
             <span class="close">&times;</span>
             <form method="get" action="{% url 'product-list-en' %}">
                 <h3>Specific products</h3>
+                <p>The products are already sorted in ascending order.</p>
                 <input type="text" name="q" value="{{ search_query }}" placeholder="Search for products, brands, colors...">
                 <label for="priceRange">Price range</label>
                 <input type="range" id="priceRange" name="max_price" min="0" max="{{ max_price_db }}" value="{{ max_price|default_if_none:max_price_db }}" oninput="updatePriceOutput(this.value)">
@@ -137,17 +138,21 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <p style="margin-top: 50px;">
-                We'd Love Your Feedback!
+                We’d Love Your Feedback!
             </p>
             <p>
-                Got ideas, feature requests, or just want to share your thoughts? <br>
-                Drop us a line at <strong>address@contact.com</strong>
+                Do you have ideas or feature requests? <br>
+                Would you like to see additional products
+                or even a buying and selling feature? <br>
+                We value your thoughts and want to hear from you! <br>
+                Please drop us a line at <strong>medlao.contact@gmail.com</strong> <br> or take a moment to write a post sharing your feedback.
             </p>
             <p>
-                Thank you!
+                Thank you for helping us improve!
             </p>
         </div>
     </div>
+
 
     <div id="modal-account" class="modal">
         <div class="modal-content">

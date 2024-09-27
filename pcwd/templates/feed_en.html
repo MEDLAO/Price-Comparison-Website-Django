@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Feedback Feed</title>
+    <title>Feed</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{% static 'images/mintcircle.ico' %}">
@@ -27,7 +27,7 @@
     <!-- Header and Menu -->
     <header class="site-header">
         <nav class="menu">
-            <a href="{% url 'feed:post-list-en' %}">
+            <a href="{% url 'feed:post-list-en' %}" title="Click to write a post">
                 <img src="{% static 'images/mintcircle.png' %}" alt="Favicon" class="menu-favicon">
             </a>
             <a href="{% url 'home' %}" class="menu-item">Home</a>
@@ -44,7 +44,7 @@
     </header>
 
     <div class="container">
-        <h1 class="center-title">User Feedback Feed</h1>
+        <h1 class="center-title">Share Your Feedback or Ideas</h1>
         {% if user.is_authenticated %}
             <a href="{% url 'feed:post-create-en' %}" class="button center-button">Write a Post</a>
         {% else %}
@@ -88,14 +88,17 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <p style="margin-top: 50px;">
-                We'd Love Your Feedback!
+                We’d Love Your Feedback!
             </p>
             <p>
-                Got ideas, feature requests, or just want to share your thoughts? <br>
-                Drop us a line at <strong>address@contact.com</strong>
+                Do you have ideas or feature requests? <br>
+                Would you like to see additional products
+                or even a buying and selling feature? <br>
+                We value your thoughts and want to hear from you! <br>
+                Please drop us a line at <strong>medlao.contact@gmail.com</strong> <br> or take a moment to write a post sharing your feedback.
             </p>
             <p>
-                Thank you!
+                Thank you for helping us improve!
             </p>
         </div>
     </div>
