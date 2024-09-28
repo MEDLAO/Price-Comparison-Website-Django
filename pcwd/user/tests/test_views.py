@@ -1,4 +1,5 @@
 import pytest
+from django.core.files.base import ContentFile
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from user.models import Profile
@@ -39,7 +40,7 @@ def test_remove_from_favorite_authenticated(client, create_test_user, scraped_pr
     """
     user = create_test_user
     client.force_login(user)
-
+    scraped_product.image = "mock_image.png"
     # add the scraped product to the user's favorites
     profile = Profile.objects.get(user=user)
     profile.favorite_products.add(scraped_product)
@@ -56,6 +57,10 @@ def test_favorites_list_authenticated(client, create_test_user, scraped_product)
     """
     user = create_test_user
     client.force_login(user)
+
+    # assign a mock image content directly to the image field
+    scraped_product.image = "mock_image.png"
+    scraped_product.save()
 
     # add the scraped product to favorites
     profile = Profile.objects.get(user=user)

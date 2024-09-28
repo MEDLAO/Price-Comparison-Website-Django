@@ -24,6 +24,10 @@ def test_favorites_list_en_template_content(client, create_test_user, scraped_pr
     user = create_test_user
     client.force_login(user)
     profile = user.profile
+
+    scraped_product.image = "mock_image.png"
+    scraped_product.save()
+
     profile.favorite_products.add(scraped_product)
     response = client.get(reverse('user:favorites-list-en'))
     content = response.content.decode()
@@ -54,6 +58,10 @@ def test_favorites_list_ar_template_content(client, create_test_user, scraped_pr
     user = create_test_user
     client.force_login(user)
     profile = user.profile
+
+    scraped_product.image = "mock_image.png"
+    scraped_product.save()
+
     profile.favorite_products.add(scraped_product)
     response = client.get(reverse('user:favorites-list-ar'))
     content = response.content.decode()

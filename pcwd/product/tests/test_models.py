@@ -3,7 +3,15 @@ from product.models import ScrapedProduct, Website
 
 
 @pytest.mark.django_db
-def test_str_method(scraped_product):
+def test_website_str_method(website):
+    """
+    Tests the __str__ method of the Website model.
+    """
+    assert str(website) == 'AM EG'
+
+
+@pytest.mark.django_db
+def test_scraped_product_str_method(scraped_product):
     """
     Tests the __str__ method of the ScrapedProduct model.
     """

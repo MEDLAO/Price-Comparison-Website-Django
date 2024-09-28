@@ -27,7 +27,7 @@ class Website(models.Model):
     url = models.URLField(max_length=1000)
 
     def __str__(self):
-        return f'{self.WEBSITE_NAME} {self.COUNTRY}'
+        return f'{self.name} {self.country}'
 
 
 class BaseProduct(TranslatableModel):
