@@ -2,7 +2,7 @@ env/
 **/__pycache__/
 .idea
 db.sqlite3
-*.env
+*.env.*
 Free_Proxy_List.txt
 pcwd/pcwd/.env
 main2.py

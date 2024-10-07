@@ -15,12 +15,21 @@ import environ
 import os
 
 
-env = environ.Env()
-# read th .env file
-environ.Env.read_env()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Initialize environment variable handling
+env = environ.Env()
+
+# determine which environment file to load
+ENVIRONMENT = env.str('ENVIRONMENT', default='dev')
+
+if ENVIRONMENT == 'prod':
+    # read the production .env file
+    environ.Env.read_env(os.path.join(BASE_DIR, '.env.prod'))
+else:
+    # read the development .env file
+    environ.Env.read_env(os.path.join(BASE_DIR, '.env.dev'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,9 +39,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
 
 # Application definition
