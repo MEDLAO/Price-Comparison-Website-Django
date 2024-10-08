@@ -26,22 +26,22 @@ ENVIRONMENT = env.str('ENVIRONMENT', default='dev')
 
 if ENVIRONMENT == 'prod':
     # read the production .env file
-    environ.Env.read_env(os.path.join(BASE_DIR, '.env.prod'))
+    env.read_env(os.path.join(BASE_DIR, '.env.prod'))
 else:
     # read the development .env file
-    environ.Env.read_env(os.path.join(BASE_DIR, '.env.dev'))
+    env.read_env(os.path.join(BASE_DIR, '.env.dev'))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG", default=True)
+DEBUG = env.bool('DEBUG', default=True)
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
 
 # Application definition
