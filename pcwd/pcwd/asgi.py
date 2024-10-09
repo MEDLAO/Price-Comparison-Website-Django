@@ -11,6 +11,10 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pcwd.settings')
+# set DJANGO_SETTINGS_MODULE based on the environment
+if os.getenv('DJANGO_ENV') == 'production':
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pcwd.settings.production')
+else:
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pcwd.settings.development')
 
 application = get_asgi_application()
