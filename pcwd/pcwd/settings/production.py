@@ -27,3 +27,12 @@ DATABASES = {
 }
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# AWS SES email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('AWS_SES_EMAIL_HOST')
+EMAIL_PORT = env('AWS_SES_PORT')  # TLS port
+EMAIL_USE_TLS = True  # use TLS for secure email
+EMAIL_HOST_USER = env('AWS_SES_SMTP_USER')
+EMAIL_HOST_PASSWORD = env('AWS_SES_SMTP_PASSWORD')
+DEFAULT_FROM_EMAIL = 'contact@fromsifr.com'
