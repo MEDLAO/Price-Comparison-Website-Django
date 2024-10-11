@@ -36,3 +36,14 @@ EMAIL_USE_TLS = True  # use TLS for secure email
 EMAIL_HOST_USER = env('AWS_SES_SMTP_USER')
 EMAIL_HOST_PASSWORD = env('AWS_SES_SMTP_PASSWORD')
 DEFAULT_FROM_EMAIL = 'contact@fromsifr.com'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f"redis://:{os.getenv('AWS_REDIS_PASSWORD')}@{os.getenv('AWS_REDIS_ENDPOINT')}/1",
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'PASSWORD': os.getenv('AWS_REDIS_PASSWORD'),
+        },
+    }
+}
