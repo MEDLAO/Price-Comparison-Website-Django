@@ -27,6 +27,7 @@ DATABASES = {
 }
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+MEDIA_ROOT = '/app/media'
 
 # AWS SES email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

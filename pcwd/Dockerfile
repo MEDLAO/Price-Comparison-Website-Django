@@ -1,6 +1,9 @@
 # Use the official lightweight Python image
 FROM python:3.10-slim
 
+# Install system packages required to compile psycopg2 (PostgreSQL adapter for Python)
+RUN apt-get update && apt-get install -y build-essential libpq-dev gcc
+
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1 # Prevent Python from generating .pyc files
 ENV PYTHONUNBUFFERED 1 # Force Python to output logs to stdout/stderr immediately without buffering
