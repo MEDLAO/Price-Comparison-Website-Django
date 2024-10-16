@@ -12,8 +12,6 @@ services:
       - media_volume:/app/media  # Media files volume (shared between Django and Nginx)
     expose:
       - "8000"  # Expose port 8000 for Gunicorn
-    env_file:
-      - .env  # Load environment variables from the .env file
     restart: always  # Automatically restart the container if it fails
 
   # Nginx web server to reverse proxy requests to Gunicorn
