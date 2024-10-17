@@ -46,9 +46,9 @@ deploy:
     - echo "$DOCKER_HUB_REGISTRY_PASSWORD" | docker login -u "$DOCKER_HUB_REGISTRY_USER" --password-stdin
   script:
     - cd pcwd
-      # Copy docker-compose.yml to the EC2 instance
-      - scp -o StrictHostKeyChecking=no -i $EC2_SSH_PRIVATE_KEY docker-compose.yml ec2-user@$EC2_INSTANCE:/home/ec2-user/
-      # SSH into the EC2 instance and deploy using Docker Compose
-      - ssh -o StrictHostKeyChecking=no -i $EC2_SSH_PRIVATE_KEY ec2-user@$EC2_INSTANCE 'cd /home/ec2-user && docker-compose down && docker-compose up -d'
+    # Copy docker-compose.yml to the EC2 instance
+    - scp -o StrictHostKeyChecking=no -i $EC2_SSH_PRIVATE_KEY docker-compose.yml ec2-user@$EC2_INSTANCE:/home/ec2-user/
+    # SSH into the EC2 instance and deploy using Docker Compose
+    - ssh -o StrictHostKeyChecking=no -i $EC2_SSH_PRIVATE_KEY ec2-user@$EC2_INSTANCE 'cd /home/ec2-user && docker-compose down && docker-compose up -d'
   only:
     - master
