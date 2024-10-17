@@ -29,8 +29,6 @@ build:
   image: docker:latest
   services:
     - docker:dind  # Enable Docker commands within the runner
-  variables:
-    DJANGO_ENV: $DJANGO_ENV
   script:
     - cd pcwd
     - echo "$DOCKER_HUB_REGISTRY_PASSWORD" | docker login -u "$DOCKER_HUB_REGISTRY_USER" --password-stdin

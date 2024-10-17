@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y build-essential libpq-dev gcc
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1 # Prevent Python from generating .pyc files
 ENV PYTHONUNBUFFERED 1 # Force Python to output logs to stdout/stderr immediately without buffering
+ENV DJANGO_ENV production
 
 # Set the working directory inside the container
 WORKDIR /app
