@@ -3,11 +3,8 @@ version: '3.8'
 services:
   # Django app with Gunicorn (web server)
   web:
-    build:
-      context: .  # Build from the current directory
-      dockerfile: Dockerfile  # Use the Dockerfile to build the image
+    image: "${DOCKER_HUB_REGISTRY_IMAGE:latest}"
     volumes:
-      - .:/app  # Mount the current directory to /app in the container
       - static_volume:/app/staticfiles  # Static files volume (shared between Django and Nginx)
       - media_volume:/app/media  # Media files volume (shared between Django and Nginx)
     expose:

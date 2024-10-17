@@ -31,6 +31,7 @@ build:
     - docker:dind  # Enable Docker commands within the runner
   script:
     - cd pcwd
+    - export DJANGO_ENV=$DJANGO_ENV
     - echo "$DOCKER_HUB_REGISTRY_PASSWORD" | docker login -u "$DOCKER_HUB_REGISTRY_USER" --password-stdin
     - docker build -t $DOCKER_IMAGE_NAME:latest .
     - docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_HUB_REGISTRY_IMAGE:latest
@@ -45,9 +46,9 @@ deploy:
     - echo "$DOCKER_HUB_REGISTRY_PASSWORD" | docker login -u "$DOCKER_HUB_REGISTRY_USER" --password-stdin
   script:
     - cd pcwd
-    # Copy docker-compose.yml to the EC2 instance
-    - scp -o StrictHostKeyChecking=no -i $EC2_SSH_PRIVATE_KEY docker-compose.yml ec2-user@$EC2_INSTANCE:/home/ec2-user/
-    # SSH into the EC2 instance, pull the latest image from Docker Hub, and deploy using Docker Compose
-    - ssh -o StrictHostKeyChecking=no -i $EC2_SSH_PRIVATE_KEY ec2-user@$EC2_INSTANCE 'docker pull $DOCKER_HUB_REGISTRY_IMAGE:latest && cd /home/ec2-user && docker-compose down && docker-compose up -d'
+      # Copy docker-compose.yml to the EC2 instance
+      - scp -o StrictHostKeyChecking=no -i $EC2_SSH_PRIVATE_KEY docker-compose.yml ec2-user@$EC2_INSTANCE:/home/ec2-user/
+      # SSH into the EC2 instance and deploy using Docker Compose
+      - ssh -o StrictHostKeyChecking=no -i $EC2_SSH_PRIVATE_KEY ec2-user@$EC2_INSTANCE 'cd /home/ec2-user && docker-compose down && docker-compose up -d'
   only:
     - master
