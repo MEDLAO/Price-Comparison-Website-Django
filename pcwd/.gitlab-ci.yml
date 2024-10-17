@@ -18,7 +18,7 @@ test:
   stage: test
   image: python:3.10
   script:
-    - pip install -r requirements.txt
+    - pip install -r pcwd/requirements.txt
     - pytest
 
 # 3. Build Stage: Build Docker Image and Push to Docker Hub
