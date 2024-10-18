@@ -32,6 +32,7 @@ fake-useragent==1.4.0
 flake8==3.7.0
 flake8-html==0.4.3
 frozenlist==1.4.1
+gunicorn==23.0.0
 h11==0.14.0
 h2==4.1.0
 hpack==4.0.0
