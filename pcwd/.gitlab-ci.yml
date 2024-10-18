@@ -53,6 +53,7 @@ deploy:
     - echo "$EC2_SSH_PRIVATE_KEY" > /tmp/private_key.pem
     - chmod 600 /tmp/private_key.pem  # Set correct permissions
   script:
+    - ls
     # Copy docker-compose.yml to the EC2 instance
     - scp -o StrictHostKeyChecking=no -i /tmp/private_key.pem pcwd/docker-compose.yml ubuntu@$EC2_INSTANCE
     # SSH into the EC2 instance and deploy using Docker Compose
