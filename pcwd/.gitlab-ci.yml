@@ -52,8 +52,8 @@ deploy:
   script:
     - cd pcwd
     # Copy docker-compose.yml to the EC2 instance
-    - scp -o StrictHostKeyChecking=no -i $EC2_SSH_PRIVATE_KEY docker-compose.yml ubuntu@$EC2_INSTANCE:/home/ubuntu/
+    - scp -o StrictHostKeyChecking=no -i $EC2_SSH_PRIVATE_KEY docker-compose.yml ubuntu@$EC2_INSTANCE
     # SSH into the EC2 instance and deploy using Docker Compose
-    - ssh -o StrictHostKeyChecking=no -i $EC2_SSH_PRIVATE_KEY ubuntu@$EC2_INSTANCE 'cd /home/ubuntu && docker-compose down && docker-compose up -d'
+    - ssh -o StrictHostKeyChecking=no -i $EC2_SSH_PRIVATE_KEY ubuntu@$EC2_INSTANCE 'docker-compose down && docker-compose up -d'
   only:
     - master
