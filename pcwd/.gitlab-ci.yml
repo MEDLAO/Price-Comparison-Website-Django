@@ -33,6 +33,7 @@ build:
   services:
     - docker:dind  # Enable Docker commands within the runner
   script:
+    - apk add --no-cache curl bash
     - curl -s https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer | bash
     - cd pcwd
     - source env.yml
