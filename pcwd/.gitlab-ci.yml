@@ -12,6 +12,7 @@ quality:
     - cd pcwd
     - pip install flake8
     - flake8 .
+    - echo "$GOOGLE_API_CLIENT_ID"
   allow_failure: true  # Allow this stage to fail without breaking the pipeline
 
 # 2. Test Stage: Run Pytest for unit tests
