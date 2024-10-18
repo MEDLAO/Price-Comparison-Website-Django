@@ -9,3 +9,4 @@ main2.py
 scraper/products-en.csv
 scraper/products-ar.csv
 .DS_Store
+env.yml
