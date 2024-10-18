@@ -126,8 +126,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'online',
         },
         'APP': {
-            'client_id': env("GOOGLE_API_CLIENT_ID"),
-            'secret': env("GOOGLE_API_SECRET"),
+            'client_id': os.getenv("GOOGLE_API_CLIENT_ID"),
+            'secret': os.getenv("GOOGLE_API_SECRET"),
             'key': ''
         }
     }
