@@ -14,4 +14,4 @@ pcwd/static/css
 pcwd/static/js
 pcwd/static/images/*
 .DS_Store
-env.yml
+pcwd/env.yml
