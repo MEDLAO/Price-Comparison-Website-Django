@@ -45,9 +45,10 @@ stages:
 # 4. Deploy Stage: Deploy to AWS EC2 using SSH and Docker Compose
 deploy:
   stage: deploy
-  image: alpine
+  image: docker:latest
   before_script:
-    - apk add --no-cache openssh-client docker
+    - apk add --no-cache openssh-client
+    - apk add --no-cache docker-compose
     - echo "$DOCKER_HUB_REGISTRY_PASSWORD" | docker login -u "$DOCKER_HUB_REGISTRY_USER" --password-stdin
     # Create private key file and set appropriate permissions
     - echo "$EC2_SSH_PRIVATE_KEY" > /tmp/private_key.pem
