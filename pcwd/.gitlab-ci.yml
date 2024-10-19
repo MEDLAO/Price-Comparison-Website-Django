@@ -59,10 +59,6 @@ deploy:
     # Copy docker-compose.yml to the EC2 instance
     - scp -o StrictHostKeyChecking=no -i /tmp/private_key.pem docker-compose.yml ubuntu@$EC2_INSTANCE:/home/ubuntu/
     # SSH into the EC2 instance and deploy using Docker Compose
-    - ssh -o StrictHostKeyChecking=no -i /tmp/private_key.pem ubuntu@$EC2_INSTANCE '
-      cd /home/ubuntu &&
-      sudo docker-compose pull web &&  # Force pull the latest image for the web service
-      sudo docker-compose down && sudo docker-compose up -d
-      '
+    - ssh -o StrictHostKeyChecking=no -i /tmp/private_key.pem ubuntu@$EC2_INSTANCE 'cd /home/ubuntu && sudo docker-compose pull web && sudo docker-compose down && sudo docker-compose up -d'
   only:
     - master
