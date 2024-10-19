@@ -18,6 +18,9 @@ COPY requirements.txt /app/
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Verify Gunicorn is installed
+RUN gunicorn --version
+
 # Copy the entire project to the container
 COPY . /app/
 
