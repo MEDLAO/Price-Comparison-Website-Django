@@ -21,6 +21,7 @@ services:
       - static_volume:/app/staticfiles  # Serve static files
       - media_volume:/app/media  # Serve media files
       - nginx_shared:/etc/nginx/conf.d
+      - /etc/letsencrypt/live/fromsifr.com:/etc/letsencrypt/live/fromsifr.com
     depends_on:
       - web  # Ensure Nginx starts after Gunicorn
     restart: always  # Automatically restart the container if it fails
