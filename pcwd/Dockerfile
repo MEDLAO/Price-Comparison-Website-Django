@@ -1,5 +1,5 @@
-# Use the official lightweight Python image
-FROM python:3.10-slim
+# Use the official Python image
+FROM python:3.10
 
 # Install system packages required to compile psycopg2 (PostgreSQL adapter for Python)
 RUN apt-get update && apt-get install -y build-essential libpq-dev gcc
