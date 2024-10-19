@@ -5,6 +5,7 @@ services:
     volumes:
       - static_volume:/app/staticfiles  # Static files volume (shared between Django and Nginx)
       - media_volume:/app/media  # Media files volume (shared between Django and Nginx)
+      - nginx_conf:/app/nginx/nginx.conf
     expose:
       - "8000"  # Expose port 8000 for Gunicorn
     restart: always  # Automatically restart the container if it fails
@@ -19,7 +20,7 @@ services:
     volumes:
       - static_volume:/app/staticfiles  # Serve static files
       - media_volume:/app/media  # Serve media files
-      - /home/ubuntu/nginx/nginx.conf:/etc/nginx/conf.d/default.conf  # Custom Nginx config file
+      - nginx_conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - web  # Ensure Nginx starts after Gunicorn
     restart: always  # Automatically restart the container if it fails
@@ -28,3 +29,4 @@ services:
 volumes:
   static_volume:  # Persistent storage for static files
   media_volume:  # Persistent storage for media files
+  nginx_conf:   # Define the shared volume for nginx.conf
