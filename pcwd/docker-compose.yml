@@ -1,7 +1,7 @@
 services:
   # Django app with Gunicorn (web server)
   web:
-    image: "${DOCKER_HUB_REGISTRY_IMAGE:-medlao/pcwd-fromsifr:latest}"
+    image: medlao/pcwd-fromsifr:latest
     volumes:
       - static_volume:/app/staticfiles  # Static files volume (shared between Django and Nginx)
       - media_volume:/app/media  # Media files volume (shared between Django and Nginx)
