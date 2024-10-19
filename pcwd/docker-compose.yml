@@ -19,7 +19,7 @@ services:
     volumes:
       - static_volume:/app/staticfiles  # Serve static files
       - media_volume:/app/media  # Serve media files
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf  # Custom Nginx config file
+      - /home/ubuntu/nginx/nginx.conf:/etc/nginx/conf.d/default.conf  # Custom Nginx config file
     depends_on:
       - web  # Ensure Nginx starts after Gunicorn
     restart: always  # Automatically restart the container if it fails
