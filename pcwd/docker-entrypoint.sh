@@ -2,8 +2,8 @@
 set -x  # Enable debug mode to print each command
 
 
-# Fetch AWS SSM parameters by path (/myapp/), iterate over each parameter name
-for param in $(aws ssm get-parameters-by-path --path /myapp/ --with-decryption --query 'Parameters[*].Name' --output text); do
+# Fetch AWS SSM parameters by path (/pcwd/), iterate over each parameter name
+for param in $(aws ssm get-parameters-by-path --path /pcwd/ --with-decryption --query 'Parameters[*].Name' --output text); do
 
   # Remove the "/pcwd/" prefix from the parameter name to use it as the environment variable key
   key=$(echo $param | sed 's/\/pcwd\///');
