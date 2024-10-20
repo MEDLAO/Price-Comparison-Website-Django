@@ -15,12 +15,6 @@ WORKDIR /app
 # Copy the requirements.txt file
 COPY requirements.txt /app/
 
-# Make the entrypoint script executable
-RUN chmod +x /app/docker-entrypoint.sh
-
-# Set the entrypoint to the script
-ENTRYPOINT ["/app/docker-entrypoint.sh"]
-
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -29,6 +23,13 @@ RUN gunicorn --version
 
 # Copy the entire project to the container
 COPY . /app/
+
+# Make the entrypoint script executable
+RUN chmod +x /app/docker-entrypoint.sh
+
+# Set the entrypoint to the script
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
+
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
