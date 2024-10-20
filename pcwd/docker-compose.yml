@@ -2,7 +2,6 @@ services:
   # Django app with Gunicorn (web server)
   web:
     image: medlao/pcwd-fromsifr:latest
-    env_file: ".env"
     volumes:
       - static_volume:/app/staticfiles  # Static files volume (shared between Django and Nginx)
       - media_volume:/app/media  # Media files volume (shared between Django and Nginx)
