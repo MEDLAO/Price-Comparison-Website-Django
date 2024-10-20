@@ -46,18 +46,15 @@ stages:
 deploy:
   stage: deploy
   image: docker:latest
-  variables:
-    SECURE_FILES_DOWNLOAD_PATH: './pcwd/'
   before_script:
     - apk add --no-cache openssh-client
     - apk add --no-cache docker-compose
+    - pip install awscli
     - echo "$DOCKER_HUB_REGISTRY_PASSWORD" | docker login -u "$DOCKER_HUB_REGISTRY_USER" --password-stdin
     # Create private key file and set appropriate permissions
     - echo "$EC2_SSH_PRIVATE_KEY" > /tmp/private_key.pem
     - chmod 600 /tmp/private_key.pem  # Set correct permissions
   script:
-    - apk add --no-cache curl bash
-    - curl -s https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer | bash
     - cd pcwd
     - ls
     # Copy docker-compose.yml to the EC2 instance
