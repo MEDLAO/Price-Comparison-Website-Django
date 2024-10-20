@@ -1,4 +1,6 @@
 #!/bin/sh
+set -x  # Enable debug mode to print each command
+
 
 # Fetch AWS SSM parameters by path (/myapp/), iterate over each parameter name
 for param in $(aws ssm get-parameters-by-path --path /myapp/ --with-decryption --query 'Parameters[*].Name' --output text); do
