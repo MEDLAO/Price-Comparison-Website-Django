@@ -8,20 +8,6 @@ services:
       - nginx_shared:/app/nginx
     expose:
       - "8000"  # Expose port 8000 for Gunicorn
-    environment:
-      - SECRET_KEY=${PROD_SECRET_KEY}
-      - PROD_DB_NAME=${PROD_DB_NAME}
-      - PROD_DB_USER=${PROD_DB_USER}
-      - PROD_DB_PASSWORD=${PROD_DB_PASSWORD}
-      - PROD_DB_HOST=${PROD_DB_HOST}
-      - PROD_DB_PORT=${PROD_DB_PORT}
-      - AWS_SES_EMAIL_HOST=${AWS_SES_EMAIL_HOST}
-      - AWS_SES_SMTP_USER=${AWS_SES_SMTP_USER}
-      - AWS_SES_SMTP_PASSWORD=${AWS_SES_SMTP_PASSWORD}
-      - AWS_REDIS_ENDPOINT=${AWS_REDIS_ENDPOINT}
-      - AWS_REDIS_PASSWORD=${AWS_REDIS_PASSWORD}
-      - GOOGLE_API_CLIENT_ID=${GOOGLE_API_CLIENT_ID}
-      - GOOGLE_API_SECRET=${GOOGLE_API_SECRET}
     command: >
       /bin/sh -c "
       export PROD_SECRET_KEY=$(aws ssm get-parameter --name /pcwd/PROD_SECRET_KEY --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
