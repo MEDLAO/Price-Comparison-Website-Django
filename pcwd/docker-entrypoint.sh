@@ -20,6 +20,3 @@ for param in $(aws ssm get-parameters-by-path --path /pcwd/ --with-decryption --
   # Export the parameter as an environment variable using the key-value pair
   export $key="$value";
 done
-
-# Start Gunicorn after retrieving the environment variables
-exec gunicorn pcwd.wsgi:application --bind 0.0.0.0:8000

@@ -30,10 +30,6 @@ COPY . /app/
 # Make the entrypoint script executable
 RUN chmod +x /app/docker-entrypoint.sh
 
-# Set the entrypoint to the script
-ENTRYPOINT ["/app/docker-entrypoint.sh"]
-
-
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
@@ -41,4 +37,4 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Start the Gunicorn server
-CMD ["gunicorn", "pcwd.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["/bin/sh", "-c", "/app/docker-entrypoint.sh && gunicorn pcwd.wsgi:application --bind 0.0.0.0:8000"]
