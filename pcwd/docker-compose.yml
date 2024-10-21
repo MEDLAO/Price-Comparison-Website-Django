@@ -8,23 +8,7 @@ services:
       - nginx_shared:/app/nginx
     expose:
       - "8000"  # Expose port 8000 for Gunicorn
-    command: >
-      /bin/sh -c "
-      export PROD_SECRET_KEY=$(aws ssm get-parameter --name /pcwd/PROD_SECRET_KEY --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      export PROD_DB_NAME=$(aws ssm get-parameter --name /pcwd/PROD_DB_NAME --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      export PROD_DB_USER=$(aws ssm get-parameter --name /pcwd/PROD_DB_USER --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      export PROD_DB_PASSWORD=$(aws ssm get-parameter --name /pcwd/PROD_DB_PASSWORD --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      export PROD_DB_HOST=$(aws ssm get-parameter --name /pcwd/PROD_DB_HOST --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      export PROD_DB_PORT=$(aws ssm get-parameter --name /pcwd/PROD_DB_PORT --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      export AWS_SES_EMAIL_HOST=$(aws ssm get-parameter --name /pcwd/AWS_SES_EMAIL_HOST --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      export AWS_SES_SMTP_USER=$(aws ssm get-parameter --name /pcwd/AWS_SES_SMTP_USER --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      export AWS_SES_SMTP_PASSWORD=$(aws ssm get-parameter --name /pcwd/AWS_SES_SMTP_PASSWORD --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      export AWS_REDIS_ENDPOINT=$(aws ssm get-parameter --name /pcwd/AWS_REDIS_ENDPOINT --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      export AWS_REDIS_PASSWORD=$(aws ssm get-parameter --name /pcwd/AWS_REDIS_PASSWORD --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      export GOOGLE_API_CLIENT_ID=$(aws ssm get-parameter --name /pcwd/GOOGLE_API_CLIENT_ID --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      export GOOGLE_API_SECRET=$(aws ssm get-parameter --name /pcwd/GOOGLE_API_SECRET --with-decryption --query 'Parameter.Value' --output text --region eu-west-3) &&
-      gunicorn pcwd.wsgi:application --bind 0.0.0.0:8000
-      "
+    command: /app/start.sh
     restart: always  # Automatically restart the container if it fails
 
   # Nginx web server to reverse proxy requests to Gunicorn

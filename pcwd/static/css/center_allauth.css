@@ -1,0 +1,185 @@
+/* center.css */
+
+.centered-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;  /* Full viewport height */
+    padding: 20px;
+}
+
+.centered-form {
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Remove the bullet points from the list */
+.provider-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Center the content within the list item */
+.provider-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;  /* Add some space between the items */
+}
+
+/* Styling the provider link with a rectangular border */
+.provider-link {
+    display: inline-block;
+    padding: 7px 50px;  /* Add padding inside the border */
+    border: 1px solid #ccc;  /* Light grey border */
+    border-radius: 8px;  /* Rounded corners */
+    transition: background-color 0.3s ease;  /* Smooth hover transition */
+}
+
+/* Adjust the size of the icon and center it */
+.provider-icon {
+    width: 40px;  /* Adjust the size of the icon */
+    height: 40px;
+}
+
+/* Hover effect: light grey background */
+.provider-link:hover {
+    background-color: #f0f0f0;  /* Light grey hover effect */
+    border-color: #999;  /* Slightly darker border on hover */
+}
+
+/* Center text within h2 element */
+.centered-text {
+    text-align: center;
+    margin: 20px 0; /* Optional: add some margin to space it out */
+}
+
+/* Default state with no rounded border and no specific border color */
+input, textarea, select {
+    border-radius: 0;  /* No rounded corners by default */
+    border: 2px solid #ccc;  /* Light grey border by default */
+    transition: all 0.3s ease;  /* Smooth transition for changes */
+}
+
+/* Focused state with rounded black border */
+input:focus, textarea:focus, select:focus {
+    outline: none;  /* Remove the default outline */
+    border-color: #01796F;  /* Change border color to black on focus */
+    border-radius: 5px;  /* Apply rounded corners on focus */
+    background-color: #f0f0f0;  /* Light grey background on focus */
+    transition: all 0.3s ease;  /* Smooth transition for focus effect */
+}
+
+/* Hide the default checkbox */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc; /* Light grey border by default */
+    border-radius: 3px; /* Slightly rounded corners */
+    background-color: white; /* Background color */
+    transition: all 0.3s ease; /* Smooth transition */
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Custom checkmark when the checkbox is checked */
+input[type="checkbox"]:checked {
+    background-color: #01796F; /* Pine green background */
+    border-color: #01796F; /* Pine green border */
+}
+
+/* Add a checkmark (tick) using :after pseudo-element */
+input[type="checkbox"]:checked::after {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Focus state to give it a modern look */
+input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 3px 2px rgba(1, 121, 111, 0.5); /* Subtle pine green glow */
+}
+
+/* Target links within the centered content area */
+.centered-form-container a {
+    color: #000000; /* Default link color (black) */
+    text-decoration: none;
+    font-weight: bold; /* Make links bold */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.centered-form-container a:hover {
+    color: #000000; /* Keep the default black color on hover */
+    text-decoration: underline; /* Underline on hover */
+}
+
+.centered-form-container a:visited {
+    color: #555555; /* Dark grey color for visited links */
+    text-decoration: none; /* Ensure no underline for visited links by default */
+    font-weight: bold; /* Keep visited links bold */
+}
+
+/* Increase font size for menu items in the auth-menu header */
+#auth-menu .menu-item {
+    font-size: 1em; /* Increase the font size */
+    font-weight: bold; /* Optional: Make the menu items bold */
+    text-transform: uppercase; /* Optional: Make the text uppercase */
+}
+
+
+/* Target buttons specifically within the centered-form-container */
+.centered-form-container button,
+.centered-form-container a.button,
+.centered-form-container input[type="submit"],
+.centered-form-container input[type="button"] {
+    margin-top: 10px;
+    padding: 7px 14px; /* Reduced padding for a smaller button */
+    background-color: #01796F; /* Pine green color */
+    color: #fff; /* White text color */
+    text-decoration: none;
+    border-radius: 20px; /* Rounded corners */
+    border: none; /* Remove any border */
+    transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in, transform 0.1s ease-in; /* Quicker transition */
+    font-size: 0.9em; /* Slightly smaller font size */
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    letter-spacing: 1px; /* Added letter-spacing */
+    text-transform: uppercase; /* Uppercase text */
+    font-weight: 500; /* Medium font weight */
+    position: relative; /* For ripple effect */
+    overflow: hidden; /* For ripple effect */
+}
+
+.centered-form-container button:hover,
+.centered-form-container a.button:hover,
+.centered-form-container input[type="submit"]:hover,
+.centered-form-container input[type="button"]:hover {
+    background-color: #23c483; /* Previous green color on hover */
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4); /* Box-shadow effect on hover */
+    color: #fff;
+    transform: translateY(-5px); /* Slightly less translation on hover */
+}
+
+.centered-form-container button:active,
+.centered-form-container a.button:active,
+.centered-form-container input[type="submit"]:active,
+.centered-form-container input[type="button"]:active {
+    background-color: #014D4E; /* Darker pine green color on click */
+    transform: translateY(-1px);
+}
+

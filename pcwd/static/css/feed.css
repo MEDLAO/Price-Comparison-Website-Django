@@ -1,0 +1,139 @@
+/* Style the "Write a Post" button */
+.button {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #01796F; /* Pine green */
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in, transform 0.1s ease-in;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1em;
+    cursor: pointer;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    letter-spacing: 1px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Centering the title and button */
+.center-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.center-button {
+    display: block;
+    width: 125px;
+    margin: 0 auto 20px; /* Center the button horizontally */
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #23c483; /* Light green hover effect */
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4); /* Box-shadow effect on hover */
+    transform: translateY(-5px); /* Slight lift on hover */
+}
+
+.button:active {
+    background-color: #014D4E; /* Darker pine green color on click */
+    transform: translateY(-1px); /* Minimal movement on click */
+}
+
+/* Container setup */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: rgba(236, 236, 236);
+    margin-top: 100px;
+    padding-left: 10px; /* Space on left */
+    padding-right: 10px; /* Space on right */
+}
+
+/* Post grid setup with reduced horizontal space (between columns) */
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted min-width for smaller screens */
+    grid-column-gap: 1px; /* Reduced space between columns */
+    grid-row-gap: 20px; /* Keep row gap for vertical space */
+    width: 100%;
+    margin-top: 10px;
+    justify-items: center; /* Center the items in the grid */
+}
+
+/* Style the post card */
+.post-card {
+    position: relative;
+    background-color: white;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    max-width: 200px;
+    min-height: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Initially, center the username and date */
+.post-content p:first-child {
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+
+.post-content small {
+    font-size: 0.8em;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Hide the content initially */
+.post-content p:nth-child(2) {
+    display: none;
+}
+
+/* Styles after the post is clicked */
+.post-content.open p:first-child {
+    font-size: 0.8em; /* Reduce font size */
+    position: absolute;
+    top: 10px; /* Move username to the top */
+    left: 20px;
+    margin: 0;
+    text-align: left;
+}
+
+.post-content.open small {
+    font-size: 0.8em; /* Reduce font size */
+    position: absolute;
+    bottom: 10px; /* Move date to the bottom */
+    right: 20px;
+    margin: 0;
+    text-align: right;
+}
+
+/* Reveal the content when clicked */
+.post-content.open p:nth-child(2) {
+    display: block;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.login-prompt {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #555; /* Adjust color as needed */
+}
+

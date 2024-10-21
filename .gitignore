@@ -9,9 +9,9 @@ main2.py
 scraper/products-en.csv
 scraper/products-ar.csv
 pcwd/media/product_images/*
-pcwd/media/profile_images/*
-pcwd/static/css
-pcwd/static/js
-pcwd/static/images/*
+#pcwd/media/profile_images/*
+#pcwd/static/css
+#pcwd/static/js
+#pcwd/static/images/*
 .DS_Store
 pcwd/env.yml

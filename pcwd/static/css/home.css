@@ -1,0 +1,138 @@
+/* static/css/home.css */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Nunito', sans-serif;
+}
+
+.background-image {
+    background-image: url('{% static "images/pcwd-image.png" %}');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container {
+    text-align: center;
+    margin-left: 25px;
+}
+
+.language-button {
+    width:100px;
+    height: 40px; /* Set a fixed height */
+    margin-top: 10px;
+    margin-bottom: 10px; /* Reduced margin between buttons */
+    padding: 0 18px; /* Adjust padding */
+    background-color: #01796F; /* Pine green color */
+    color: #fff; /* Use white text color */
+    text-decoration: none;
+    border-radius: 20px; /* More rounded */
+    transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in, transform 0.1s ease-in; /* Quicker transition */
+    font-size: 1em; /* Adjust font size */
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px; /* Added letter-spacing */
+    font-weight: 350; /* Added font-weight */
+    position: relative; /* For ripple effect */
+    overflow: hidden; /* For ripple effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.2; /* Adjust line-height */
+}
+
+.left-button {
+    margin-right: 35px;
+}
+
+.language-button:hover {
+    background-color: #23c483; /* Previous green color on hover */
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4); /* Use box-shadow from the provided snippet */
+    color: #fff;
+    transform: translateY(-7px);
+}
+
+.language-button:active {
+    background-color: #014D4E; /* Darker pine green color on click */
+    transform: translateY(-1px);
+}
+
+.language-button.nunito {
+    font-family: 'Nunito', sans-serif;
+}
+
+.language-button.noto-kufi-arabic {
+    font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+/* Center container to align all content */
+.center-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center elements horizontally */
+    justify-content: center; /* Center elements vertically */
+    height: 100vh; /* Full height of the viewport */
+}
+
+.user-info {
+    text-align: center; /* Center the content inside the container */
+    margin-bottom: 20px; /* Add some space between the user info and buttons */
+}
+
+.profile-image {
+    width: 80px; /* Set the width for the vertical rectangle shape */
+    height: 120px; /* Set the height to make it a vertical rectangle */
+    object-fit: cover; /* Crop the image to fit the specified width and height */
+    border-radius: 12px; /* Set rounded corners; adjust value for more or less rounding */
+    border: 3px solid #ffffff; /* White border */
+    margin-bottom: 10px; /* Add space below the image */
+}
+
+.username {
+    font-size: 1.2em; /* Adjust the font size of the username */
+    color: #ffffff; /* Set the color of the username text */
+    margin: 0; /* Remove default margin */
+}
+
+.button-container {
+    display: flex; /* Align buttons horizontally */
+    gap: 10px; /* Add space between the buttons */
+}
+
+
+@media (max-width: 900px) {
+    .language-button {
+        width: 100px; /* Adjust width for tablets */
+        height: 40px; /* Adjust height for tablets */
+    }
+    .left-button {
+        margin-right: 15px; /* Reduce margin for tablets */
+    }
+}
+
+@media (max-width: 576px) {
+    .language-button {
+        width: 70px; /* Adjust width for mobile devices */
+        height: 35px; /* Adjust height for mobile devices */
+    }
+    .left-button {
+        margin-right: 10px; /* Reduce margin for mobile devices */
+    }
+    .button-container {
+        margin-left: 15px; /* Move buttons slightly to the right for mobile devices */
+    }
+}
