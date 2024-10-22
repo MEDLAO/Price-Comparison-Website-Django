@@ -8,6 +8,7 @@ services:
       - nginx_shared:/app/nginx
     expose:
       - "8000"  # Expose port 8000 for Gunicorn
+    command: /app/start.sh
     environment:
       PROD_SECRET_KEY: "$${PROD_SECRET_KEY}"
       PROD_DB_NAME: "${PROD_DB_NAME}"
@@ -22,7 +23,6 @@ services:
       AWS_REDIS_PASSWORD: "${AWS_REDIS_PASSWORD}"
       GOOGLE_API_CLIENT_ID: "${GOOGLE_API_CLIENT_ID}"
       GOOGLE_API_SECRET: "${GOOGLE_API_SECRET}"
-    command: /app/start.sh
     restart: always  # Automatically restart the container if it fails
 
   # Nginx web server to reverse proxy requests to Gunicorn

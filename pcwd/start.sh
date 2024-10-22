@@ -1,7 +1,7 @@
 #!/bin/sh
 # Fetch and export environment variables from AWS SSM
 
-export PROD_SECRET_KEY=$$(aws ssm get-parameter --name /pcwd/PROD_SECRET_KEY --with-decryption --query 'Parameter.Value' --output text --region eu-west-3 --no-cli-pager)
+export PROD_SECRET_KEY=$(aws ssm get-parameter --name /pcwd/PROD_SECRET_KEY --with-decryption --query 'Parameter.Value' --output text --region eu-west-3 --no-cli-pager)
 echo "PROD_SECRET_KEY fetched: $PROD_SECRET_KEY"
 
 export PROD_DB_NAME=$(aws ssm get-parameter --name /pcwd/PROD_DB_NAME --with-decryption --query 'Parameter.Value' --output text --region eu-west-3 --no-cli-pager)
