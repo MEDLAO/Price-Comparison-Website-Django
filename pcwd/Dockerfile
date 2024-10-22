@@ -32,4 +32,4 @@ RUN chmod +x /app/start.sh
 EXPOSE 8000
 
 # Start the Gunicorn server
-CMD ["gunicorn", "pcwd.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["/app/start.sh"]

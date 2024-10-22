@@ -1,8 +1,8 @@
 #!/bin/sh
 # Fetch and export environment variables from AWS SSM
 
-aws ssm get-parameter --name /pcwd/PROD_SECRET_KEY --with-decryption --query 'Parameter.Value' --output text --region eu-west-3 --no-cli-pager
-
+export PROD_SECRET_KEY=$(aws ssm get-parameter --name /pcwd/PROD_SECRET_KEY --with-decryption --query 'Parameter.Value' --output text --region eu-west-3 --no-cli-pager)
+echo "PROD_SECRET_KEY fetched: $PROD_SECRET_KEY"
 
 export PROD_DB_NAME=$(aws ssm get-parameter --name /pcwd/PROD_DB_NAME --with-decryption --query 'Parameter.Value' --output text --region eu-west-3 --no-cli-pager)
 echo "PROD_DB_NAME fetched: $PROD_DB_NAME"
@@ -40,8 +40,6 @@ echo "GOOGLE_API_CLIENT_ID fetched: $GOOGLE_API_CLIENT_ID"
 export GOOGLE_API_SECRET=$(aws ssm get-parameter --name /pcwd/GOOGLE_API_SECRET --with-decryption --query 'Parameter.Value' --output text --region eu-west-3 --no-cli-pager)
 echo "GOOGLE_API_SECRET fetched: $GOOGLE_API_SECRET"
 
-
-export PROD_SECRET_KEY=$${PROD_SECRET_KEY}
 
 # Start Gunicorn
 exec gunicorn pcwd.wsgi:application --bind 0.0.0.0:8000
