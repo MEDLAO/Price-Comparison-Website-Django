@@ -9,7 +9,7 @@ services:
     expose:
       - "8000"  # Expose port 8000 for Gunicorn
     environment:
-      PROD_SECRET_KEY: "${PROD_SECRET_KEY}"
+      PROD_SECRET_KEY: "$${PROD_SECRET_KEY}"
       PROD_DB_NAME: "${PROD_DB_NAME}"
       PROD_DB_USER: "${PROD_DB_USER}"
       PROD_DB_PASSWORD: "${PROD_DB_PASSWORD}"
