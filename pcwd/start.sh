@@ -40,7 +40,7 @@ echo "GOOGLE_API_CLIENT_ID fetched: $GOOGLE_API_CLIENT_ID"
 export GOOGLE_API_SECRET=$(aws ssm get-parameter --name /pcwd/GOOGLE_API_SECRET --with-decryption --query 'Parameter.Value' --output text --region eu-west-3 --no-cli-pager)
 echo "GOOGLE_API_SECRET fetched: $GOOGLE_API_SECRET"
 
-exec env PROD_SECRET_KEY="$PROD_SECRET_KEY"
+exec env PROD_SECRET_KEY="$$PROD_SECRET_KEY"
 
 # Start Gunicorn
 gunicorn pcwd.wsgi:application --bind 0.0.0.0:8000
