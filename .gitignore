@@ -15,3 +15,4 @@ pcwd/media/product_images/*
 #pcwd/static/images/*
 .DS_Store
 pcwd/env.yml
+pcwd/.aws/credentials

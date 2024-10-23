@@ -10,3 +10,4 @@ scraper/products-en.csv
 scraper/products-ar.csv
 .DS_Store
 env.yml
+pcwd/.aws/credentials

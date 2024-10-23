@@ -36,6 +36,8 @@ build:
     - apk add --no-cache curl bash
     - curl -s https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer | bash
     - cd pcwd
+    - mkdir -p ~/.aws
+    - mv ./pcwd/credentials ~/.aws/credentials
     - ls -la
     - echo "$DOCKER_HUB_REGISTRY_PASSWORD" | docker login -u "$DOCKER_HUB_REGISTRY_USER" --password-stdin
     - docker build --no-cache -t $DOCKER_IMAGE_NAME:latest .
