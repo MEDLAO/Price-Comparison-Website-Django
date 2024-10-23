@@ -5,15 +5,10 @@ from botocore.exceptions import ClientError
 
 def get_ssm_parameter(name, with_decryption=True):
     """Fetch a parameter from AWS SSM Parameter Store."""
-    aws_access_key = os.getenv('AWS_ACCESS_KEY_ID')
-    aws_secret_key = os.getenv('AWS_SECRET_ACCESS_KEY')
-
     # create a boto3 SSM client using the credentials from the environment variables
     ssm = boto3.client(
         'ssm',
         region_name='eu-west-3',  # Use your specific AWS region
-        aws_access_key_id=aws_access_key,
-        aws_secret_access_key=aws_secret_key
     )
 
     try:
