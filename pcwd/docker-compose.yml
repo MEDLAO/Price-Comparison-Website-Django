@@ -8,7 +8,7 @@ services:
       - nginx_shared:/app/nginx
     expose:
       - "8000"  # Expose port 8000 for Gunicorn
-    command: /app/start.sh
+    command: gunicorn pcwd.wsgi:application --bind 0.0.0.0:8000
     restart: always  # Automatically restart the container if it fails
 
   # Nginx web server to reverse proxy requests to Gunicorn

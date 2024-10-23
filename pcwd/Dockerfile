@@ -26,10 +26,10 @@ COPY . /app/
 RUN python manage.py collectstatic --noinput
 
 # Make the start.sh script executable
-RUN chmod +x /app/start.sh
+#RUN chmod +x /app/start.sh
 
 # Expose port 8000
 EXPOSE 8000
 
 # Start the Gunicorn server
-CMD ["/app/start.sh"]
+CMD ["gunicorn", "pcwd.wsgi:application", "--bind", "0.0.0.0:8000"]
