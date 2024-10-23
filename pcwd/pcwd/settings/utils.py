@@ -6,7 +6,8 @@ import os
 def get_ssm_parameter(name, with_decryption=True):
     """Fetch a parameter from AWS SSM Parameter Store."""
     # Boto3 will automatically use the credentials from ~/.aws/credentials or IAM role
-    ssm = boto3.client('ssm', region_name='eu-west-3')
+    session = boto3.Session(region_name='eu-west-3')
+    ssm = session.client('ssm')
 
     try:
         parameter = ssm.get_parameter(Name=name, WithDecryption=with_decryption)
