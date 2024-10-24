@@ -17,13 +17,13 @@ WORKDIR /app
 COPY requirements.txt /app/
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Copy the entire project to the container
 COPY . /app/
 
 # Collect static files
-RUN python manage.py collectstatic --noinput
+#RUN python manage.py collectstatic --noinput
 
 # Make the start.sh script executable
 #RUN chmod +x /app/start.sh
@@ -32,4 +32,4 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Start the Gunicorn server
-CMD ["gunicorn", "pcwd.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py collectstatic --noinput && gunicorn pcwd.wsgi:application --bind 0.0.0.0:8000"]

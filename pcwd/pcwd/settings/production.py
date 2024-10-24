@@ -8,6 +8,8 @@ def get_ssm_parameter(name, with_decryption=True):
     # create a boto3 SSM client using the credentials from the environment variables
     ssm = boto3.client(
         'ssm',
+        aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+        aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
         region_name='eu-west-3',  # Use your specific AWS region
     )
 
