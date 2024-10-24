@@ -47,7 +47,7 @@ DATABASES = {
 }
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_ROOT = BASE_DIR / 'media'
 
 # AWS SES email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -58,13 +58,30 @@ EMAIL_HOST_USER = get_ssm_parameter('/pcwd/AWS_SES_SMTP_USER')
 EMAIL_HOST_PASSWORD = get_ssm_parameter('/pcwd/AWS_SES_SMTP_PASSWORD')
 DEFAULT_FROM_EMAIL = 'contact@fromsifr.com'
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f"redis://:{get_ssm_parameter('/pcwd/AWS_REDIS_PASSWORD')}@{get_ssm_parameter('/pcwd/AWS_REDIS_ENDPOINT')}/1",
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'PASSWORD': get_ssm_parameter('/pcwd/AWS_REDIS_PASSWORD'),
-        },
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': f"redis://{get_ssm_parameter('/pcwd/AWS_REDIS_ENDPOINT')}:6379/1",
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#             'PASSWORD': get_ssm_parameter('/pcwd/AWS_REDIS_PASSWORD'),
+#         },
+#     }
+# }
+
+# AWS S3 settings for media files
+AWS_ACCESS_KEY_ID = get_ssm_parameter('/pcwd/AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = get_ssm_parameter('/pcwd/AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = get_ssm_parameter('/pcwd/AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = 'eu-west-3'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+# Media files on S3
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# Static settings
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_QUERYSTRING_AUTH = False
+
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'

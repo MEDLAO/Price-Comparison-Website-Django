@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'user',
     'feed',
     'parler',
+    'storages',
 ]
 
 PARLER_LANGUAGES = {
