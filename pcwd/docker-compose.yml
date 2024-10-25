@@ -4,7 +4,7 @@ services:
     image: medlao/pcwd-fromsifr:latest
     volumes:
       - static_volume:/app/staticfiles  # Static files volume (shared between Django and Nginx)
-      - media_volume:/app/media  # Media files volume (shared between Django and Nginx)
+#      - media_volume:/app/media  # Media files volume (shared between Django and Nginx)
       - nginx_shared:/app/nginx
     expose:
       - "8000"  # Expose port 8000 for Gunicorn
@@ -19,7 +19,7 @@ services:
       - "443:443"  # Map port 443 for HTTPS
     volumes:
       - static_volume:/app/staticfiles  # Serve static files
-      - media_volume:/app/media  # Serve media files
+#      - media_volume:/app/media  # Serve media files
       - nginx_shared:/etc/nginx/conf.d
       - /etc/letsencrypt/live/fromsifr.com/fullchain.pem:/etc/letsencrypt/live/fromsifr.com/fullchain.pem
       - /etc/letsencrypt/live/fromsifr.com/privkey.pem:/etc/letsencrypt/live/fromsifr.com/privkey.pem
@@ -30,5 +30,5 @@ services:
 # Define Docker volumes for static and media files
 volumes:
   static_volume:  # Persistent storage for static files
-  media_volume:  # Persistent storage for media files
+#  media_volume:  # Persistent storage for media files
   nginx_shared:   # Define the shared volume for nginx.conf

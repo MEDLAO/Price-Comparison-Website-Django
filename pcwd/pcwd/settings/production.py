@@ -29,6 +29,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['fromsifr.com', 'www.fromsifr.com', 'ec2-35-180-205-132.eu-west-3.compute.amazonaws.com']
 
+CSRF_TRUSTED_ORIGINS = ['https://fromsifr.com', 'https://www.fromsifr.com']
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
