@@ -1,28 +1,28 @@
 stages:
-#  - quality
-#  - test
+  - quality
+  - test
   - build
   - deploy
 
-## 1. Quality Stage: Run Flake8 linter
-#quality:
-#  stage: quality
-#  image: python:3.10
-#  script:
-#    - cd pcwd
-#    - pip install flake8
-#    - flake8 .
-#    - echo "$GOOGLE_API_CLIENT_ID"
-#  allow_failure: true  # Allow this stage to fail without breaking the pipeline
-#
-## 2. Test Stage: Run Pytest for unit tests
-#test:
-#  stage: test
-#  image: python:3.10
-#  script:
-#    - cd pcwd
-#    - pip install -r requirements.txt
-#    - pytest
+# 1. Quality Stage: Run Flake8 linter
+quality:
+  stage: quality
+  image: python:3.10
+  script:
+    - cd pcwd
+    - pip install flake8
+    - flake8 .
+    - echo "$GOOGLE_API_CLIENT_ID"
+  allow_failure: true  # Allow this stage to fail without breaking the pipeline
+
+# 2. Test Stage: Run Pytest for unit tests
+test:
+  stage: test
+  image: python:3.10
+  script:
+    - cd pcwd
+    - pip install -r requirements.txt
+    - pytest
 
 # 3. Build Stage: Build Docker Image and Push to Docker Hub
 build:
