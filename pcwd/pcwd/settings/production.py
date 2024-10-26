@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['fromsifr.com', 'www.fromsifr.com', 'ec2-35-180-205-132.eu-west
 
 CSRF_TRUSTED_ORIGINS = ['https://fromsifr.com', 'https://www.fromsifr.com']
 
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
