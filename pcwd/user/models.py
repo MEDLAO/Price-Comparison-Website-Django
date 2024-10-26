@@ -45,7 +45,7 @@ class CustomUser(AbstractUser, PermissionsMixin):
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(_('Profile Image'), default='default.png', upload_to='profile_images')
+    image = models.ImageField(_('Profile Image'), default='media/default.png', upload_to='media/profile_images')
     favorite_products = models.ManyToManyField(ScrapedProduct, blank=True,
                                                related_name='favorited_by')
 
