@@ -3,6 +3,7 @@ Website, BaseProduct and ScrapedProduct models for the product app.
 """
 
 import os
+from django.conf import settings
 from django.db import models
 from django.core.files.base import ContentFile
 import requests
@@ -67,8 +68,8 @@ class ScrapedProduct(BaseProduct):
             subfolder = 'ehabgroup'
         elif instance.website.name == '2B':
             subfolder = 'twob'
-        # construct the full upload path
-        return os.path.join(subfolder, filename)
+
+        return os.path.join('product_images', subfolder, filename)
 
     def save(self, *args, **kwargs):
         if self.image_url and not self.image:

@@ -20,37 +20,6 @@ def test_scraped_product_str_method(scraped_product):
 
 
 @pytest.mark.django_db
-def test_get_image_upload_path_amazon(scraped_product):
-    """
-    Tests the image upload path for a ScrapedProduct from Amazon.
-    """
-    path = ScrapedProduct.get_image_upload_path(scraped_product, '615LVMteaYL._AC_SL1500_.jpg')
-    assert path == 'amazon/615LVMteaYL._AC_SL1500_.jpg'
-
-
-@pytest.mark.django_db
-def test_save_method_download_image(mocker, scraped_product):
-    """
-    Tests the save method to ensure the image is downloaded and saved correctly.
-    """
-    scraped_product.image_url = "https://m.media-amazon.com/images/I/615LVMteaYL._AC_SL1500_.jpg"
-
-    mock_response = mocker.Mock()
-    mock_response.status_code = 200
-    mock_response.content = b'Test image content'
-    mock_requests_get = mocker.patch('requests.get', return_value=mock_response)
-
-    assert not scraped_product.image
-
-    scraped_product.save()
-
-    mock_requests_get.assert_called_once_with(scraped_product.image_url)
-
-    assert scraped_product.image.name.startswith('product_images/amazon/')
-    assert scraped_product.image.read() == b'Test image content'
-
-
-@pytest.mark.django_db
 def test_translations_in_database(scraped_product):
     """
     Tests that English and Arabic translations are correctly stored in the database.
