@@ -87,3 +87,20 @@ AWS_DEFAULT_ACL = None
 AWS_QUERYSTRING_AUTH = False
 
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'APP': {
+            'client_id': get_ssm_parameter('/pcwd/GOOGLE_API_CLIENT_ID'),
+            'secret': get_ssm_parameter('/pcwd/GOOGLE_API_SECRET'),
+            'key': ''
+        }
+    }
+}
