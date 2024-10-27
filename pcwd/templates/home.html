@@ -61,5 +61,18 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript to adjust height dynamically on mobile devices -->
+    <script>
+        function adjustBackgroundHeight() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
+        window.addEventListener('resize', adjustBackgroundHeight);
+        window.addEventListener('load', adjustBackgroundHeight);
+        adjustBackgroundHeight();
+    </script>
+
 </body>
 </html>

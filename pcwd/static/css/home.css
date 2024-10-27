@@ -5,12 +5,13 @@ body, html {
     padding: 0;
     height: 100%;
     font-family: 'Nunito', sans-serif;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .background-image {
     background-image: url('{% static "images/pcwd-image.png" %}');
-    height: 100%;
+    height: calc(var(--vh, 1vh) * 100);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
