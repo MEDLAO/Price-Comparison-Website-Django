@@ -62,16 +62,16 @@ EMAIL_HOST_USER = get_ssm_parameter('/pcwd/AWS_SES_SMTP_USER')
 EMAIL_HOST_PASSWORD = get_ssm_parameter('/pcwd/AWS_SES_SMTP_PASSWORD')
 DEFAULT_FROM_EMAIL = 'contact@fromsifr.com'
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django_redis.cache.RedisCache',
-#         'LOCATION': f"redis://{get_ssm_parameter('/pcwd/AWS_REDIS_ENDPOINT')}:6379/1",
-#         'OPTIONS': {
-#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-#             'PASSWORD': get_ssm_parameter('/pcwd/AWS_REDIS_PASSWORD'),
-#         },
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f"redis://{get_ssm_parameter('/pcwd/AWS_REDIS_ENDPOINT')}:6379/1",
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'PASSWORD': get_ssm_parameter('/pcwd/AWS_REDIS_PASSWORD'),
+        },
+    }
+}
 
 # AWS S3 settings for media files
 AWS_ACCESS_KEY_ID = get_ssm_parameter('/pcwd/AWS_ACCESS_KEY_ID')
