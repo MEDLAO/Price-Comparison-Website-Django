@@ -83,6 +83,8 @@ experience across various devices, including desktops, tablets, and smartphones.
      - **S3** : Simple Storage Service
      - **RDS** : Relational Database Service
      - **SES** : Simple Email Service
+     - **Route 53** : **D**omain **N**ame **S**ystem service
+     
 ### Machine-Learning :
 
 * **scikit-learn**: TfidfVectorizer, cosine_similarity
