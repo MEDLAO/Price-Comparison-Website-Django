@@ -107,7 +107,7 @@ In this first version, I have scraped products from four Egyptian websites:
 
 For each product, I collected the following information: image, price, description, currency, and
 product URL. I used `asyncio` and `aiohttp` to fetch data asynchronously from each page, and 
-BeautifulSoup to parse the content.
+`BeautifulSoup` to parse HTML content.
 
 * **Data Normalization** : 
  I implemented helper functions using `Python` and `Pandas` to normalize the scraped data.
