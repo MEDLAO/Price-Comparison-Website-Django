@@ -105,9 +105,9 @@ In this first version, I have scraped products from four Egyptian websites:
   * 2B
   * EhabGroup
 
-For each product, I collected the following information: image, price, description, currency, and
-product URL. I used `asyncio` and `aiohttp` to fetch data asynchronously from each page, and 
-`BeautifulSoup` to parse HTML content.
+  For each product, I collected the following information: image, price, description, currency, and
+  product URL. I used `asyncio` and `aiohttp` to fetch data asynchronously from each page, and 
+  `BeautifulSoup` to parse HTML content.
 
 * **Data Normalization** : 
  I implemented helper functions using `Python` and `Pandas` to normalize the scraped data.
@@ -122,6 +122,34 @@ Since the products were stored in two CSV files for both languages but not in th
 This step ensured a proper correspondence between the two files, allowing me to instantiate 
 the models correctly in English and Arabic using `django-parler`.
 ## 5. Django Application :
+This section provides an overview of the key features and components implemented in the 
+Django application :
+
+* **Applications** :
+    * **Product**: contains the `Website`, `BaseProduct`, and `ScrapedProduct` models.  This structure
+      supports future extensions through **inheritance**, such as implementing a buy/sell feature 
+      with additional **derived classes**.
+    * **User**: contains the `CustomUser`, `CustomUserManager`, and `Profile` models. 
+      The CustomUserManager class **overrides** BaseUserManager to allow sign-in with email and password. 
+      The CustomUser model permits authentication using either email or username. The Profile model
+      adds additional user-related fields without overloading CustomUser, ensuring better
+      organization and reusability.
+    * **Feed**: includes the `Post` model for user feedback.<br><br>
+
+* **Signals**: Django signals are used in the user application to automatically create a user 
+profile whenever a new user instance is generated.
+* **Multilingual Support**: `django-parler` third-party library for ScrapedProduct
+models. Additionally, I utilized Django's built-in internationalization (`i18n`) feature to 
+translate the content of `django-allauth` templates.
+* **Forms**: The user application includes a `CustomSignupForm`, and the `PostCreateView` handles 
+post submissions.
+* **Unit Tests**: I used the `Pytest` testing framework (**fixtures**, **parameterization**, ...) to write unit tests covering all aspects
+of the Django application, including models, views, URLs, and templates.
+* **Validators**: custom validators for checking email addresses and usernames during the sign-up
+process.
+* **Views**: concerning the views, I used both **class-based and function-based views** depending 
+on the specific requirements and features of the application.
+  
 
 ## 6. Deployment :
 ## 7. SEO considerations :
