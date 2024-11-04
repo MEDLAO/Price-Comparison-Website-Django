@@ -149,6 +149,10 @@ of the Django application, including models, views, URLs, and templates.
 process.
 * **Views**: concerning the views, I used both **class-based and function-based views** depending 
 on the specific requirements and features of the application.
+* **Pagination**: to manage the display of large datasets, enhancing user navigation 
+and performance, using the **paginate_by** attribute.
+* **Django ORM Queries**: queries are used to manipulate data before displaying it 
+(filtering, sorting, etc.), allowing for efficient retrieval of relevant data entries based on various conditions.
   
 
 ## 6. Deployment :
