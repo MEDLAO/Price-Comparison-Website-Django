@@ -2,8 +2,7 @@
 
 [**Français**](README-fr.md)
 <p align="center">
-  <img src="media/pictures-readme/pcwd-db-diagram.png" width="150" height="175" />
-  <img src="media/pictures-readme/.png" width="150" height="175" />
+  <img src="pcwd/media/pictures-readme/pcwd-db-diagram.png"/>
 </p>
 
 ### Table of contents:
