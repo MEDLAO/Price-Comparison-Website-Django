@@ -1,10 +1,13 @@
-## Project: Price Comparison Website - Django
+## Project: Price Comparison Website - Django 
 
-[**Français**](README-fr.md)
 <p align="center">
   <img src="pcwd/media/pictures-readme/pcwd-db-diagram.png"/>
 </p>
+<p align="center"  style="font-size: 2.0em;">
+  <a href="https://fromsifr.com" style="color: #23c483;>fromsifr.com</a>
+</p>
 
+ 
 ### Table of contents:
 1. Project description
 2. Features
